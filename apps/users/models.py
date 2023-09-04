@@ -62,8 +62,8 @@ class CustomUser(AbstractBaseUser):
         verbose_name_plural = 'Пользователи'
         constraints = [
             models.CheckConstraint(
-                check=models.Q(is_client=True) |
-                models.Q(is_psychologists=True),
+                check=models.Q(is_client=True, is_psychologists=False) |
+                models.Q(is_psychologists=True, is_client=False),
                 name='is_client_or_psychologist'
             )
         ]
