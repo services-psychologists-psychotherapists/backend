@@ -46,6 +46,12 @@ class CustomUser(AbstractBaseUser):
     is_psychologists = models.BooleanField(
         default=False
     )
+    is_staff = models.BooleanField(
+        default=False
+    )
+    is_superuser = models.BooleanField(
+        default=False
+    )
 
     objects = CustomUserManager()
 
@@ -54,6 +60,13 @@ class CustomUser(AbstractBaseUser):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+        constraints = [
+            models.CheckConstraint(
+                check=models.Q(is_client=True) |
+                models.Q(is_psychologists=True),
+                name='is_client_or_psychologist'
+            )
+        ]
 
     def __str__(self):
         return self.email

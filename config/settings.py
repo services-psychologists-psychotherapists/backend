@@ -19,15 +19,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_yasg',
     'rest_framework',
     'rest_framework_simplejwt',
     'djoser',
-    'drf-yasg',
     'apps.api.apps.ApiConfig',
     'apps.users.apps.UsersConfig',
     'apps.clients.apps.ClientsConfig',
-    'apps.sessions.apps.SessionsConfig',
-    'apps.psychologists.apps.PsychologistsConfig'
+    'apps.session.apps.SessionConfig',
+    'apps.psychologists.apps.PsychologistsConfig',
 ]
 
 MIDDLEWARE = [
