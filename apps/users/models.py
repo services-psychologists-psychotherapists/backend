@@ -53,7 +53,7 @@ class CustomUser(AbstractBaseUser):
     is_superuser = models.BooleanField(
         default=False
     )
-    is_ative = models.BooleanField(
+    is_active = models.BooleanField(
         default=True
     )
 
