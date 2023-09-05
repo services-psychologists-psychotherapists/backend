@@ -19,6 +19,7 @@ class CustomUserManager(BaseUserManager):
     def create_superuser(self, email, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_active', True)
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError(
@@ -51,6 +52,9 @@ class CustomUser(AbstractBaseUser):
     )
     is_superuser = models.BooleanField(
         default=False
+    )
+    is_ative = models.BooleanField(
+        default=True
     )
 
     objects = CustomUserManager()
