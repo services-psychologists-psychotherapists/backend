@@ -9,7 +9,7 @@ class Gender(models.TextChoices):
     """Пол человека на выбор."""
     MALE = 'male', 'мужской'
     FEMALE = 'female', 'женский'
-    NON_BINARY = 'non-binary', 'небинарный гендер'
+    OTHER = 'other', 'другое'
 
 
 class Client(models.Model):
@@ -20,7 +20,7 @@ class Client(models.Model):
         default=uuid.uuid4,
         editable=False,
     )
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='client',
