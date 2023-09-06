@@ -2,66 +2,67 @@ import uuid
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
+
+from apps.psychologists.constants import (MIN_AGE, MIN_PRICE, MAX_LIFESPAN,
+                                          MAX_PRICE, SESSION_DURATION)
 
 
 def user_directory_path(instance, filename):
-    return "user_{0}/{1}".format(instance.user.id, filename)
+    if isinstance(instance, ProfilePsychologist):
+        return "user_{0}/{1}".format(instance.user.id, filename)
+    return "user_{0}/{1}".format(instance.psychologist.user.id, filename)
 
 
-class Institute(models.Model):
-    """Институт"""
+class CommonInfo(models.Model):
+    """
+    Базовая модель для Institute, Theme, Approach
+    """
     title = models.CharField(
         max_length=200,
         unique=True,
     )
 
     class Meta:
-        verbose_name = 'Институт'
-        verbose_name_plural = 'Институты'
+        abstract = True
 
     def __str__(self):
         return f'{self.title}'
 
 
-class Theme(models.Model):
+class Institute(CommonInfo):
+    """Институт"""
+
+    class Meta:
+        verbose_name = 'Институт'
+        verbose_name_plural = 'Институты'
+
+
+class Theme(CommonInfo):
     """Темы, с которыми работает психолог"""
-    title = models.CharField(
-        max_length=100,
-        unique=True,
-    )
 
     class Meta:
         verbose_name = 'Тема'
         verbose_name_plural = 'Темы'
 
-    def __str__(self):
-        return f'{self.title}'
 
-
-class Approach(models.Model):
+class Approach(CommonInfo):
     """Подход, используемый психологом в работе"""
-    title = models.CharField(
-        max_length=100,
-        unique=True,
-    )
 
     class Meta:
         verbose_name = 'Подход'
         verbose_name_plural = 'Подходы'
-
-    def __str__(self):
-        return f'{self.title}'
 
 
 class ProfilePsychologist(models.Model):
     """Профиль психолога"""
 
     class Gender(models.TextChoices):
-        MALE = 'M', _('MALE')
-        FEMALE = 'F', _('FEMALE')
+        MALE = 'M', 'MALE'
+        FEMALE = 'F', 'FEMALE'
+        OTHER = 'O', 'OTHER'
 
     id = models.UUIDField(
         primary_key=True,
@@ -115,6 +116,7 @@ class ProfilePsychologist(models.Model):
     class Meta:
         verbose_name = 'Профиль психолога'
         verbose_name_plural = 'Профили психолога'
+        default_related_name = 'psychologists'
 
     @property
     def age(self):
@@ -133,14 +135,12 @@ class ProfilePsychologist(models.Model):
         return f'{self.first_name} {self.last_name[0]}'
 
     def clean_fields(self, exclude=None):
-        max_lifespan = 120
         cur_year = timezone.now().year
-        min_age = 25
-        if self.birthdate.year < cur_year - max_lifespan:
+        if self.birthdate.year < cur_year - MAX_LIFESPAN:
             raise ValidationError(
                 {'birthdate': 'Укажите корректный год рождения'}
             )
-        if self.age < min_age:
+        if self.age < MIN_AGE:
             raise ValidationError(
                 {'birthdate': 'Мы работаем с психологами старше 25 лет'}
             )
@@ -168,6 +168,11 @@ class PsychoEducation(models.Model):
 
     class Meta:
         verbose_name = 'Образование психолога'
+        default_related_name = 'psychoeducation'
+        constraints = [
+            models.UniqueConstraint(fields=('psychologist', 'institute'),
+                                    name='unique_education')
+        ]
 
     def __str__(self):
         return f'{self.psychologist}: {self.institute}'
@@ -176,12 +181,14 @@ class PsychoEducation(models.Model):
 class Service(models.Model):
 
     class Type(models.TextChoices):
-        PERSONAL = 'P', _('PERSONAL')
-        GROUP = 'G', _('GROUP')
+        PERSONAL = 'P', 'PERSONAL'
+        GROUP = 'G', 'GROUP'
+        NOMATTER = 'N', 'NO MATTER'
 
     class Format(models.TextChoices):
         ONLINE = 'ON', 'ONLINE'
         OFFLINE = 'OF', 'OFFLINE'
+        NOMATTER = 'N', 'NO MATTER'
 
     psychologist = models.ForeignKey(
         ProfilePsychologist,
@@ -191,9 +198,16 @@ class Service(models.Model):
     type = models.CharField(
         max_length=1,
         choices=Type.choices,
+        default=Type.NOMATTER,
     )
-    price = models.PositiveIntegerField()
-    duration = models.PositiveSmallIntegerField()
+    price = models.PositiveIntegerField(
+        validators=(MinValueValidator(MIN_PRICE),
+                    MaxValueValidator(MAX_PRICE),
+                    ),
+    )
+    duration = models.PositiveSmallIntegerField(
+        default=SESSION_DURATION,
+    )
     format = models.CharField(
         max_length=2,
         choices=Format.choices,
