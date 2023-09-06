@@ -9,7 +9,7 @@ class Gender(models.TextChoices):
     """Пол человека на выбор."""
     MALE = 'male', 'мужской'
     FEMALE = 'female', 'женский'
-    OTHER = 'other', 'другое'
+    OTHER = 'other', 'другой'
 
 
 class Client(models.Model):
