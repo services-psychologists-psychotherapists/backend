@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'djoser',
     'apps.api.apps.ApiConfig',
+    'apps.core.apps.CoreConfig',
     'apps.users.apps.UsersConfig',
     'apps.clients.apps.ClientsConfig',
     'apps.session.apps.SessionConfig',
