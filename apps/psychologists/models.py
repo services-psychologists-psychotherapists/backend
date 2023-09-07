@@ -6,8 +6,9 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
 
-from apps.psychologists.constants import (MIN_AGE, MIN_PRICE, MAX_LIFESPAN,
-                                          MAX_PRICE, SESSION_DURATION)
+from apps.core.constants import (MIN_PRICE, MAX_PRICE, MAX_LIFESPAN,
+                                 PSYCHO_MIN_AGE, SESSION_DURATION)
+from apps.core.models import Gender
 
 
 def user_directory_path(instance, filename):
@@ -59,11 +60,6 @@ class Approach(CommonInfo):
 class ProfilePsychologist(models.Model):
     """Профиль психолога"""
 
-    class Gender(models.TextChoices):
-        MALE = 'M', 'MALE'
-        FEMALE = 'F', 'FEMALE'
-        OTHER = 'O', 'OTHER'
-
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -84,7 +80,7 @@ class ProfilePsychologist(models.Model):
     )
     birthdate = models.DateField()
     gender = models.CharField(
-        max_length=1,
+        max_length=10,
         choices=Gender.choices,
     )
     phone_number = models.CharField(
@@ -140,7 +136,7 @@ class ProfilePsychologist(models.Model):
             raise ValidationError(
                 {'birthdate': 'Укажите корректный год рождения'}
             )
-        if self.age < MIN_AGE:
+        if self.age < PSYCHO_MIN_AGE:
             raise ValidationError(
                 {'birthdate': 'Мы работаем с психологами старше 25 лет'}
             )
@@ -153,6 +149,7 @@ class ProfilePsychologist(models.Model):
 
 class PsychoEducation(models.Model):
     """Образование психолога"""
+
     psychologist = models.ForeignKey(
         ProfilePsychologist,
         on_delete=models.CASCADE,
@@ -181,14 +178,16 @@ class PsychoEducation(models.Model):
 class Service(models.Model):
 
     class Type(models.TextChoices):
-        PERSONAL = 'P', 'PERSONAL'
-        GROUP = 'G', 'GROUP'
-        NOMATTER = 'N', 'NO MATTER'
+        """Тип сессии"""
+        PERSONAL = 'personal', 'личная'
+        GROUP = 'group', 'групповая'
+        NOMATTER = 'no_matter', 'неважно'
 
     class Format(models.TextChoices):
-        ONLINE = 'ON', 'ONLINE'
-        OFFLINE = 'OF', 'OFFLINE'
-        NOMATTER = 'N', 'NO MATTER'
+        """Формат сессии"""
+        ONLINE = 'online', 'онлайн'
+        OFFLINE = 'offline', 'личная встреча'
+        NOMATTER = 'no_matter', 'неважно'
 
     psychologist = models.ForeignKey(
         ProfilePsychologist,
@@ -196,7 +195,7 @@ class Service(models.Model):
         related_name='services',
     )
     type = models.CharField(
-        max_length=1,
+        max_length=10,
         choices=Type.choices,
         default=Type.NOMATTER,
     )
@@ -209,7 +208,7 @@ class Service(models.Model):
         default=SESSION_DURATION,
     )
     format = models.CharField(
-        max_length=2,
+        max_length=10,
         choices=Format.choices,
         default=Format.ONLINE,
     )
