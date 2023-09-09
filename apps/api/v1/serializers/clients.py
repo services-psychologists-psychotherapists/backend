@@ -11,7 +11,6 @@ class CreateUserSerializer(serializers.ModelSerializer):
         fields = ('id', 'email', 'password')
         model = CustomUser
         extra_kwargs = {
-            "id": {"read_only": True},
             "password": {"write_only": True},
         }
 
@@ -34,7 +33,6 @@ class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ('id', 'name', 'gender', 'birthday', 'phone_number')
         model = Client
-        read_only_fields = ('id',)
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)

@@ -1,9 +1,7 @@
-from django.shortcuts import get_object_or_404
 from rest_framework import views, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from apps.clients.models import Client
 from apps.clients.selectors import get_client
 from apps.clients.services import create_client, update_client
 
@@ -39,7 +37,7 @@ class ClientApiView(views.APIView):
 
     def put(self, request):
         """Изменение клиентского профиля."""
-        client = get_object_or_404(Client, user=request.user)
+        client = get_client(request.user)
         serializer = ClientSerializer(client, request.data)
         serializer.is_valid(raise_exception=True)
         client = update_client(client, serializer.validated_data)
