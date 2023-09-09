@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
+                                        PermissionsMixin)
 
 
 class CustomUserManager(BaseUserManager):
@@ -9,9 +10,13 @@ class CustomUserManager(BaseUserManager):
             raise ValueError(
                 "Необходимо указать адрес электронной почты"
             )
-
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
+        if not password:
+            random_password = self.make_random_password(length=10)
+            user.set_password(random_password)
+            user.save()
+            return user
         user.set_password(password)
         user.save()
         return user
@@ -32,7 +37,7 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class CustomUser(AbstractBaseUser):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
