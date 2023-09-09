@@ -2,14 +2,9 @@ import uuid
 from django.db import models
 from django.conf import settings
 
+from apps.core.models import Gender
+
 from .validators import validate_birthday
-
-
-class Gender(models.TextChoices):
-    """Пол человека на выбор."""
-    MALE = 'male', 'мужской'
-    FEMALE = 'female', 'женский'
-    OTHER = 'other', 'другой'
 
 
 class Client(models.Model):
