@@ -4,8 +4,8 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 
-from psychologists.models import ProfilePsychologist, Theme, Service
-from clients.models import ProfileClient
+from apps.psychologists.models import ProfilePsychologist, Theme, Service
+from apps.clients.models import Client
 
 
 class Slot(models.Model):
@@ -17,10 +17,8 @@ class Slot(models.Model):
         verbose_name='Специалист'
     )
     datetime_from = models.DateTimeField(
-        unique=True
     )
     datetime_to = models.DateTimeField(
-        unique=True
     )
     is_free = models.BooleanField(
         verbose_name='Свободно',
@@ -30,6 +28,12 @@ class Slot(models.Model):
     class Meta:
         verbose_name = 'Окно записи'
         verbose_name_plural = 'Окна записи'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['psychologist', 'datetime_from', 'datetime_to'],
+                name='unique_slots'
+            ),
+        ]
 
     def clean(self):
         if self.datetime_from > self.datetime_to:
@@ -37,7 +41,7 @@ class Slot(models.Model):
                 {'datetime_to': ('Значение должно быть больше'
                                  ', чем datetime_from')}
             )
-        elif self.datetime_to - self.datetime_from != timedelta(hour=1):
+        elif self.datetime_to - self.datetime_from != timedelta(hours=1):
             raise ValidationError(
                 {'datetime_to': ('Значение должно быть больше '
                                  'daterime_from ровно на 1 час')}
@@ -50,12 +54,12 @@ class Slot(models.Model):
 
 class Session(models.Model):
     """Сессия"""
-    class Status(models.TextChoices):
-        CONFIRMED = 'C', _('Подтверждено')
-        NOT_CONFIRMED = 'NC', _('Не подтверждено')
+    class StatusChoice(models.TextChoices):
+        PAID = 'P', _('Оплаченный')
+        UNPAID = 'UNP', _('Неоплаченный')
 
     client = models.ForeignKey(
-        ProfileClient,
+        Client,
         on_delete=models.CASCADE,
         related_name='sessions'
     )
@@ -65,8 +69,9 @@ class Session(models.Model):
         verbose_name='Окно записи'
     )
     status = models.CharField(
-        max_length=2,
-        choices=Status.choices,
+        max_length=3,
+        choices=StatusChoice.choices,
+        default=StatusChoice.UNPAID,
         verbose_name='Статус записи'
     )
     themes = models.ManyToManyField(

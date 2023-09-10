@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'apps.core.apps.CoreConfig',
     'apps.users.apps.UsersConfig',
     'apps.clients.apps.ClientsConfig',
-    'apps.sessions.apps.SessionsConfig',
+    'apps.session.apps.SessionConfig',
     'apps.psychologists.apps.PsychologistsConfig',
 ]
 
