@@ -1,4 +1,5 @@
 import uuid
+
 from django.db import models
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
@@ -13,10 +14,7 @@ class CustomUserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         if not password:
-            random_password = self.make_random_password(length=10)
-            user.set_password(random_password)
-            user.save()
-            return user
+            password = self.make_random_password(length=10)
         user.set_password(password)
         user.save()
         return user
