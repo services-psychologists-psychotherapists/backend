@@ -57,7 +57,7 @@ class Session(models.Model):
     client = models.ForeignKey(
         ProfileClient,
         on_delete=models.CASCADE,
-        verbose_name='sessions'
+        related_name='sessions'
     )
     slot = models.OneToOneField(
         Slot,
@@ -73,9 +73,10 @@ class Session(models.Model):
         Theme,
         verbose_name='Тема сессии'
     )
-    service = models.OneToOneField(
+    service = models.ForeignKey(
         Service,
         on_delete=models.CASCADE,
+        related_name='sessions'
     )
 
     class Meta:
