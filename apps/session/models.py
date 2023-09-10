@@ -2,7 +2,6 @@ from datetime import timedelta
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.core.exceptions import ValidationError
 
 from apps.psychologists.models import ProfilePsychologist, Theme, Service
 from apps.clients.models import Client
@@ -18,34 +17,24 @@ class Slot(models.Model):
     )
     datetime_from = models.DateTimeField(
     )
-    datetime_to = models.DateTimeField(
-    )
     is_free = models.BooleanField(
         verbose_name='Свободно',
         default=True
     )
+
+    @property
+    def datetime_to(self):
+        return self.datetime_from + timedelta(hours=1)
 
     class Meta:
         verbose_name = 'Окно записи'
         verbose_name_plural = 'Окна записи'
         constraints = [
             models.UniqueConstraint(
-                fields=['psychologist', 'datetime_from', 'datetime_to'],
+                fields=['psychologist', 'datetime_from'],
                 name='unique_slots'
             ),
         ]
-
-    def clean(self):
-        if self.datetime_from > self.datetime_to:
-            raise ValidationError(
-                {'datetime_to': ('Значение должно быть больше'
-                                 ', чем datetime_from')}
-            )
-        elif self.datetime_to - self.datetime_from != timedelta(hours=1):
-            raise ValidationError(
-                {'datetime_to': ('Значение должно быть больше '
-                                 'daterime_from ровно на 1 час')}
-            )
 
     def __str__(self):
         return (f'{self.psychologist}: {self.datetime_from} '
