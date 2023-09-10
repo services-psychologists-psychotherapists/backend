@@ -28,6 +28,11 @@ class CommonInfo(models.Model):
 
     class Meta:
         abstract = True
+        indexes = [
+            models.Index(fields=('title', ),
+                         name='%(app_label)s_%(class)s_title_index',
+                         ),
+        ]
 
     def __str__(self):
         return f'{self.title}'
@@ -35,6 +40,8 @@ class CommonInfo(models.Model):
 
 class Institute(CommonInfo):
     """Институт"""
+
+    is_higher = models.BooleanField()
 
     class Meta:
         verbose_name = 'Институт'
@@ -74,6 +81,8 @@ class ProfilePsychologist(models.Model):
     )
     middle_name = models.CharField(
         max_length=50,
+        blank=True,
+        default='',
     )
     last_name = models.CharField(
         max_length=50,
@@ -101,9 +110,11 @@ class ProfilePsychologist(models.Model):
     )
     about = models.TextField(
         max_length=500,
+        blank=True,
     )
     avatar = models.ImageField(
         upload_to=user_directory_path,
+        blank=True,
     )
     is_verified = models.BooleanField(
         default=False,
@@ -158,7 +169,12 @@ class PsychoEducation(models.Model):
         Institute,
         on_delete=models.CASCADE,
     )
-    graduation_year = models.DateField()
+    speciality = models.CharField(
+        max_length=50,
+    )
+    graduation_year = models.CharField(
+        max_length=10,
+    )
     document = models.FileField(
         upload_to=user_directory_path,
     )
@@ -197,7 +213,7 @@ class Service(models.Model):
     type = models.CharField(
         max_length=10,
         choices=Type.choices,
-        default=Type.NOMATTER,
+        default=Type.PERSONAL,
     )
     price = models.PositiveIntegerField(
         validators=(MinValueValidator(MIN_PRICE),
