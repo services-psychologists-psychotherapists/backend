@@ -24,8 +24,7 @@ class CreateClientApiView(views.APIView):
         user, client = create_client(user_serializer.validated_data,
                                      client_serializer.validated_data)
 
-        # пример использования рассылки; потом удалю
-        # ClientActivationEmail(request, {'user': user}).send(to=[user.email])
+        ClientActivationEmail(request, {'user': user}).send(to=[user.email])
 
         return Response(ClientSerializer(client).data,
                         status=status.HTTP_201_CREATED)
