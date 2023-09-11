@@ -4,6 +4,7 @@ from rest_framework.response import Response
 
 from apps.clients.selectors import get_client
 from apps.clients.services import create_client, update_client
+from apps.core.email import ClientActivationEmail
 
 from ..permissions import IsClientOnly
 from ..serializers.clients import CreateUserSerializer, ClientSerializer
@@ -19,8 +20,13 @@ class CreateClientApiView(views.APIView):
         user_serializer.is_valid(raise_exception=True)
         client_serializer = ClientSerializer(data=request.data)
         client_serializer.is_valid(raise_exception=True)
-        client = create_client(user_serializer.validated_data,
-                               client_serializer.validated_data)
+
+        user, client = create_client(user_serializer.validated_data,
+                                     client_serializer.validated_data)
+
+        # пример использования рассылки; потом удалю
+        # ClientActivationEmail(request, {'user': user}).send(to=[user.email])
+
         return Response(ClientSerializer(client).data,
                         status=status.HTTP_201_CREATED)
 
