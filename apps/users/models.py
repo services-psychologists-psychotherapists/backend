@@ -11,9 +11,10 @@ class CustomUserManager(BaseUserManager):
             raise ValueError(
                 "Необходимо указать адрес электронной почты"
             )
-
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
+        if not password:
+            password = self.make_random_password(length=10)
         user.set_password(password)
         user.save()
         return user
