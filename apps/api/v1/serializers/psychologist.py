@@ -48,12 +48,6 @@ class PsychoEducationSerializer(serializers.Serializer):
     file = ImageFieldSerialiser(required=False)
 
 
-class ServiceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Service
-        fields = ('all')
-
-
 class CreatePsychologistSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=50)
     last_name = serializers.CharField(max_length=50)
@@ -61,12 +55,12 @@ class CreatePsychologistSerializer(serializers.Serializer):
     gender = serializers.ChoiceField(choices=Gender.choices)
     phone_number = serializers.CharField(max_length=12, required=False)
     experience = serializers.IntegerField()
-    about = serializers.CharField(max_length=500, required=False)
+    about = serializers.CharField(max_length=500)
     price = serializers.IntegerField()
     themes = ThemeSerializer(many=True)
     approaches = ApproachSerializer(many=True)
     institutes = PsychoEducationSerializer(many=True)
-    courses = PsychoEducationSerializer(many=True)
+    courses = PsychoEducationSerializer(many=True, required=False)
 
     def validate_price(self, value):
         if value < MIN_PRICE or value > MAX_PRICE:
