@@ -17,7 +17,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
 class CommonInfoSerializer(serializers.Serializer):
     """
-    Input сериализатор для Theme, Approach
+    Сериализатор для Theme, Approach
     """
     id = serializers.IntegerField(read_only=True)
     title = serializers.CharField(max_length=200)
