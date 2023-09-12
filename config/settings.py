@@ -121,3 +121,20 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ACTIVATION_URL = 'auth/verify-email/{uid}/{token}'
+PASSWORD_RESET_CONFIRM_URL = 'auth/reset-password/{uid}/{token}'
+
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', default='django.core.mail.backends.filebased.EmailBackend')
+
+# Settings for filebased.EmailBackend
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+EMAIL_SENDER = 'share.with.me-help@yandex.ru'
+
+# Settings for smtp.EmailBackend
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', default='True') == 'True'
+EMAIL_HOST = os.getenv('EMAIL_HOST', default='email_host')
+EMAIL_PORT = os.getenv('EMAIL_PORT', default=587)
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', default=EMAIL_SENDER)
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', default='email_pass')
+DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER', default=EMAIL_SENDER)
