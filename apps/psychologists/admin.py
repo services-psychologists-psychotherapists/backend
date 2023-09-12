@@ -5,21 +5,21 @@ from apps.psychologists import models
 
 @admin.register(models.Institute)
 class InstituteAdmin(admin.ModelAdmin):
-    list_display = ('title', )
+    list_display = ('id', 'title', )
     empty_value_display = '-пусто-'
     search_fields = ('title__startswith', )
 
 
 @admin.register(models.Theme)
 class ThemeAdmin(admin.ModelAdmin):
-    list_display = ('title', )
+    list_display = ('id', 'title', )
     empty_value_display = '-пусто-'
     search_fields = ('title__startswith', )
 
 
 @admin.register(models.Approach)
 class ApproachAdmin(admin.ModelAdmin):
-    list_display = ('title', )
+    list_display = ('id', 'title', )
     empty_value_display = '-пусто-'
     search_fields = ('title__startswith', )
 
@@ -32,8 +32,8 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(models.ProfilePsychologist)
 class ProfilePsychologistAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'middle_name', 'last_name',
-                    'birthdate', 'gender', 'is_verified')
+    list_display = ('first_name', 'last_name', 'birthdate',
+                    'gender', 'is_verified')
     empty_value_display = '-пусто-'
     list_filter = ('is_verified', )
     search_fields = ('last_name__startswith', )
