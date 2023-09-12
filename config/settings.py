@@ -85,14 +85,6 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
-DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': 'auth/password-reset/{uid}/{token}',
-    'ACTIVATION_URL': 'auth/activate/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL': True,
-    'SEND_CONFIRMATION_EMAIL': True,
-    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True
-}
-
 SIMPLE_JWT = {
    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
    'AUTH_HEADER_TYPES': ('JWT',),
@@ -129,8 +121,23 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ACTIVATION_URL = 'auth/verify-email/{uid}/{token}'
+PASSWORD_RESET_CONFIRM_URL = 'auth/reset-password/{uid}/{token}'
+SEND_ACTIVATION_EMAIL = True
+SEND_CONFIRMATION_EMAIL = True
+PASSWORD_CHANGED_EMAIL_CONFIRMATION = True
+
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', default='django.core.mail.backends.filebased.EmailBackend')
 
 # Settings for filebased.EmailBackend
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 EMAIL_SENDER = 'share.with.me-help@yandex.ru'
+
+# Settings for smtp.EmailBackend
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', default='True') == 'True'
+EMAIL_HOST = os.getenv('EMAIL_HOST', default='email_host')
+EMAIL_PORT = os.getenv('EMAIL_PORT', default=587)
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', default=EMAIL_SENDER)
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', default='email_pass')
+DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER', default=EMAIL_SENDER)

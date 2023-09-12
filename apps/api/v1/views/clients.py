@@ -19,9 +19,12 @@ class CreateClientApiView(views.APIView):
         user_serializer.is_valid(raise_exception=True)
         client_serializer = ClientSerializer(data=request.data)
         client_serializer.is_valid(raise_exception=True)
-        client = create_client(user_serializer.validated_data,
-                               client_serializer.validated_data)
-        return Response(ClientSerializer(client).data,
+
+        user, _ = create_client(user_serializer.validated_data,
+                                client_serializer.validated_data,
+                                request)
+
+        return Response(CreateUserSerializer(user).data,
                         status=status.HTTP_201_CREATED)
 
 
