@@ -29,7 +29,7 @@ class CreatePsychologistView(views.APIView):
 
 class ThemeViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.Theme.objects.all()
-    serializer_class = psycho.ThemeSerializer
+    serializer_class = psycho.CommonInfoSerializer
     filter_backends = (filters.SearchFilter, )
     search_fields = ('^title', )
     permission_classes = (AllowAny,)
@@ -38,7 +38,7 @@ class ThemeViewSet(viewsets.ReadOnlyModelViewSet):
 
 class ApproacheViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.Approach.objects.all()
-    serializer_class = psycho.ApproachSerializer
+    serializer_class = psycho.CommonInfoSerializer
     filter_backends = (filters.SearchFilter, )
     search_fields = ('^title', )
     permission_classes = (AllowAny,)

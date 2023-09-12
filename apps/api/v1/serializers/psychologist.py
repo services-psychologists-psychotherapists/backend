@@ -1,7 +1,8 @@
-from django.shortcuts import get_object_or_404
+from django.utils import timezone
 from rest_framework import serializers
 
 from apps.api.v1.serializers.fields import ImageFieldSerialiser
+from apps.api.v1.validators import validate_file_size
 from apps.core.models import Gender
 from apps.core.constants import MIN_PRICE, MAX_PRICE
 from apps.psychologists import models
@@ -14,24 +15,12 @@ class CreateUserSerializer(serializers.ModelSerializer):
         model = CustomUser
 
 
-class ThemeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Theme
-        fields = ('id', 'title')
-
-    def to_internal_value(self, data):
-        theme = get_object_or_404(models.Theme, id=data)
-        return theme
-
-
-class ApproachSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Approach
-        fields = ('id', 'title')
-
-    def to_internal_value(self, data):
-        approach = get_object_or_404(models.Approach, id=data)
-        return approach
+class CommonInfoSerializer(serializers.Serializer):
+    """
+    Input сериализатор для Theme, Approach
+    """
+    id = serializers.IntegerField(read_only=True)
+    title = serializers.CharField(max_length=200)
 
 
 class InstituteSerializer(serializers.ModelSerializer):
@@ -45,7 +34,20 @@ class PsychoEducationSerializer(serializers.Serializer):
     title = serializers.CharField(max_length=200)
     speciality = serializers.CharField(max_length=50)
     graduation_year = serializers.CharField(max_length=10)
-    file = ImageFieldSerialiser(required=False)
+    document = ImageFieldSerialiser()
+
+    def validate_graduation_year(self, value):
+        finish_year = int(value.split('-')[-1])
+        cur_year = timezone.now().year
+        if finish_year > cur_year:
+            raise serializers.ValidationError(
+                'Укажите корректный год окончания обучения'
+            )
+        return value
+
+    def validate_document(self, value):
+        validate_file_size(value)
+        return value
 
 
 class CreatePsychologistSerializer(serializers.Serializer):
@@ -57,8 +59,8 @@ class CreatePsychologistSerializer(serializers.Serializer):
     experience = serializers.IntegerField()
     about = serializers.CharField(max_length=500)
     price = serializers.IntegerField()
-    themes = ThemeSerializer(many=True)
-    approaches = ApproachSerializer(many=True)
+    themes = CommonInfoSerializer(many=True)
+    approaches = CommonInfoSerializer(many=True)
     institutes = PsychoEducationSerializer(many=True)
     courses = PsychoEducationSerializer(many=True, required=False)
 
@@ -69,8 +71,8 @@ class CreatePsychologistSerializer(serializers.Serializer):
             )
         return value
 
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep['gender'] = instance.get_gender_display()
-        rep['birthdate'] = instance.birthdate.strftime("%d.%m.%Y")
-        return rep
+    # def to_representation(self, instance):
+    #     rep = super().to_representation(instance)
+    #     rep['gender'] = instance.get_gender_display()
+    #     rep['birthdate'] = instance.birthdate.strftime("%d.%m.%Y")
+    #     return rep
