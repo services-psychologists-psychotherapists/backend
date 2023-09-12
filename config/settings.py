@@ -122,11 +122,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+HIDE_USERS = True
 ACTIVATION_URL = 'auth/verify-email/{uid}/{token}'
 PASSWORD_RESET_CONFIRM_URL = 'auth/reset-password/{uid}/{token}'
 SEND_ACTIVATION_EMAIL = True
 SEND_CONFIRMATION_EMAIL = True
 PASSWORD_CHANGED_EMAIL_CONFIRMATION = True
+LOGOUT_ON_PASSWORD_CHANGE = False
+CREATE_SESSION_ON_LOGIN = True
 
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', default='django.core.mail.backends.filebased.EmailBackend')
 
