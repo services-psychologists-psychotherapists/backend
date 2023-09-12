@@ -70,9 +70,3 @@ class CreatePsychologistSerializer(serializers.Serializer):
                 'Введите корректную цену на услугу'
             )
         return value
-
-    # def to_representation(self, instance):
-    #     rep = super().to_representation(instance)
-    #     rep['gender'] = instance.get_gender_display()
-    #     rep['birthdate'] = instance.birthdate.strftime("%d.%m.%Y")
-    #     return rep
