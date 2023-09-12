@@ -32,8 +32,8 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(models.ProfilePsychologist)
 class ProfilePsychologistAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'middle_name', 'last_name',
-                    'birthdate', 'gender', 'is_verified')
+    list_display = ('first_name', 'last_name', 'birthdate',
+                    'gender', 'is_verified')
     empty_value_display = '-пусто-'
     list_filter = ('is_verified', )
     search_fields = ('last_name__startswith', )
