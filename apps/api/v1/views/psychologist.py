@@ -28,7 +28,7 @@ class CreatePsychologistView(views.APIView):
                         status=status.HTTP_201_CREATED)
 
 
-class ThemeViewSet(viewsets.ModelViewSet):
+class ThemeViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.Theme.objects.all()
     serializer_class = psycho.CommonInfoSerializer
     filter_backends = (DjangoFilterBackend,)

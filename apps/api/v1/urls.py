@@ -8,9 +8,9 @@ from .views.custom_user import CustomUserViewSet
 
 router_v1 = DefaultRouter()
 router_v1.register('users', CustomUserViewSet, basename='users')
-router_v1.register(r'themes', psycho.ThemeViewSet)
-router_v1.register(r'approaches', psycho.ApproacheViewSet)
-router_v1.register(r'institutes', psycho.InstituteViewSet)
+router_v1.register('themes', psycho.ThemeViewSet)
+router_v1.register('approaches', psycho.ApproacheViewSet)
+router_v1.register('institutes', psycho.InstituteViewSet)
 
 
 urlpatterns = [
@@ -21,4 +21,5 @@ urlpatterns = [
          psycho.CreatePsychologistView.as_view(),
          name='create_psychologist'),
     path('auth/', include('djoser.urls.jwt')),
+    path('', include(router_v1.urls)),
 ]

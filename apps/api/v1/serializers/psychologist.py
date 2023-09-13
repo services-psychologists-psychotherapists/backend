@@ -4,7 +4,8 @@ from rest_framework import serializers
 from apps.api.v1.serializers.fields import ImageFieldSerialiser
 from apps.api.v1.validators import validate_file_size
 from apps.core.models import Gender
-from apps.core.constants import MIN_PRICE, MAX_PRICE
+from apps.core.constants import (MIN_PRICE, MAX_PRICE, MAX_LIFESPAN,
+                                 PSYCHO_MIN_AGE)
 from apps.psychologists import models
 from apps.users.models import CustomUser
 
@@ -68,5 +69,20 @@ class CreatePsychologistSerializer(serializers.Serializer):
         if value < MIN_PRICE or value > MAX_PRICE:
             raise serializers.ValidationError(
                 'Введите корректную цену на услугу'
+            )
+        return value
+
+    def validate_birthdate(self, value):
+        cur = timezone.now()
+        age = cur.year - value.year
+        if (cur.month, cur.day) < (value.month, value.day):
+            return age - 1
+        if age > MAX_LIFESPAN:
+            raise serializers.ValidationError(
+                'Укажите корректный год рождения'
+            )
+        if age < PSYCHO_MIN_AGE:
+            raise serializers.ValidationError(
+                'Мы работаем с психологами старше 25 лет'
             )
         return value
