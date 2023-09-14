@@ -30,7 +30,7 @@ class CommonInfo(models.Model):
         abstract = True
         indexes = [
             models.Index(fields=('title', ),
-                         name='%(app_label)s_%(class)s_title_index',
+                         name='%(app_label)s_%(class)s_index',
                          ),
         ]
 
@@ -43,7 +43,7 @@ class Institute(CommonInfo):
 
     is_higher = models.BooleanField()
 
-    class Meta:
+    class Meta(CommonInfo.Meta):
         verbose_name = 'Институт'
         verbose_name_plural = 'Институты'
 
@@ -51,7 +51,7 @@ class Institute(CommonInfo):
 class Theme(CommonInfo):
     """Темы, с которыми работает психолог"""
 
-    class Meta:
+    class Meta(CommonInfo.Meta):
         verbose_name = 'Тема'
         verbose_name_plural = 'Темы'
 
@@ -59,7 +59,7 @@ class Theme(CommonInfo):
 class Approach(CommonInfo):
     """Подход, используемый психологом в работе"""
 
-    class Meta:
+    class Meta(CommonInfo.Meta):
         verbose_name = 'Подход'
         verbose_name_plural = 'Подходы'
 
@@ -78,11 +78,6 @@ class ProfilePsychologist(models.Model):
     )
     first_name = models.CharField(
         max_length=50,
-    )
-    middle_name = models.CharField(
-        max_length=50,
-        blank=True,
-        default='',
     )
     last_name = models.CharField(
         max_length=50,
@@ -110,7 +105,6 @@ class ProfilePsychologist(models.Model):
     )
     about = models.TextField(
         max_length=500,
-        blank=True,
     )
     avatar = models.ImageField(
         upload_to=user_directory_path,
@@ -151,6 +145,10 @@ class ProfilePsychologist(models.Model):
             raise ValidationError(
                 {'birthdate': 'Мы работаем с психологами старше 25 лет'}
             )
+        if self.started_working.year > cur_year:
+            raise ValidationError(
+                {'experience': 'Некорректно указан опыт работы'}
+            )
         super().clean_fields(exclude=exclude)
 
     def save(self, *args, **kwargs):
@@ -183,12 +181,32 @@ class PsychoEducation(models.Model):
         verbose_name = 'Образование психолога'
         default_related_name = 'psychoeducation'
         constraints = [
-            models.UniqueConstraint(fields=('psychologist', 'institute'),
-                                    name='unique_education')
+            models.UniqueConstraint(
+                fields=('psychologist', 'institute', 'speciality'),
+                name='unique_education',
+            )
         ]
 
     def __str__(self):
         return f'{self.psychologist}: {self.institute}'
+
+    def _get_graduation_year(self):
+        finish_year = self.graduation_year.split('-')[-1]
+        return int(finish_year)
+
+    def clean_fields(self, exclude=None):
+        finish_year = self._get_graduation_year()
+        cur_year = timezone.now().year
+        if finish_year > cur_year:
+            raise ValidationError({
+                'graduation_year': 'Укажите корректный год окончания обучения'
+            }
+            )
+        super().clean_fields(exclude=exclude)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
 
 
 class Service(models.Model):
@@ -213,7 +231,7 @@ class Service(models.Model):
     type = models.CharField(
         max_length=10,
         choices=Type.choices,
-        default=Type.PERSONAL,
+        default=Type.NOMATTER,
     )
     price = models.PositiveIntegerField(
         validators=(MinValueValidator(MIN_PRICE),
