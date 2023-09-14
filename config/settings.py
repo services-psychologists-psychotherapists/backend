@@ -85,6 +85,10 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
+    'DATE_INPUT_FORMATS': ["%d.%m.%Y"],
+    'DATE_FORMAT': "%d.%m.%Y",
+    'DATETIME_INPUT_FORMATS': ["%d.%m.%Y %H:%M"],
+    'DATETIME_FORMAT': "%d.%m.%Y %H:%M",
 }
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -111,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -148,3 +152,8 @@ EMAIL_PORT = os.getenv('EMAIL_PORT', default=587)
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', default=EMAIL_SENDER)
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', default='email_pass')
 DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER', default=EMAIL_SENDER)
+
+# Zoom settings
+ZOOM_CLIENT_ID = os.getenv('ZOOM_CLIENT_ID', default='client_id')
+ZOOM_ACCOUNT_ID = os.getenv('ZOOM_ACCOUNT_ID', default='account_id')
+ZOOM_CLIENT_SECRET = os.getenv('ZOOM_CLIENT_SECRET', default='client_secret')
