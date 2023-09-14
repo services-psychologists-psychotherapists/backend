@@ -37,6 +37,7 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(
+        'Уникальный id',
         primary_key=True,
         default=uuid.uuid4,
         editable=False
@@ -45,9 +46,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         unique=True
     )
     is_client = models.BooleanField(
+        'Клиент',
         default=True
     )
     is_psychologists = models.BooleanField(
+        'Психолог',
         default=False
     )
     is_staff = models.BooleanField(
@@ -57,6 +60,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         default=False
     )
     is_active = models.BooleanField(
+        'Активный',
         default=True
     )
 
