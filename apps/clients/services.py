@@ -15,7 +15,7 @@ def create_client(
 ) -> tuple[CustomUser, Client]:
     """
     Создание пользователя, создание клиента, отправка письма клиенту со ссылкой
-    для подтверждения почты и активации аккаунта. 
+    для подтверждения почты и активации аккаунта.
     """
     user = CustomUser.objects.create_user(**user_data)
     client = Client.objects.create(user=user, **client_data)

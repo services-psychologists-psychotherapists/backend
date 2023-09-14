@@ -7,6 +7,7 @@ from apps.users.models import CustomUser
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
+    """Сериализатор для создания пользователя-клиента."""
     class Meta:
         fields = ('id', 'email', 'password')
         model = CustomUser
@@ -30,6 +31,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
 
 class ClientSerializer(serializers.ModelSerializer):
+    """Сериализатор для клиента, в т.ч. ЛК."""
     class Meta:
         fields = ('id', 'name', 'gender', 'birthday', 'phone_number')
         model = Client
