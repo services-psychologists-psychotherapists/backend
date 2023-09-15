@@ -5,6 +5,8 @@ from rest_framework import serializers
 from apps.clients.models import Client
 from apps.users.models import CustomUser
 
+from .fields import ImageFieldSerialiser
+
 
 class CreateUserSerializer(serializers.ModelSerializer):
     """Сериализатор для создания пользователя-клиента."""
@@ -31,12 +33,10 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
 
 class ClientSerializer(serializers.ModelSerializer):
-    """Сериализатор для клиента, в т.ч. ЛК."""
-    class Meta:
-        fields = ('id', 'name', 'gender', 'birthday', 'phone_number')
-        model = Client
+    """Сериализатор для профиля клиента, в т.ч. ЛК."""
+    avatar = ImageFieldSerialiser(required=False)
 
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep['gender'] = instance.get_gender_display()
-        return rep
+    class Meta:
+        fields = ('id', 'first_name', 'last_name', 'birthday', 'phone_number',
+                  'avatar')
+        model = Client
