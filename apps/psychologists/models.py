@@ -82,7 +82,7 @@ class ProfilePsychologist(models.Model):
     last_name = models.CharField(
         max_length=50,
     )
-    birthdate = models.DateField()
+    birthday = models.DateField()
     gender = models.CharField(
         max_length=10,
         choices=Gender.choices,
@@ -109,6 +109,12 @@ class ProfilePsychologist(models.Model):
     avatar = models.ImageField(
         upload_to=user_directory_path,
         blank=True,
+        null=True,
+    )
+    speciality = models.CharField(
+        max_length=50,
+        default='Психолог',
+        blank=True,
     )
     is_verified = models.BooleanField(
         default=False,
@@ -122,8 +128,8 @@ class ProfilePsychologist(models.Model):
     @property
     def age(self):
         cur = timezone.now()
-        age = cur.year - self.birthdate.year
-        if (cur.month, cur.day) < (self.birthdate.month, self.birthdate.day):
+        age = cur.year - self.birthday.year
+        if (cur.month, cur.day) < (self.birthday.month, self.birthday.day):
             return age - 1
         return age
 
@@ -137,13 +143,13 @@ class ProfilePsychologist(models.Model):
 
     def clean_fields(self, exclude=None):
         cur_year = timezone.now().year
-        if self.birthdate.year < cur_year - MAX_LIFESPAN:
+        if self.birthday.year < cur_year - MAX_LIFESPAN:
             raise ValidationError(
-                {'birthdate': 'Укажите корректный год рождения'}
+                {'birthday': 'Укажите корректный год рождения'}
             )
         if self.age < PSYCHO_MIN_AGE:
             raise ValidationError(
-                {'birthdate': 'Мы работаем с психологами старше 25 лет'}
+                {'birthday': 'Мы работаем с психологами старше 25 лет'}
             )
         if self.started_working.year > cur_year:
             raise ValidationError(

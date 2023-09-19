@@ -2,6 +2,7 @@ from rest_framework import viewsets, views, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_yasg.utils import swagger_auto_schema
 
 from apps.api.v1.serializers import psychologist as psycho
 from apps.api.v1.filters import TitleFilter, InstituteFilter
@@ -16,6 +17,10 @@ class CreatePsychologistView(views.APIView):
     """Создание психолога на сайте. Доступ - любой пользователь."""
     permission_classes = (AllowAny,)
 
+    @swagger_auto_schema(
+            request_body=psycho.CreatePsychologistSerializer(),
+            responses={201: psycho.CreateUserSerializer()},
+    )
     def post(self, request):
         """Создание профиля психолога по анкете"""
         user_ser = psycho.CreateUserSerializer(data=request.data)
@@ -64,23 +69,28 @@ class PsychologistProfileView(views.APIView):
     """
     permission_classes = (IsPsychologistOnly,)
 
+    @swagger_auto_schema(responses={200: psycho.PsychologistSerializer()})
     def get(self, request):
         """Отображение профиля психолога"""
         psychologist = get_psychologist(request.user)
         return Response(psycho.PsychologistSerializer(psychologist).data,
                         status=status.HTTP_200_OK)
 
+    @swagger_auto_schema(
+            request_body=psycho.UpdatePsychologistSerializer(),
+            responses={200: psycho.PsychologistSerializer()},
+            operation_description="Жду только отредактированные поля",
+    )
     def patch(self, request):
         """Редактирование профиля психолога"""
         psychologist = get_psychologist(request.user)
-        serializer = psycho.CreatePsychologistSerializer(
+        serializer = psycho.UpdatePsychologistSerializer(
             psychologist,
             data=request.data,
             partial=True
         )
         serializer.is_valid(raise_exception=True)
-        psychologist = update_psychologist(
-            psychologist, serializer.validated_data
-        )
+        update_psychologist(psychologist, serializer.validated_data)
+        psychologist = get_psychologist(request.user)
         return Response(psycho.PsychologistSerializer(psychologist).data,
                         status=status.HTTP_200_OK)

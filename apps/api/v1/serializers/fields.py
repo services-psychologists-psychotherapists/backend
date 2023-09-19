@@ -7,6 +7,7 @@ from rest_framework import serializers
 
 
 class ImageFieldSerialiser(serializers.ImageField):
+
     def to_internal_value(self, data):
         if isinstance(data, str) and data.startswith('data:image'):
             format, imgstr = data.split(';base64,')
@@ -18,4 +19,6 @@ class ImageFieldSerialiser(serializers.ImageField):
     def to_representation(self, value):
         if isinstance(value, str):
             return f'{settings.MEDIA_URL}{value}'
+        if not value:
+            return None
         return value.url

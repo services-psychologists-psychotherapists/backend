@@ -184,8 +184,7 @@ def update_service(psychologist: ProfilePsychologist, price: int) -> Service:
     """
     Изменяет Service
     """
-    service = Service.objects.update(
-        psychologist=psychologist,
-        price=price
-    )
+    service = Service.objects.get(psychologist=psychologist)
+    service.price = price
+    service.save()
     return service
