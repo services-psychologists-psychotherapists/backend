@@ -35,6 +35,7 @@ def create_psychologist(user_data: OrderedDict,
     user = CustomUser.objects.create_user(
         is_client=False,
         is_psychologists=True,
+        is_active=True,
         **user_data,
     )
     psychologist = create_profile(user, psychologist_data)
@@ -86,6 +87,43 @@ def create_profile(user: CustomUser,
     return psychologist
 
 
+@transaction.atomic
+def update_psychologist(instance: ProfilePsychologist,
+                        data: OrderedDict
+                        ) -> ProfilePsychologist:
+    if 'themes' in data:
+        themes = get_or_create_object(data.pop('themes'), Theme)
+        instance.themes.set(themes)
+    if 'approaches' in data:
+        approaches = get_or_create_object(data.pop('approaches'),
+                                          Approach)
+        instance.approaches.set(approaches)
+    institutes = []
+    if 'institutes' in data:
+        institutes = get_or_create_education(data.pop('institutes'),
+                                             flag=True)
+        instance.is_verified = False
+    courses = []
+    if 'courses' in data:
+        courses = get_or_create_education(data.pop('courses'),
+                                          flag=False)
+        instance.is_verified = False
+    if 'price' in data:
+        update_service(instance, data.pop('price'))
+
+    for key, value in data.items():
+        setattr(instance, key, value)
+    instance.save()
+
+    for data in institutes + courses:
+        education = data.pop('institute')
+        instance.education.add(
+            education, through_defaults=data
+        )
+
+    return instance
+
+
 def count_started_working(experience: int) -> date:
     """
     Считает год, с которого психолог начал рабочую практику
@@ -103,7 +141,7 @@ def get_or_create_object(iterable: list[OrderedDict],
     """
     for i, data in enumerate(iterable):
         obj, _ = myclass.objects.get_or_create(
-            title=data['title']
+            title=data['title'].lower()
         )
         iterable[i] = obj
     return iterable
@@ -136,6 +174,17 @@ def create_service(psychologist: ProfilePsychologist, price: int) -> Service:
     Создает Service
     """
     service = Service.objects.create(
+        psychologist=psychologist,
+        price=price
+    )
+    return service
+
+
+def update_service(psychologist: ProfilePsychologist, price: int) -> Service:
+    """
+    Изменяет Service
+    """
+    service = Service.objects.update(
         psychologist=psychologist,
         price=price
     )

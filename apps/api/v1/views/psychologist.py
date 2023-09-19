@@ -5,7 +5,10 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from apps.api.v1.serializers import psychologist as psycho
 from apps.api.v1.filters import TitleFilter, InstituteFilter
-from apps.psychologists.services import create_psychologist
+from apps.api.v1.permissions import IsPsychologistOnly
+from apps.psychologists.services import (create_psychologist,
+                                         update_psychologist)
+from apps.psychologists.selectors import get_psychologist
 from apps.psychologists import models
 
 
@@ -53,3 +56,31 @@ class InstituteViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_class = InstituteFilter
     pagination_class = None
+
+
+class PsychologistProfileView(views.APIView):
+    """
+    Отображение / редактирование профиля психолога
+    """
+    permission_classes = (IsPsychologistOnly,)
+
+    def get(self, request):
+        """Отображение профиля психолога"""
+        psychologist = get_psychologist(request.user)
+        return Response(psycho.PsychologistSerializer(psychologist).data,
+                        status=status.HTTP_200_OK)
+
+    def patch(self, request):
+        """Редактирование профиля психолога"""
+        psychologist = get_psychologist(request.user)
+        serializer = psycho.CreatePsychologistSerializer(
+            psychologist,
+            data=request.data,
+            partial=True
+        )
+        serializer.is_valid(raise_exception=True)
+        psychologist = update_psychologist(
+            psychologist, serializer.validated_data
+        )
+        return Response(psycho.PsychologistSerializer(psychologist).data,
+                        status=status.HTTP_200_OK)
