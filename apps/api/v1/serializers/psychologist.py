@@ -1,4 +1,4 @@
-from django.utils import timezone
+from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework import serializers
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_serializer_method
@@ -6,9 +6,12 @@ from drf_yasg.utils import swagger_serializer_method
 from apps.api.v1.serializers.fields import ImageFieldSerialiser
 from apps.api.v1.validators import validate_file_size
 from apps.core.models import Gender
-from apps.core.constants import (MIN_PRICE, MAX_PRICE, MAX_LIFESPAN,
-                                 PSYCHO_MIN_AGE)
-from apps.psychologists.selectors import get_education
+from apps.core.constants import MIN_PRICE, MAX_PRICE
+from apps.psychologists.selectors import get_education, get_service
+from apps.psychologists.validators import (
+    validate_birthday as _validate_birthday,
+    validate_graduation_year as _validate_graduation_year,
+)
 from apps.users.models import CustomUser
 
 
@@ -69,12 +72,10 @@ class PsychoEducationSerializer(serializers.Serializer):
          }
 
     def validate_graduation_year(self, value):
-        finish_year = int(value.split('-')[-1])
-        cur_year = timezone.now().year
-        if finish_year > cur_year:
-            raise serializers.ValidationError(
-                'Укажите корректный год окончания обучения'
-            )
+        try:
+            _validate_graduation_year(value)
+        except DjangoValidationError as e:
+            raise serializers.ValidationError(e.messages)
         return value
 
     def validate_document(self, value):
@@ -104,18 +105,10 @@ class CreatePsychologistSerializer(serializers.Serializer):
         return value
 
     def validate_birthday(self, value):
-        cur = timezone.now()
-        age = cur.year - value.year
-        if (cur.month, cur.day) < (value.month, value.day):
-            return age - 1
-        if age > MAX_LIFESPAN:
-            raise serializers.ValidationError(
-                'Укажите корректный год рождения'
-            )
-        if age < PSYCHO_MIN_AGE:
-            raise serializers.ValidationError(
-                'Мы работаем с психологами старше 25 лет'
-            )
+        try:
+            _validate_birthday(value)
+        except DjangoValidationError as e:
+            raise serializers.ValidationError(e.messages)
         return value
 
 
@@ -124,8 +117,7 @@ class UpdatePsychologistSerializer(CreatePsychologistSerializer):
 
 
 class PsychologistSerializer(CreatePsychologistSerializer):
-    email = serializers.EmailField(source='user.email', read_only=True)
-    password = serializers.CharField(source='user.password', read_only=True)  # TODO: Не знаю как правильно сериализовать. # noqa E501
+    id = serializers.UUIDField()
     avatar = ImageFieldSerialiser()
     institutes = serializers.SerializerMethodField()
     courses = serializers.SerializerMethodField()
@@ -136,8 +128,12 @@ class PsychologistSerializer(CreatePsychologistSerializer):
     )
     def get_institutes(self, obj):
         institutes = get_education(obj, True)
-        serializer = PsychoEducationSerializer(institutes,
-                                               many=True)
+        serializer = PsychoEducationSerializer(
+            institutes,
+            many=True,
+            context={'request': self.context.get('request'),
+                     'view': self.context.get('view')},
+        )
         return serializer.data
 
     @swagger_serializer_method(
@@ -145,17 +141,15 @@ class PsychologistSerializer(CreatePsychologistSerializer):
     )
     def get_courses(self, obj):
         courses = get_education(obj, False)
-        serializer = PsychoEducationSerializer(courses,
-                                               many=True)
+        serializer = PsychoEducationSerializer(
+            courses,
+            many=True,
+            context={'request': self.context.get('request'),
+                     'view': self.context.get('view')},
+        )
         return serializer.data
 
     @swagger_serializer_method(serializer_or_field=serializers.IntegerField)
     def get_price(self, obj):
-        """
-        Сделано с учетом того, что сейчас возможна только 1
-        цена на все и один формат
-        """
-        service = obj.services.all()[0]
-        if service:
-            return service.price
-        return 1
+        service = get_service(obj)
+        return service.price

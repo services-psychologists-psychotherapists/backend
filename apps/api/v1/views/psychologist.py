@@ -18,8 +18,8 @@ class CreatePsychologistView(views.APIView):
     permission_classes = (AllowAny,)
 
     @swagger_auto_schema(
-            request_body=psycho.CreatePsychologistSerializer(),
-            responses={201: psycho.CreateUserSerializer()},
+        request_body=psycho.CreatePsychologistSerializer(),
+        responses={201: psycho.CreateUserSerializer()},
     )
     def post(self, request):
         """Создание профиля психолога по анкете"""
@@ -73,13 +73,17 @@ class PsychologistProfileView(views.APIView):
     def get(self, request):
         """Отображение профиля психолога"""
         psychologist = get_psychologist(request.user)
-        return Response(psycho.PsychologistSerializer(psychologist).data,
-                        status=status.HTTP_200_OK)
+        return Response(
+            psycho.PsychologistSerializer(
+                psychologist, context={'request': request, 'view': self}
+            ).data,
+            status=status.HTTP_200_OK,
+        )
 
     @swagger_auto_schema(
-            request_body=psycho.UpdatePsychologistSerializer(),
-            responses={200: psycho.PsychologistSerializer()},
-            operation_description="Жду только отредактированные поля",
+        request_body=psycho.UpdatePsychologistSerializer(),
+        responses={200: psycho.PsychologistSerializer()},
+        operation_description="Жду только отредактированные поля",
     )
     def patch(self, request):
         """Редактирование профиля психолога"""
@@ -90,7 +94,13 @@ class PsychologistProfileView(views.APIView):
             partial=True
         )
         serializer.is_valid(raise_exception=True)
-        update_psychologist(psychologist, serializer.validated_data)
-        psychologist = get_psychologist(request.user)
-        return Response(psycho.PsychologistSerializer(psychologist).data,
-                        status=status.HTTP_200_OK)
+        psychologist = update_psychologist(
+            psychologist,
+            serializer.validated_data
+        )
+        return Response(
+            psycho.PsychologistSerializer(
+                psychologist, context={'request': request, 'view': self}
+            ).data,
+            status=status.HTTP_200_OK,
+        )

@@ -1,7 +1,8 @@
 from django.db.models import Prefetch, F
 from django.shortcuts import get_object_or_404
 
-from apps.psychologists.models import ProfilePsychologist, Institute
+from apps.psychologists.models import (ProfilePsychologist, Institute,
+                                       Service)
 from apps.users.models import CustomUser
 
 
@@ -11,7 +12,6 @@ def get_psychologist(user: CustomUser) -> ProfilePsychologist:
             Prefetch('themes'),
             Prefetch('approaches'),
             Prefetch('education'),
-            Prefetch('services'),
         )
     return get_object_or_404(queryset, user=user)
 
@@ -25,3 +25,15 @@ def get_education(user: ProfilePsychologist,
             document=F('psychoeducation__document'),
         )
     return education
+
+
+def get_service(psychologist: ProfilePsychologist,
+                type: Service.Type = Service.Type.NOMATTER,
+                format: Service.Format = Service.Format.ONLINE,
+                ) -> Service:
+    return get_object_or_404(
+        Service,
+        psychologist=psychologist,
+        type=type,
+        format=format
+    )

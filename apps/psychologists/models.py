@@ -1,14 +1,16 @@
 import uuid
 
 from django.conf import settings
-from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
 
-from apps.core.constants import (MIN_PRICE, MAX_PRICE, MAX_LIFESPAN,
-                                 PSYCHO_MIN_AGE, SESSION_DURATION)
+from apps.core.constants import MIN_PRICE, MAX_PRICE, SESSION_DURATION
 from apps.core.models import Gender
+from apps.psychologists.validators import (validate_birthday,
+                                           validate_graduation_year,
+                                           validate_started_working,
+                                           )
 
 
 def user_directory_path(instance, filename):
@@ -82,7 +84,9 @@ class ProfilePsychologist(models.Model):
     last_name = models.CharField(
         max_length=50,
     )
-    birthday = models.DateField()
+    birthday = models.DateField(
+        validators=[validate_birthday],
+    )
     gender = models.CharField(
         max_length=10,
         choices=Gender.choices,
@@ -92,7 +96,9 @@ class ProfilePsychologist(models.Model):
         blank=True,
         default='',
     )
-    started_working = models.DateField()
+    started_working = models.DateField(
+        validators=[validate_started_working],
+    )
     education = models.ManyToManyField(
         Institute,
         through='PsychoEducation',
@@ -141,22 +147,6 @@ class ProfilePsychologist(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name[0]}'
 
-    def clean_fields(self, exclude=None):
-        cur_year = timezone.now().year
-        if self.birthday.year < cur_year - MAX_LIFESPAN:
-            raise ValidationError(
-                {'birthday': 'Укажите корректный год рождения'}
-            )
-        if self.age < PSYCHO_MIN_AGE:
-            raise ValidationError(
-                {'birthday': 'Мы работаем с психологами старше 25 лет'}
-            )
-        if self.started_working.year > cur_year:
-            raise ValidationError(
-                {'experience': 'Некорректно указан опыт работы'}
-            )
-        super().clean_fields(exclude=exclude)
-
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
@@ -178,6 +168,7 @@ class PsychoEducation(models.Model):
     )
     graduation_year = models.CharField(
         max_length=10,
+        validators=[validate_graduation_year],
     )
     document = models.FileField(
         upload_to=user_directory_path,
@@ -195,20 +186,6 @@ class PsychoEducation(models.Model):
 
     def __str__(self):
         return f'{self.psychologist}: {self.institute}'
-
-    def _get_graduation_year(self):
-        finish_year = self.graduation_year.split('-')[-1]
-        return int(finish_year)
-
-    def clean_fields(self, exclude=None):
-        finish_year = self._get_graduation_year()
-        cur_year = timezone.now().year
-        if finish_year > cur_year:
-            raise ValidationError({
-                'graduation_year': 'Укажите корректный год окончания обучения'
-            }
-            )
-        super().clean_fields(exclude=exclude)
 
     def save(self, *args, **kwargs):
         self.full_clean()

@@ -72,7 +72,7 @@ def create_profile(user: CustomUser,
             **psychologist_data,
         )
     except DjangoValidationError as e:
-        raise exceptions.ValidationError(e.message_dict)
+        raise exceptions.ValidationError(e.messages)
 
     psychologist.themes.add(*themes)
     psychologist.approaches.add(*approaches)
@@ -91,6 +91,12 @@ def create_profile(user: CustomUser,
 def update_psychologist(instance: ProfilePsychologist,
                         data: OrderedDict
                         ) -> ProfilePsychologist:
+    """
+    Образование можно только добавлять, предыдущий set не меняется.
+    Как только психолог редактирует поле "Институты" или "Курсы", флаг
+    is_verified меняется на False.
+    """
+
     if 'themes' in data:
         themes = get_or_create_object(data.pop('themes'), Theme)
         instance.themes.set(themes)
@@ -141,7 +147,7 @@ def get_or_create_object(iterable: list[OrderedDict],
     """
     for i, data in enumerate(iterable):
         obj, _ = myclass.objects.get_or_create(
-            title=data['title'].lower()
+            title=data['title'].title()
         )
         iterable[i] = obj
     return iterable
@@ -169,22 +175,36 @@ def get_or_create_education(iterable: list[OrderedDict],
     return iterable
 
 
-def create_service(psychologist: ProfilePsychologist, price: int) -> Service:
+def create_service(psychologist: ProfilePsychologist,
+                   price: int,
+                   type: Service.Type = Service.Type.NOMATTER,
+                   format: Service.Format = Service.Format.ONLINE,
+                   ) -> Service:
     """
     Создает Service
     """
     service = Service.objects.create(
         psychologist=psychologist,
-        price=price
+        price=price,
+        type=type,
+        format=format,
     )
     return service
 
 
-def update_service(psychologist: ProfilePsychologist, price: int) -> Service:
+def update_service(psychologist: ProfilePsychologist,
+                   price: int,
+                   type: Service.Type = Service.Type.NOMATTER,
+                   format: Service.Format = Service.Format.ONLINE,
+                   ) -> Service:
     """
     Изменяет Service
     """
-    service = Service.objects.get(psychologist=psychologist)
+    service = Service.objects.get(
+        psychologist=psychologist,
+        type=type,
+        format=format,
+    )
     service.price = price
     service.save()
     return service
