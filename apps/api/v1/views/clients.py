@@ -1,48 +1,30 @@
-from rest_framework import views, status
+from django.utils.decorators import method_decorator
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework import generics
 from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
-
-from apps.clients.selectors import get_client
-from apps.clients.services import create_client, update_client
 
 from ..permissions import IsClientOnly
-from ..serializers.clients import CreateUserSerializer, ClientSerializer
+from ..serializers.clients import (ClientSerializer, CreateClientSerializer,
+                                   UserSerializer)
 
 
-class CreateClientApiView(views.APIView):
-    """Создание нового клиента на сайте. Доступ - любой пользователь."""
+@method_decorator(name='post', decorator=swagger_auto_schema(
+    responses={200: UserSerializer, 400: 'Bad request'}
+))
+class CreateClientView(generics.CreateAPIView):
+    """Создание пользователя-клиента и профиля клиента."""
+    serializer_class = CreateClientSerializer
     permission_classes = (AllowAny,)
 
-    def post(self, request):
-        """Создание нового клиента на сайте."""
-        user_serializer = CreateUserSerializer(data=request.data)
-        user_serializer.is_valid(raise_exception=True)
-        client_serializer = ClientSerializer(data=request.data)
-        client_serializer.is_valid(raise_exception=True)
 
-        user, _ = create_client(user_serializer.validated_data,
-                                client_serializer.validated_data,
-                                request)
-
-        return Response(CreateUserSerializer(user).data,
-                        status=status.HTTP_201_CREATED)
-
-
-class ClientApiView(views.APIView):
-    """Просмотр и изменение данных клиентского профиля пользователя."""
+class ClientView(generics.RetrieveUpdateAPIView):
+    """
+    Просмотр и изменение профиля клиента.
+    Поле "avatar" передается в формате base64.
+    """
+    serializer_class = ClientSerializer
     permission_classes = (IsClientOnly,)
+    http_method_names = ['get', 'put']
 
-    def get(self, request):
-        """Просмотр клиентского профиля."""
-        client = get_client(request.user)
-        return Response(ClientSerializer(client).data,
-                        status=status.HTTP_200_OK)
-
-    def put(self, request):
-        """Изменение клиентского профиля."""
-        client = get_client(request.user)
-        serializer = ClientSerializer(client, request.data)
-        serializer.is_valid(raise_exception=True)
-        client = update_client(client, serializer.validated_data)
-        return Response(ClientSerializer(client).data,
-                        status=status.HTTP_200_OK)
+    def get_object(self):
+        return self.request.user.client
