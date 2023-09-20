@@ -39,7 +39,7 @@ Windows:source venv/scripts/activate     /   Linux & MacOS: source venv/bin/acti
 Windows:python -m pip install --upgrade pip     /   Linux & MacOS: python3 -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
-В корне проекта создать файл .env. Пример содержания файла:
+Пример содержания .env файла (для проверки документации не требуется):
 ```
 DB_ENGINE=django.db.backends.postgresql
 DB_NAME=postgres
