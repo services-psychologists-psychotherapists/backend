@@ -93,8 +93,6 @@ def update_psychologist(instance: ProfilePsychologist,
                         ) -> ProfilePsychologist:
     """
     Образование можно только добавлять, предыдущий set не меняется.
-    Как только психолог редактирует поле "Институты" или "Курсы", флаг
-    is_verified меняется на False.
     """
 
     if 'themes' in data:
@@ -108,12 +106,10 @@ def update_psychologist(instance: ProfilePsychologist,
     if 'institutes' in data:
         institutes = get_or_create_education(data.pop('institutes'),
                                              flag=True)
-        instance.is_verified = False
     courses = []
     if 'courses' in data:
         courses = get_or_create_education(data.pop('courses'),
                                           flag=False)
-        instance.is_verified = False
     if 'price' in data:
         update_service(instance, data.pop('price'))
 
