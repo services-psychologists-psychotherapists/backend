@@ -2,10 +2,14 @@ from rest_framework import viewsets, views, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_yasg.utils import swagger_auto_schema
 
 from apps.api.v1.serializers import psychologist as psycho
 from apps.api.v1.filters import TitleFilter, InstituteFilter
-from apps.psychologists.services import create_psychologist
+from apps.api.v1.permissions import IsPsychologistOnly
+from apps.psychologists.services import (create_psychologist,
+                                         update_psychologist)
+from apps.psychologists.selectors import get_psychologist
 from apps.psychologists import models
 
 
@@ -13,6 +17,10 @@ class CreatePsychologistView(views.APIView):
     """Создание психолога на сайте. Доступ - любой пользователь."""
     permission_classes = (AllowAny,)
 
+    @swagger_auto_schema(
+        request_body=psycho.CreatePsychologistSerializer(),
+        responses={201: psycho.CreateUserSerializer()},
+    )
     def post(self, request):
         """Создание профиля психолога по анкете"""
         user_ser = psycho.CreateUserSerializer(data=request.data)
@@ -28,7 +36,7 @@ class CreatePsychologistView(views.APIView):
                         status=status.HTTP_201_CREATED)
 
 
-class ThemeViewSet(viewsets.ModelViewSet):
+class ThemeViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.Theme.objects.all()
     serializer_class = psycho.CommonInfoSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -53,3 +61,46 @@ class InstituteViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_class = InstituteFilter
     pagination_class = None
+
+
+class PsychologistProfileView(views.APIView):
+    """
+    Отображение / редактирование профиля психолога
+    """
+    permission_classes = (IsPsychologistOnly,)
+
+    @swagger_auto_schema(responses={200: psycho.PsychologistSerializer()})
+    def get(self, request):
+        """Отображение профиля психолога"""
+        psychologist = get_psychologist(request.user)
+        return Response(
+            psycho.PsychologistSerializer(
+                psychologist, context={'request': request, 'view': self}
+            ).data,
+            status=status.HTTP_200_OK,
+        )
+
+    @swagger_auto_schema(
+        request_body=psycho.UpdatePsychologistSerializer(),
+        responses={200: psycho.PsychologistSerializer()},
+        operation_description="Жду только отредактированные поля",
+    )
+    def patch(self, request):
+        """Редактирование профиля психолога"""
+        psychologist = get_psychologist(request.user)
+        serializer = psycho.UpdatePsychologistSerializer(
+            psychologist,
+            data=request.data,
+            partial=True
+        )
+        serializer.is_valid(raise_exception=True)
+        psychologist = update_psychologist(
+            psychologist,
+            serializer.validated_data
+        )
+        return Response(
+            psycho.PsychologistSerializer(
+                psychologist, context={'request': request, 'view': self}
+            ).data,
+            status=status.HTTP_200_OK,
+        )
