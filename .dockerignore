@@ -1,4 +1,0 @@
-venv/
-sent_emails/
-__pycache__/
-db.sqlite3

@@ -9,60 +9,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install flake8 pep8-naming flake8-broken-line flake8-return flake8-isort
-          pip install -r requirements.txt
-      - name: Test with flake8
-        run: |
-          python -m flake8
+    - uses: actions/checkout@v2
 
-  build_and_push_to_docker_hub:
-    name: Push Docker image to Docker Hub
-    runs-on: ubuntu-latest
-    needs: tests
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Login to Docker
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Push to Docker Hub
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: ./
-          tags: ${{ secrets.DOCKER_USERNAME }}/psy_back:latest
-  
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build_and_push_to_docker_hub
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: executing remote ssh commands to deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
-          password: ${{ secrets.PASSPHRASE }}
-          script: |
-            cd app/
-            sudo docker-compose stop
-            sudo docker rm psy_backend         
-            sudo docker rm nginx
-            sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/psy_back
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/psy_back:latest
-            sudo docker-compose up -d --build
-            sudo docker exec -i mafia-back python manage.py migrate
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pep8-naming flake8-broken-line flake8-return flake8-isort
+        pip install -r requirements.txt
+
+    - name: Test with flake8
+      run: |
+        python -m flake8
