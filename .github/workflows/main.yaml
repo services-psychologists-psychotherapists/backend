@@ -2,7 +2,7 @@ name: App tests workflow
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
 
 jobs:
   tests:
@@ -50,7 +50,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build_and_push_to_docker_hub
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/develop'
     steps:
       - name: executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
@@ -68,4 +68,5 @@ jobs:
             sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/psy_back
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/psy_back:latest
             sudo docker-compose up -d --build
-            sudo docker exec -i mafia-back python manage.py migrate
+            sudo docker exec -i psy_backend python manage.py migrate
+            sudo docker exec -i psy_backend python manage.py collectstatic --noinput

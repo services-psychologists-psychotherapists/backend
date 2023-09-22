@@ -4,7 +4,7 @@ services:
   db:
     image: postgres:13.0-alpine
     volumes:
-      - db_value/var/lib/postgresql/data/
+      - db_value:/var/lib/postgresql/data/
     env_file:
       - .env
 
@@ -20,13 +20,13 @@ services:
     env_file:
       - .env
 
-  frontend:
-    image: devladi/psy_front:latest
-    container_name: psy_frontend
-    volumes:
-      - ./frontend/:/app/result_build/
-    depends_on:
-      - backend
+  # frontend:
+  #   image: devladi/psy_front:latest
+  #   container_name: psy_frontend
+  #   volumes:
+  #     - ./frontend/:/app/result_build/
+  #   depends_on:
+  #     - backend
 
   nginx:
     image: nginx:1.21.3-alpine
