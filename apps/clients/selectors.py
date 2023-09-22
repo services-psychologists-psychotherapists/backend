@@ -24,11 +24,11 @@ def get_next_session(client: Client) -> Session:
         Session.objects.
         filter(
             slot__datetime_from__gte=now,
-            status=Session.StatusChoice.PAID,
+            status=Session.Status.PAID,
             client=client,
         ).
         order_by('slot__datetime_from').
-        select_related('slot', 'service', 'slot__psychologist').
+        select_related('slot', 'slot__psychologist').
         first()
     )
 
