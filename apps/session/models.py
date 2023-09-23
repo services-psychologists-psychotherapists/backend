@@ -2,9 +2,9 @@ from datetime import timedelta
 
 from django.db import models
 
+from apps.clients.models import Client
 from apps.core.constants import SESSION_DURATION
 from apps.psychologists.models import ProfilePsychologist
-from apps.clients.models import Client
 
 
 class Slot(models.Model):
@@ -45,7 +45,9 @@ class Slot(models.Model):
                 f'{self.datetime_to} - {self.is_free}')
 
     def save(self, *args, **kwargs):
-        self.datetime_to = self.datetime_from + timedelta(minutes=SESSION_DURATION)
+        self.datetime_to = self.datetime_from + timedelta(
+            minutes=SESSION_DURATION
+        )
         super().save(*args, **kwargs)
 
 

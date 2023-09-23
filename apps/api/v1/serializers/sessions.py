@@ -7,17 +7,20 @@ from apps.clients.models import Client
 
 
 class ClientSerializer(serializers.ModelSerializer):
+    """Вложенный сериализатор для полей Клиента."""
     class Meta:
         fields = ('id', 'first_name', 'last_name', 'avatar')
         model = Client
 
 
 class SlotSerializer(serializers.ModelSerializer):
+    """Сериализация полей Слота для создания и чтения."""
     client = ClientSerializer(source='session.client', required=False)
     href = serializers.URLField(source='session.psycho_link', required=False)
 
     class Meta:
-        fields = ('id', 'date', 'datetime_from', 'datetime_to', 'is_free', 'client', 'href')
+        fields = ('id', 'date', 'datetime_from', 'datetime_to',
+                  'is_free', 'client', 'href')
         model = Slot
         read_only_fields = ('datetime_to', 'session', 'client', 'href')
 
@@ -42,6 +45,7 @@ class SlotSerializer(serializers.ModelSerializer):
 
 
 class FreeSlotsSerializer(serializers.ModelSerializer):
+    """Сериализация списка свободных слотов в расписании психолога."""
     class Meta:
         fields = ('id', 'datetime_from', 'date')
         model = Slot

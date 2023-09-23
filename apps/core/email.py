@@ -41,3 +41,21 @@ class PasswordResetEmail(BaseEmailMessage):
 
 class PasswordChangedConfirmationEmail(BaseEmailMessage):
     template_name = "email/password_changed_confirmation.html"
+
+
+class ClientSessionCancellationEmail(BaseEmailMessage):
+    template_name = "email/session_cancelled.html"
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        # дописать логику для шаблона
+        return context
+
+
+class PsychoSessionCancellationEmail(BaseEmailMessage):
+    template_name = "email/session_cancelled.html"
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        # дописать логику для шаблона
+        return context
