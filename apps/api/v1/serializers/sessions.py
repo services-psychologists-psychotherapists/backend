@@ -6,7 +6,7 @@ from apps.session.models import Slot
 from apps.clients.models import Client
 
 
-class ClientSerializer(serializers.ModelSerializer):
+class ShortClientSerializer(serializers.ModelSerializer):
     """Вложенный сериализатор для полей Клиента."""
     class Meta:
         fields = ('id', 'first_name', 'last_name', 'avatar')
@@ -15,14 +15,14 @@ class ClientSerializer(serializers.ModelSerializer):
 
 class SlotSerializer(serializers.ModelSerializer):
     """Сериализация полей Слота для создания и чтения."""
-    client = ClientSerializer(source='session.client', required=False)
+    client = ShortClientSerializer(source='session.client', required=False)
     href = serializers.URLField(source='session.psycho_link', required=False)
 
     class Meta:
         fields = ('id', 'date', 'datetime_from', 'datetime_to',
                   'is_free', 'client', 'href')
         model = Slot
-        read_only_fields = ('datetime_to', 'session', 'client', 'href')
+        read_only_fields = ('date', 'datetime_to', 'client', 'is_free', 'href')
 
     def validate_datetime_from(self, start_time):
         user = self.context['request'].user
