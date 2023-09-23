@@ -66,7 +66,7 @@ class FullPsychologistSerializer(serializers.Serializer):
     id = serializers.UUIDField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
-    # speciality = serializers.CharField()
+    speciality = serializers.CharField()
     avatar = ImageFieldSerialiser()
     price = serializers.IntegerField()
     duration = serializers.IntegerField()
