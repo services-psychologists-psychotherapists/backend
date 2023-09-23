@@ -75,17 +75,13 @@ class FullPsychologistSerializer(serializers.Serializer):
 class SessionSerializer(serializers.ModelSerializer):
     """Сериализация полей ближайшей сессии клиента в личном кабинете."""
     psychologist = ShortPsychologistSerializer(source='slot.psychologist')
-    start = serializers.DateTimeField(source='slot.datetime_from')
-    end = serializers.DateTimeField(source='slot.datetime_to')
-    client_link = serializers.SerializerMethodField()
+    datetime_from = serializers.DateTimeField(source='slot.datetime_from')
+    datetime_to = serializers.DateTimeField(source='slot.datetime_to')
+    href = serializers.URLField(source='client_link')
 
     class Meta:
-        fields = ('id', 'psychologist', 'start', 'end', 'client_link')
+        fields = ('id', 'psychologist', 'datetime_from', 'datetime_to', 'href')
         model = Session
-
-    @swagger_serializer_method(serializers.URLField)
-    def get_client_link(self, obj):
-        return 'Тут будет ссылка на Zoom'
 
 
 class ClientSerializer(serializers.ModelSerializer):
