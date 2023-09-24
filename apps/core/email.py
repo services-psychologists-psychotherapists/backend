@@ -59,3 +59,12 @@ class PsychoSessionCancellationEmail(BaseEmailMessage):
         context = super().get_context_data()
         # дописать логику для шаблона
         return context
+
+
+class NewSessionEmail(BaseEmailMessage):
+    template_name = "email/session_created.html"
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        # дописать логику для шаблона
+        return context

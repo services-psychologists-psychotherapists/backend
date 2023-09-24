@@ -2,7 +2,8 @@ from django.db.models import Q
 from django.utils import timezone
 from rest_framework import serializers
 
-from apps.session.models import Slot
+from apps.session.models import Session, Slot
+from apps.session.services import create_session
 from apps.clients.models import Client
 
 
@@ -49,3 +50,14 @@ class FreeSlotsSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ('id', 'datetime_from', 'date')
         model = Slot
+
+
+class CreateSessionSerializer(serializers.ModelSerializer):
+    """Сериализация данных при создании сессии."""
+    class Meta:
+        fields = ('id', 'slot')
+        model = Session
+
+    def create(self, validated_data):
+        user = self.context.get('request').user
+        return create_session(user, validated_data.get('slot'))
