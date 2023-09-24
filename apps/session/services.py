@@ -55,7 +55,7 @@ def _get_response_details(user: CustomUser, late_cancel: bool) -> dict:
             refund = ('Вы отменили позднее чем за 12 часов до начала,'
                       'поэтому оплата не возвращается.')
         else:
-            refund = 'Оплата вернется в течение 7 дней'
+            refund = 'Оплата вернется в течение 7 дней.'
     return {'details': refund}
 
 
