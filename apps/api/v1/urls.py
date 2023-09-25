@@ -1,13 +1,13 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from .views.clients import CreateClientView, ClientView
+from .views.clients import ClientView, CreateClientView
 from .views.custom_user import CustomUserViewSet
 from .views.psychologist import (ApproacheViewSet, CreatePsychologistView,
-                                 InstituteViewSet, ThemeViewSet,
-                                 PsychologistProfileView)
-from .views.sessions import ListCreateSlotView, FreeSlotsView, DeleteSlotView
-
+                                 InstituteViewSet, PsychologistProfileView,
+                                 ThemeViewSet)
+from .views.sessions import (CancelSessionView, CreateSessionView,
+                             DeleteSlotView, FreeSlotsView, ListCreateSlotView)
 
 router_v1 = DefaultRouter()
 router_v1.register('users', CustomUserViewSet, basename='users')
@@ -43,6 +43,10 @@ urlpatterns = [
     path('psychologists/<uuid:psychologist_id>/free_slots/',
          FreeSlotsView.as_view(),
          name='free_slots'),
+    path('sessions/', CreateSessionView.as_view(), name='create_session'),
+    path('sessions/<int:pk>/',
+         CancelSessionView.as_view(),
+         name='cancel_session'),
 
     path('', include(router_v1_1.urls)),
 ]

@@ -1,8 +1,11 @@
 import requests
+from http import HTTPStatus
 from datetime import datetime
 
 from django.conf import settings
 from rest_framework.exceptions import APIException
+
+from apps.core.constants import SESSION_DURATION
 
 AUTH_TOKEN_URL = "https://zoom.us/oauth/token"
 API_BASE_URL = "https://api.zoom.us/v2"
@@ -21,25 +24,25 @@ def get_token() -> str:
         data=data
     )
 
-    if response.status_code != 200:
+    if response.status_code != HTTPStatus.OK:
         raise APIException("Нет доступа к API Zoom.")
 
     response_data = response.json()
     return response_data["access_token"]
 
 
-def create_meeting(topic: str, start_time: datetime,
-                   duration: int = 50) -> tuple[str, str]:
+def create_meeting(start_time: datetime,
+                   duration: int = SESSION_DURATION) -> tuple[str, str]:
     """Создание встречи Zoom. Возвращает 2 ссылки: для клиента и психолога."""
     access_token = get_token()
 
     headers = {
-        "Authorization": f"Bearer {access_token}1",
+        "Authorization": f"Bearer {access_token}",
         "Content-Type": "application/json"
     }
 
     payload = {
-        "topic": topic,
+        "topic": 'Сеанс психолога',
         "duration": duration,
         'start_time': start_time.strftime('%Y-%m-%dT%H:%M:00'),
         "timezone": "Europe/Moscow",
@@ -52,7 +55,7 @@ def create_meeting(topic: str, start_time: datetime,
         json=payload,
     )
 
-    if response.status_code != 201:
+    if response.status_code != HTTPStatus.CREATED:
         raise APIException('Zoom не смог сформировать ссылку на встречу')
 
     response_data = response.json()

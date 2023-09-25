@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from django.db import models
+from django.utils import timezone
 
 from apps.clients.models import Client
 from apps.core.constants import SESSION_DURATION
@@ -27,7 +28,7 @@ class Slot(models.Model):
 
     @property
     def date(self):
-        return self.datetime_from.date().strftime("%d.%m.%Y")
+        return timezone.localdate(self.datetime_from).strftime("%d.%m.%Y")
 
     class Meta:
         ordering = ('datetime_from',)
@@ -64,6 +65,7 @@ class Session(models.Model):
         OFFLINE = 'offline', 'личная встреча'
 
     class Status(models.TextChoices):
+        """Статус оплаты сессии."""
         PAID = 'paid', 'Оплачена'
         UNPAID = 'unpaid', 'Требуется оплата'
 
@@ -80,8 +82,8 @@ class Session(models.Model):
     status = models.CharField(
         max_length=10,
         choices=Status.choices,
-        default=Status.UNPAID,
-        verbose_name='Статус записи',
+        default=Status.PAID,
+        verbose_name='Статус оплаты',
     )
     type = models.CharField(
         max_length=10,
@@ -96,8 +98,14 @@ class Session(models.Model):
         default=Format.ONLINE,
         verbose_name='Формат сессии',
     )
-    client_link = models.URLField(verbose_name='Ссылка для клиента')
-    psycho_link = models.URLField(verbose_name='Ссылка для психолога')
+    client_link = models.TextField(
+        verbose_name='Ссылка для клиента',
+        null=True,
+    )
+    psycho_link = models.TextField(
+        verbose_name='Ссылка для психолога',
+        null=True,
+    )
 
     class Meta:
         verbose_name = 'Сессия'
