@@ -49,10 +49,11 @@ def _check_if_late(start: datetime) -> bool:
 
 
 def _get_response_details(user: CustomUser, late_cancel: bool) -> dict:
+    """Текст ответа в API при отмене сессии - возврат ден.средств."""
     refund = ''
     if user.is_client:
         if late_cancel:
-            refund = ('Вы отменили позднее чем за 12 часов до начала,'
+            refund = ('Вы отменили позднее чем за 12 часов до начала, '
                       'поэтому оплата не возвращается.')
         else:
             refund = 'Оплата вернется в течение 7 дней.'
