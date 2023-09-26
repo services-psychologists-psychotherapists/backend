@@ -1,9 +1,11 @@
 from django.db.models import Prefetch, F
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 
 from apps.psychologists.models import (ProfilePsychologist, Institute,
                                        Service)
 from apps.users.models import CustomUser
+from apps.session.models import Slot
 
 
 def get_psychologist(user: CustomUser) -> ProfilePsychologist:
@@ -14,6 +16,26 @@ def get_psychologist(user: CustomUser) -> ProfilePsychologist:
             Prefetch('education'),
         )
     return get_object_or_404(queryset, user=user)
+
+
+def get_all_verified_psychologists() -> list[ProfilePsychologist]:
+    return ProfilePsychologist.objects.filter(
+        is_verified=True).prefetch_related(
+            Prefetch('slots'),
+            Prefetch('services'),
+        )
+
+
+def get_psychologist_for_card(id) -> ProfilePsychologist:
+    queryset = ProfilePsychologist.objects.all().select_related(
+        'user').prefetch_related(
+            Prefetch('themes'),
+            Prefetch('approaches'),
+            Prefetch('education'),
+            Prefetch('slots'),
+            Prefetch('services'),
+        )
+    return get_object_or_404(queryset, id=id)
 
 
 def get_education(user: ProfilePsychologist,
@@ -37,3 +59,13 @@ def get_service(psychologist: ProfilePsychologist,
         type=type,
         format=format
     )
+
+
+def get_free_slots(psychologist: ProfilePsychologist) -> Slot:
+    now = timezone.now()
+    slots = Slot.objects.filter(
+        psychologist=psychologist,
+        is_free=True,
+        datetime_from__gt=now,
+    ).order_by('datetime_from')
+    return slots

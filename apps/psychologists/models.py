@@ -66,6 +66,14 @@ class Approach(CommonInfo):
         verbose_name_plural = 'Подходы'
 
 
+class QuerySetWithProperty(models.QuerySet):
+    def annotate_property_field(self):
+        return self.annotate(
+            age=models.F('age'),
+            experience=models.F('experience'),
+        )
+
+
 class ProfilePsychologist(models.Model):
     """Профиль психолога"""
 
@@ -125,6 +133,8 @@ class ProfilePsychologist(models.Model):
     is_verified = models.BooleanField(
         default=False,
     )
+
+    objects = QuerySetWithProperty.as_manager()
 
     class Meta:
         verbose_name = 'Профиль психолога'
