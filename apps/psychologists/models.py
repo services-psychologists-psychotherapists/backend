@@ -66,14 +66,6 @@ class Approach(CommonInfo):
         verbose_name_plural = 'Подходы'
 
 
-class QuerySetWithProperty(models.QuerySet):
-    def annotate_property_field(self):
-        return self.annotate(
-            age=models.F('age'),
-            experience=models.F('experience'),
-        )
-
-
 class ProfilePsychologist(models.Model):
     """Профиль психолога"""
 
@@ -134,8 +126,6 @@ class ProfilePsychologist(models.Model):
         default=False,
     )
 
-    objects = QuerySetWithProperty.as_manager()
-
     class Meta:
         verbose_name = 'Профиль психолога'
         verbose_name_plural = 'Профили психолога'
@@ -147,12 +137,14 @@ class ProfilePsychologist(models.Model):
         age = cur.year - self.birthday.year
         if (cur.month, cur.day) < (self.birthday.month, self.birthday.day):
             return age - 1
-        return age
+        self._age = age
+        return self._age
 
     @property
     def experience(self):
         today = timezone.now()
-        return today.year - self.started_working.year
+        self._experience = today.year - self.started_working.year
+        return self._experience
 
     def __str__(self):
         return f'{self.first_name} {self.last_name[0]}'
