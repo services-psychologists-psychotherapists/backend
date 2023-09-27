@@ -33,6 +33,13 @@ class CreateClientSerializer(serializers.ModelSerializer):
             "password": {"write_only": True},
         }
 
+    def validate_email(self, value):
+        if CustomUser.objects.filter(email=value).exists():
+            raise serializers.ValidationError(
+                'Пользователь с таким адресом эл.почты существует.'
+            )
+        return value
+
     def validate(self, attrs):
         """Валидация пароля по списку валидаторов в settings"""
         password = attrs.get("user").get('password')

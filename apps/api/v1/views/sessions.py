@@ -1,14 +1,14 @@
-from rest_framework import generics, views, status
+from rest_framework import generics, status, views
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from apps.session.selectors import get_free_slots, get_user_slots
-from apps.session.services import delete_user_slot
+from apps.session.services import delete_user_slot, cancel_session
 
 from ..filters import SlotFilter
-from ..mixins import PsychoBasedMixin
-from ..permissions import IsPsychologistOnly
-from ..serializers.sessions import SlotSerializer, FreeSlotsSerializer
+from ..permissions import IsClientOnly, IsParticipant, IsPsychologistOnly
+from ..serializers.sessions import (CreateSessionSerializer,
+                                    FreeSlotsSerializer, SlotSerializer)
 
 
 class ListCreateSlotView(generics.ListCreateAPIView):
@@ -36,10 +36,10 @@ class DeleteSlotView(views.APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class FreeSlotsView(PsychoBasedMixin, generics.ListAPIView):
+class FreeSlotsView(generics.ListAPIView):
     """
     Список свободных слотов.
-    Фильтр 'since=DD.MM.YYYY' отдает слоты в диапазоне календаря с даты.
+    Фильтр 'since=DD.MM.YYYY' отдает слоты в диапазоне 14 дней с даты.
     """
     permission_classes = (AllowAny,)
     serializer_class = FreeSlotsSerializer
@@ -47,3 +47,21 @@ class FreeSlotsView(PsychoBasedMixin, generics.ListAPIView):
 
     def get_queryset(self):
         return get_free_slots(self.kwargs.get('psychologist_id'))
+
+
+class CreateSessionView(generics.CreateAPIView):
+    """Создание сессии."""
+    permission_classes = (IsClientOnly,)
+    serializer_class = CreateSessionSerializer
+
+
+class CancelSessionView(views.APIView):
+    """
+    Отмена сессии. При отмене клиентом ответ содержит информацию о
+    возврате денежных средств.
+    """
+    permission_classes = (IsParticipant,)
+
+    def delete(self, request, pk, format=None):
+        details = cancel_session(request.user, pk)
+        return Response(details, status=status.HTTP_204_NO_CONTENT)
