@@ -5,7 +5,7 @@ from django_filters import rest_framework as filters
 
 from apps.core.constants import LOADED_DAYS_IN_CALENDAR
 from apps.core.models import Gender
-from apps.psychologists.models import ProfilePsychologist, Theme
+from apps.psychologists.models import ProfilePsychologist, Theme, Approach
 from apps.session.models import Slot
 
 
@@ -60,6 +60,11 @@ class PsychoFilter(filters.FilterSet):
         field_name='themes__title',
         to_field_name='title',
         queryset=Theme.objects.all(),
+    )
+    approaches = filters.ModelMultipleChoiceFilter(
+        field_name='approaches__title',
+        to_field_name='title',
+        queryset=Approach.objects.all(),
     )
     age = filters.RangeFilter(method='filter_age')
     experience = filters.RangeFilter(method='filter_experience')
