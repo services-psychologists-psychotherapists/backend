@@ -137,14 +137,12 @@ class ProfilePsychologist(models.Model):
         age = cur.year - self.birthday.year
         if (cur.month, cur.day) < (self.birthday.month, self.birthday.day):
             return age - 1
-        self._age = age
-        return self._age
+        return age
 
     @property
     def experience(self):
         today = timezone.now()
-        self._experience = today.year - self.started_working.year
-        return self._experience
+        return today.year - self.started_working.year
 
     def __str__(self):
         return f'{self.first_name} {self.last_name[0]}'

@@ -1,7 +1,10 @@
+from dateutil.relativedelta import relativedelta
+
 from django.db.models import Prefetch, F
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
+from apps.core.constants import LOADED_DAYS_FOR_SLOTS
 from apps.psychologists.models import (ProfilePsychologist, Institute,
                                        Service)
 from apps.users.models import CustomUser
@@ -63,9 +66,11 @@ def get_service(psychologist: ProfilePsychologist,
 
 def get_free_slots(psychologist: ProfilePsychologist) -> Slot:
     now = timezone.now()
+    finish = now + relativedelta(days=+LOADED_DAYS_FOR_SLOTS)
     slots = Slot.objects.filter(
         psychologist=psychologist,
         is_free=True,
         datetime_from__gt=now,
-    ).order_by('datetime_from')
+        datetime_to__lte=finish,
+    )
     return slots
