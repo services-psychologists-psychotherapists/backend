@@ -218,6 +218,9 @@ class ShortPsychoCardSerializer(CommonPsychologistSerializer):
 
 
 class FullPsychoCardSerializer(ShortPsychoCardSerializer):
+    """
+    Данные для полной карточки психолога
+    """
     age = serializers.IntegerField()
     speciality = serializers.CharField()
     themes = CommonInfoSerializer(many=True)

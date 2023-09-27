@@ -1,4 +1,5 @@
-from datetime import timedelta
+from datetime import date, timedelta
+from dateutil.relativedelta import relativedelta
 
 from django_filters import rest_framework as filters
 
@@ -32,18 +33,25 @@ class SlotFilter(filters.FilterSet):
         )
 
 
-class NumberRangeFilter(filters.BaseRangeFilter, filters.NumberFilter):
-    def get_filter_predicate(self, v):
-        a = 1
-        return {'age': v.age,
-                'experience': v.experience,
-                }
-
-    def filter(self, qs, value):
-        if value:
-            qs = qs.annotate_property_field()
-            qs = super().filter(qs, value)
-        return qs
+def filter_property(queryset, value, field):
+    today = date.today()
+    if value.start is not None and value.stop is not None:
+        value = (value.start, value.stop)
+        start = today - relativedelta(years=+value[1])
+        finish = today - relativedelta(years=+value[0])
+        lookup = '__'.join([field, 'range'])
+        qs = queryset.filter(**{lookup: [start, finish]})
+    elif value.start is not None:
+        value = value.start
+        finish = today - relativedelta(years=+value)
+        lookup = '__'.join([field, 'lte'])
+        qs = queryset.filter(**{lookup: finish})
+    elif value.stop is not None:
+        value = value.stop
+        start = today - relativedelta(years=+value)
+        lookup = '__'.join([field, 'gte'])
+        qs = queryset.filter(**{lookup: start})
+    return qs
 
 
 class PsychoFilter(filters.FilterSet):
@@ -53,9 +61,19 @@ class PsychoFilter(filters.FilterSet):
         to_field_name='title',
         queryset=Theme.objects.all(),
     )
-    age = NumberRangeFilter(field_name='age', lookup_expr='range')
-    # age = filters.RangeFilter(field_name='age')
+    age = filters.RangeFilter(method='filter_age')
+    experience = filters.RangeFilter(method='filter_experience')
 
     class Meta:
         model = ProfilePsychologist
-        fields = ('gender', 'themes', 'approaches', 'age')
+        fields = ('gender', 'themes', 'approaches', 'age', 'experience')
+
+    def filter_age(self, queryset, name, value):
+        if value:
+            queryset = filter_property(queryset, value, 'birthday')
+        return queryset
+
+    def filter_experience(self, queryset, name, value):
+        if value:
+            queryset = filter_property(queryset, value, 'started_working')
+        return queryset
