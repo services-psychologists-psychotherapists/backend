@@ -1,15 +1,18 @@
-from rest_framework import viewsets, views, status
+from rest_framework import generics, viewsets, views, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_yasg.utils import swagger_auto_schema
 
 from apps.api.v1.serializers import psychologist as psycho
-from apps.api.v1.filters import TitleFilter, InstituteFilter
+from apps.api.v1.filters import (TitleFilter, InstituteFilter,
+                                 PsychoFilter)
 from apps.api.v1.permissions import IsPsychologistOnly
 from apps.psychologists.services import (create_psychologist,
                                          update_psychologist)
-from apps.psychologists.selectors import get_psychologist
+from apps.psychologists.selectors import (get_psychologist,
+                                          get_all_verified_psychologists,
+                                          get_psychologist_for_card)
 from apps.psychologists import models
 
 
@@ -102,5 +105,33 @@ class PsychologistProfileView(views.APIView):
             psycho.PsychologistSerializer(
                 psychologist, context={'request': request, 'view': self}
             ).data,
+            status=status.HTTP_200_OK,
+        )
+
+
+class PsychoListCatalogView(generics.ListAPIView):
+    """
+    Отображение каталога психологов
+    """
+    permission_classes = (AllowAny,)
+    serializer_class = psycho.ShortPsychoCardSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = PsychoFilter
+
+    def get_queryset(self):
+        return get_all_verified_psychologists()
+
+
+class PsychoCardCatalogView(views.APIView):
+    """
+    Отображение карточки психолога в каталоге
+    """
+    permission_classes = (AllowAny,)
+
+    @swagger_auto_schema(responses={200: psycho.FullPsychoCardSerializer()})
+    def get(self, request, id=None):
+        psychologist = get_psychologist_for_card(id)
+        return Response(
+            psycho.FullPsychoCardSerializer(psychologist).data,
             status=status.HTTP_200_OK,
         )
