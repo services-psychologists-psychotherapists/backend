@@ -12,7 +12,8 @@ from apps.psychologists.services import (create_psychologist,
                                          update_psychologist)
 from apps.psychologists.selectors import (get_psychologist,
                                           get_all_verified_psychologists,
-                                          get_psychologist_for_card)
+                                          get_psychologist_for_card,
+                                          get_psychologist_with_services)
 from apps.psychologists import models
 
 
@@ -133,5 +134,22 @@ class PsychoCardCatalogView(views.APIView):
         psychologist = get_psychologist_for_card(id)
         return Response(
             psycho.FullPsychoCardSerializer(psychologist).data,
+            status=status.HTTP_200_OK,
+        )
+
+
+class ShortPsychoCardCatalogView(views.APIView):
+    """
+    Краткая информация о психологе на странице создания сессии.
+    """
+    permission_classes = (AllowAny,)
+
+    def get(self, request, id=None):
+        psychologist = get_psychologist_with_services(id)
+        return Response(
+            psycho.SuperShortPsychoCardSerializer(
+                psychologist,
+                context={'request': request, 'view': self},
+            ).data,
             status=status.HTTP_200_OK,
         )

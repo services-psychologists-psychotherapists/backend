@@ -41,14 +41,22 @@ def get_psychologist_for_card(id) -> ProfilePsychologist:
     return get_object_or_404(queryset, id=id)
 
 
+def get_psychologist_with_services(id: int) -> ProfilePsychologist:
+    """Выдача психолога с присоединенной таблицей сервисов."""
+    queryset = ProfilePsychologist.objects.all().prefetch_related(
+        Prefetch('services'),
+    )
+    return get_object_or_404(queryset, id=id)
+
+
 def get_education(user: ProfilePsychologist,
                   flag: bool) -> list[Institute]:
     education = user.education.filter(is_higher=flag)
     education = education.annotate(
-            speciality=F('psychoeducation__speciality'),
-            graduation_year=F('psychoeducation__graduation_year'),
-            document=F('psychoeducation__document'),
-        )
+        speciality=F('psychoeducation__speciality'),
+        graduation_year=F('psychoeducation__graduation_year'),
+        document=F('psychoeducation__document'),
+    )
     return education
 
 

@@ -46,7 +46,7 @@ class FreeSlotsView(generics.ListAPIView):
     filterset_class = SlotFilter
 
     def get_queryset(self):
-        return get_free_slots(self.kwargs.get('psychologist_id'))
+        return get_free_slots(self.kwargs.get('id'))
 
 
 class CreateSessionView(generics.CreateAPIView):

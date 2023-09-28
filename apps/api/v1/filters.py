@@ -26,11 +26,13 @@ class SlotFilter(filters.FilterSet):
         fields = ('since',)
 
     def filter_dates(self, queryset, name, since):
-        until = since + timedelta(days=LOADED_DAYS_IN_CALENDAR)
-        return queryset.filter(
-            datetime_from__gte=since,
-            datetime_to__lte=until
-        )
+        if since:
+            until = since + timedelta(days=LOADED_DAYS_IN_CALENDAR)
+            return queryset.filter(
+                datetime_from__gte=since,
+                datetime_to__lte=until
+            )
+        return queryset
 
 
 def filter_property(queryset, value, field):

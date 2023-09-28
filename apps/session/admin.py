@@ -7,6 +7,7 @@ from .models import Session, Slot
 class SessionAdmin(admin.ModelAdmin):
     """Настройка сессии для админки"""
     list_display = (
+        'id',
         'client',
         'slot',
         'status'
@@ -17,6 +18,7 @@ class SessionAdmin(admin.ModelAdmin):
 class SlotAdmin(admin.ModelAdmin):
     """Настройка окна записи для админки"""
     list_display = (
+        'id',
         'psychologist',
         'datetime_from',
         'datetime_to',

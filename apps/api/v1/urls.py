@@ -4,12 +4,12 @@ from rest_framework.routers import DefaultRouter
 from .views.clients import ClientView, CreateClientView
 from .views.custom_user import CustomUserViewSet
 from .views.psychologist import (ApproacheViewSet, CreatePsychologistView,
-                                 InstituteViewSet, ThemeViewSet,
+                                 InstituteViewSet, PsychoCardCatalogView,
+                                 PsychoListCatalogView,
                                  PsychologistProfileView,
-                                 PsychoListCatalogView, PsychoCardCatalogView)
+                                 ShortPsychoCardCatalogView, ThemeViewSet)
 from .views.sessions import (CancelSessionView, CreateSessionView,
                              DeleteSlotView, FreeSlotsView, ListCreateSlotView)
-
 
 router_v1 = DefaultRouter()
 router_v1.register('users', CustomUserViewSet, basename='users')
@@ -41,7 +41,10 @@ urlpatterns = [
     # Аутентификация
     path('auth/', include('djoser.urls.jwt')),
     # Запись на сессию
-    path('psychologists/<uuid:psychologist_id>/free_slots/',
+    path('psychologists/<uuid:id>/short/',
+         ShortPsychoCardCatalogView.as_view(),
+         name='short_psycho_card'),
+    path('psychologists/<uuid:id>/free_slots/',
          FreeSlotsView.as_view(),
          name='free_slots'),
     path('sessions/', CreateSessionView.as_view(), name='create_session'),
