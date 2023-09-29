@@ -26,6 +26,7 @@ class CommonInfo(models.Model):
     title = models.CharField(
         max_length=200,
         unique=True,
+        verbose_name='Название',
     )
 
     class Meta:
@@ -43,7 +44,9 @@ class CommonInfo(models.Model):
 class Institute(CommonInfo):
     """Институт"""
 
-    is_higher = models.BooleanField()
+    is_higher = models.BooleanField(
+        verbose_name='Высшее',
+    )
 
     class Meta(CommonInfo.Meta):
         verbose_name = 'Институт'
@@ -70,6 +73,7 @@ class ProfilePsychologist(models.Model):
     """Профиль психолога"""
 
     id = models.UUIDField(
+        verbose_name='Уникальный id',
         primary_key=True,
         default=uuid.uuid4,
         editable=False,
@@ -79,50 +83,63 @@ class ProfilePsychologist(models.Model):
         on_delete=models.CASCADE,
     )
     first_name = models.CharField(
+        verbose_name='Имя',
         max_length=50,
     )
     last_name = models.CharField(
+        verbose_name='Фамилия',
         max_length=50,
     )
     birthday = models.DateField(
+        verbose_name='Дата рождения',
         validators=[validate_birthday],
     )
     gender = models.CharField(
+        verbose_name='Пол',
         max_length=10,
         choices=Gender.choices,
     )
     phone_number = models.CharField(
+        verbose_name='Номер телефона',
         max_length=12,
         blank=True,
         default='',
     )
     started_working = models.DateField(
+        verbose_name='Год начала практики',
         validators=[validate_started_working],
     )
     education = models.ManyToManyField(
         Institute,
         through='PsychoEducation',
+        verbose_name='Образование',
     )
     themes = models.ManyToManyField(
         Theme,
+        verbose_name='Темы',
     )
     approaches = models.ManyToManyField(
         Approach,
+        verbose_name='Подходы',
     )
     about = models.TextField(
+        verbose_name='Обо мне',
         max_length=500,
     )
     avatar = models.ImageField(
+        verbose_name='Фото',
         upload_to=user_directory_path,
         blank=True,
         null=True,
     )
     speciality = models.CharField(
+        verbose_name='Специальность',
         max_length=50,
         default='Психолог',
         blank=True,
     )
     is_verified = models.BooleanField(
+        verbose_name='Верификация',
         default=False,
     )
 
@@ -158,24 +175,30 @@ class PsychoEducation(models.Model):
     psychologist = models.ForeignKey(
         ProfilePsychologist,
         on_delete=models.CASCADE,
+        verbose_name='Психолог',
     )
     institute = models.ForeignKey(
         Institute,
         on_delete=models.CASCADE,
+        verbose_name='Институт',
     )
     speciality = models.CharField(
+        verbose_name='Специальность',
         max_length=50,
     )
     graduation_year = models.CharField(
+        verbose_name='Даты обучения / Год выпуска',
         max_length=10,
         validators=[validate_graduation_year],
     )
     document = models.FileField(
+        verbose_name='Документ об образовании',
         upload_to=user_directory_path,
     )
 
     class Meta:
         verbose_name = 'Образование психолога'
+        verbose_name_plural = 'Профили психологов'
         default_related_name = 'psychoeducation'
         constraints = [
             models.UniqueConstraint(
@@ -210,24 +233,29 @@ class Service(models.Model):
         ProfilePsychologist,
         on_delete=models.CASCADE,
         related_name='services',
+        verbose_name='Психолог',
     )
     type = models.CharField(
         max_length=10,
         choices=Type.choices,
         default=Type.NOMATTER,
+        verbose_name='Тип консультации',
     )
     price = models.PositiveIntegerField(
         validators=(MinValueValidator(MIN_PRICE),
                     MaxValueValidator(MAX_PRICE),
                     ),
+        verbose_name='Цена',
     )
     duration = models.PositiveSmallIntegerField(
         default=SESSION_DURATION,
+        verbose_name='Продолжительность сессии',
     )
     format = models.CharField(
         max_length=10,
         choices=Format.choices,
         default=Format.ONLINE,
+        verbose_name='Формат сессии',
     )
 
     class Meta:
