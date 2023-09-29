@@ -7,6 +7,7 @@ from drf_yasg.utils import swagger_auto_schema
 from apps.api.v1.serializers import psychologist as psycho
 from apps.api.v1.filters import (TitleFilter, InstituteFilter,
                                  PsychoFilter)
+from apps.api.v1.pagination import CustomPagination
 from apps.api.v1.permissions import IsPsychologistOnly
 from apps.psychologists.services import (create_psychologist,
                                          update_psychologist)
@@ -117,6 +118,7 @@ class PsychoListCatalogView(generics.ListAPIView):
     serializer_class = psycho.ShortPsychoCardSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = PsychoFilter
+    pagination_class = CustomPagination
 
     def get_queryset(self):
         return get_all_verified_psychologists()
