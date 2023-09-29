@@ -1,20 +1,23 @@
-from rest_framework import generics, viewsets, views, status
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework import generics, status, views, viewsets
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
 from apps.api.v1.serializers import psychologist as psycho
-from apps.api.v1.filters import (TitleFilter, InstituteFilter,
-                                 PsychoFilter)
+from apps.api.v1.filters import (InstituteFilter, PsychoFilter, SlotFilter,
+                                 TitleFilter)
 from apps.api.v1.pagination import CustomPagination
 from apps.api.v1.permissions import IsPsychologistOnly
+from apps.api.v1.serializers import psychologist as psycho
+from apps.psychologists import models
+from apps.psychologists.selectors import (get_all_free_slots,
+                                          get_all_verified_psychologists,
+                                          get_psychologist,
+                                          get_psychologist_for_card,
+                                          get_psychologist_with_services)
 from apps.psychologists.services import (create_psychologist,
                                          update_psychologist)
-from apps.psychologists.selectors import (get_psychologist,
-                                          get_all_verified_psychologists,
-                                          get_psychologist_for_card)
-from apps.psychologists import models
 
 
 class CreatePsychologistView(views.APIView):
@@ -137,3 +140,34 @@ class PsychoCardCatalogView(views.APIView):
             psycho.FullPsychoCardSerializer(psychologist).data,
             status=status.HTTP_200_OK,
         )
+
+
+class ShortPsychoCardCatalogView(views.APIView):
+    """
+    Краткая информация о психологе на странице создания сессии.
+    """
+    permission_classes = (AllowAny,)
+
+    @swagger_auto_schema(responses={200: psycho.SuperShortPsychoSerializer()})
+    def get(self, request, id=None):
+        psychologist = get_psychologist_with_services(id)
+        return Response(
+            psycho.SuperShortPsychoSerializer(
+                psychologist,
+                context={'request': request, 'view': self},
+            ).data,
+            status=status.HTTP_200_OK,
+        )
+
+
+class FreeSlotsView(generics.ListAPIView):
+    """
+    Список свободных слотов на странице создания сессии.
+    Фильтр 'since=DD.MM.YYYY' отдает слоты в диапазоне 14 дней с даты.
+    """
+    permission_classes = (AllowAny,)
+    serializer_class = psycho.SlotPsychoSerializer
+    filterset_class = SlotFilter
+
+    def get_queryset(self):
+        return get_all_free_slots(self.kwargs.get('id'))

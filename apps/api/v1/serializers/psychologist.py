@@ -94,7 +94,7 @@ class PsychoEducationSerializer(serializers.Serializer):
                 ),
             },
             "required": ['title', 'speciality', 'graduation_year'],
-         }
+        }
 
     def validate_document(self, value):
         validate_file_size(value)
@@ -196,6 +196,21 @@ class PsychologistSerializer(CommonPsychologistSerializer):
                      'view': self.context.get('view')},
         )
         return serializer.data
+
+
+class SuperShortPsychoSerializer(CommonPsychologistSerializer):
+    """
+    Данные психолога для страницы создания сессии.
+    """
+    speciality = serializers.CharField()
+    duration = serializers.SerializerMethodField()
+    format = serializers.SerializerMethodField()
+
+    def get_duration(self, obj) -> int:
+        return SESSION_DURATION
+
+    def get_format(self, obj) -> str:
+        return 'онлайн'
 
 
 class ShortPsychoCardSerializer(CommonPsychologistSerializer):
