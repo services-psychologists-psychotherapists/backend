@@ -4,8 +4,10 @@ from rest_framework import generics, status, views, viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
+from apps.api.v1.serializers import psychologist as psycho
 from apps.api.v1.filters import (InstituteFilter, PsychoFilter, SlotFilter,
                                  TitleFilter)
+from apps.api.v1.pagination import CustomPagination
 from apps.api.v1.permissions import IsPsychologistOnly
 from apps.api.v1.serializers import psychologist as psycho
 from apps.psychologists import models
@@ -119,6 +121,7 @@ class PsychoListCatalogView(generics.ListAPIView):
     serializer_class = psycho.ShortPsychoCardSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = PsychoFilter
+    pagination_class = CustomPagination
 
     def get_queryset(self):
         return get_all_verified_psychologists()

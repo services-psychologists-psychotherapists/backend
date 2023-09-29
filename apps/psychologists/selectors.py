@@ -26,7 +26,7 @@ def get_all_verified_psychologists() -> list[ProfilePsychologist]:
         is_verified=True).prefetch_related(
             Prefetch('slots'),
             Prefetch('services'),
-        )
+        ).order_by('id')
 
 
 def get_psychologist_for_card(id) -> ProfilePsychologist:
