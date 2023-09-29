@@ -1,6 +1,6 @@
 from dateutil.relativedelta import relativedelta
 
-from django.db.models import Prefetch, F
+from django.db.models import Prefetch, F, QuerySet
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
@@ -82,3 +82,10 @@ def get_free_slots(psychologist: ProfilePsychologist) -> Slot:
         datetime_to__lte=finish,
     )
     return slots
+
+
+def get_all_free_slots(psychologist_id: int) -> QuerySet:
+    """Возвращает все свободные слоты психолога с текущего момента."""
+    psycho = get_object_or_404(ProfilePsychologist, pk=psychologist_id)
+    now = timezone.now()
+    return psycho.slots.filter(datetime_from__gt=now, is_free=True)

@@ -1,14 +1,12 @@
 from rest_framework import generics, status, views
-from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from apps.session.selectors import get_free_slots, get_user_slots
-from apps.session.services import delete_user_slot, cancel_session
+from apps.session.selectors import get_user_slots
+from apps.session.services import cancel_session, delete_user_slot
 
 from ..filters import SlotFilter
 from ..permissions import IsClientOnly, IsParticipant, IsPsychologistOnly
-from ..serializers.sessions import (CreateSessionSerializer,
-                                    FreeSlotsSerializer, SlotSerializer)
+from ..serializers.sessions import CreateSessionSerializer, SlotSerializer
 
 
 class ListCreateSlotView(generics.ListCreateAPIView):
@@ -34,19 +32,6 @@ class DeleteSlotView(views.APIView):
     def delete(self, request, pk, format=None):
         delete_user_slot(request.user, pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class FreeSlotsView(generics.ListAPIView):
-    """
-    Список свободных слотов.
-    Фильтр 'since=DD.MM.YYYY' отдает слоты в диапазоне 14 дней с даты.
-    """
-    permission_classes = (AllowAny,)
-    serializer_class = FreeSlotsSerializer
-    filterset_class = SlotFilter
-
-    def get_queryset(self):
-        return get_free_slots(self.kwargs.get('id'))
 
 
 class CreateSessionView(generics.CreateAPIView):

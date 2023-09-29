@@ -4,12 +4,12 @@ from rest_framework.routers import DefaultRouter
 from .views.clients import ClientView, CreateClientView
 from .views.custom_user import CustomUserViewSet
 from .views.psychologist import (ApproacheViewSet, CreatePsychologistView,
-                                 InstituteViewSet, PsychoCardCatalogView,
-                                 PsychoListCatalogView,
+                                 FreeSlotsView, InstituteViewSet,
+                                 PsychoCardCatalogView, PsychoListCatalogView,
                                  PsychologistProfileView,
                                  ShortPsychoCardCatalogView, ThemeViewSet)
 from .views.sessions import (CancelSessionView, CreateSessionView,
-                             DeleteSlotView, FreeSlotsView, ListCreateSlotView)
+                             DeleteSlotView, ListCreateSlotView)
 
 router_v1 = DefaultRouter()
 router_v1.register('users', CustomUserViewSet, basename='users')
@@ -31,7 +31,7 @@ urlpatterns = [
          name='delete_slot'),
     path('auth/psychologists/slots/',
          ListCreateSlotView.as_view(),
-         name='psycho_slots'),
+         name='add_and_list_psycho_slots'),
     path('auth/psychologists/me/',
          PsychologistProfileView.as_view(),
          name='profile_psychologist'),
@@ -40,18 +40,18 @@ urlpatterns = [
          name='create_psychologist'),
     # Аутентификация
     path('auth/', include('djoser.urls.jwt')),
-    # Запись на сессию
+    # Запись и отмена сессий
+    path('sessions/', CreateSessionView.as_view(), name='create_session'),
+    path('sessions/<int:pk>/',
+         CancelSessionView.as_view(),
+         name='cancel_session'),
+    # Каталог психологов
     path('psychologists/<uuid:id>/short/',
          ShortPsychoCardCatalogView.as_view(),
          name='short_psycho_card'),
     path('psychologists/<uuid:id>/free_slots/',
          FreeSlotsView.as_view(),
          name='free_slots'),
-    path('sessions/', CreateSessionView.as_view(), name='create_session'),
-    path('sessions/<int:pk>/',
-         CancelSessionView.as_view(),
-         name='cancel_session'),
-    # Каталог психологов
     path('psychologists/<uuid:id>/',
          PsychoCardCatalogView.as_view(),
          name='psycho_card'),

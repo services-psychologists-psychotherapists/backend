@@ -198,7 +198,7 @@ class PsychologistSerializer(CommonPsychologistSerializer):
         return serializer.data
 
 
-class SuperShortPsychoCardSerializer(CommonPsychologistSerializer):
+class SuperShortPsychoSerializer(CommonPsychologistSerializer):
     """
     Данные психолога для страницы создания сессии.
     """
