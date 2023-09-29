@@ -94,15 +94,15 @@ REST_FRAMEWORK = {
     'DATE_FORMAT': "%d.%m.%Y",
     'DATETIME_INPUT_FORMATS': ["%d.%m.%Y %H:%M"],
     'DATETIME_FORMAT': "%d.%m.%Y %H:%M",
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE': 10,
 }
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
 SIMPLE_JWT = {
-   'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
-   'AUTH_HEADER_TYPES': ('JWT',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
+    'AUTH_HEADER_TYPES': ('JWT',),
 }
 
 AUTH_PASSWORD_VALIDATORS = [

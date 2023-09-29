@@ -1,6 +1,6 @@
 from dateutil.relativedelta import relativedelta
 
-from django.db.models import Prefetch, F
+from django.db.models import Prefetch, F, QuerySet
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
@@ -41,14 +41,22 @@ def get_psychologist_for_card(id) -> ProfilePsychologist:
     return get_object_or_404(queryset, id=id)
 
 
+def get_psychologist_with_services(id: int) -> ProfilePsychologist:
+    """Выдача психолога с присоединенной таблицей сервисов."""
+    queryset = ProfilePsychologist.objects.all().prefetch_related(
+        Prefetch('services'),
+    )
+    return get_object_or_404(queryset, id=id)
+
+
 def get_education(user: ProfilePsychologist,
                   flag: bool) -> list[Institute]:
     education = user.education.filter(is_higher=flag)
     education = education.annotate(
-            speciality=F('psychoeducation__speciality'),
-            graduation_year=F('psychoeducation__graduation_year'),
-            document=F('psychoeducation__document'),
-        )
+        speciality=F('psychoeducation__speciality'),
+        graduation_year=F('psychoeducation__graduation_year'),
+        document=F('psychoeducation__document'),
+    )
     return education
 
 
@@ -74,3 +82,10 @@ def get_free_slots(psychologist: ProfilePsychologist) -> Slot:
         datetime_to__lte=finish,
     )
     return slots
+
+
+def get_all_free_slots(psychologist_id: int) -> QuerySet:
+    """Возвращает все свободные слоты психолога с текущего момента."""
+    psycho = get_object_or_404(ProfilePsychologist, pk=psychologist_id)
+    now = timezone.now()
+    return psycho.slots.filter(datetime_from__gt=now, is_free=True)
