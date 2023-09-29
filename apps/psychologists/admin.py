@@ -24,25 +24,31 @@ class ApproachAdmin(admin.ModelAdmin):
     search_fields = ('title__startswith', )
 
 
-@admin.register(models.Service)
-class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'psychologist', 'type', 'price',
-                    'duration', 'format')
-    empty_value_display = '-пусто-'
-    search_fields = ('title__startswith', )
+class PsychoEducationInline(admin.TabularInline):
+    model = models.PsychoEducation
+    extra = 1
+
+
+class ServiceInline(admin.TabularInline):
+    model = models.Service
+    extra = 1
 
 
 @admin.register(models.ProfilePsychologist)
 class ProfilePsychologistAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,               {'fields': ('user', 'is_verified')}),
+        ('Общая информация', {'fields': ('first_name', 'last_name',
+                                         'birthday', 'gender', 'phone_number',
+                                         'about', 'started_working',
+                                         )
+                              }
+         ),
+        ('О работе',         {'fields': ['themes', 'approaches']}),
+    ]
+    inlines = (PsychoEducationInline, ServiceInline)
     list_display = ('user', 'first_name', 'last_name', 'birthday',
                     'gender', 'is_verified', 'speciality')
     empty_value_display = '-пусто-'
     list_filter = ('is_verified', )
     search_fields = ('last_name__startswith', )
-
-
-@admin.register(models.PsychoEducation)
-class PsychoEducationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'psychologist', 'institute',
-                    'speciality', 'graduation_year')
-    empty_value_display = '-пусто-'
