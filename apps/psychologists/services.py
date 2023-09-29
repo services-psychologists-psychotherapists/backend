@@ -1,8 +1,9 @@
 from datetime import date
-from typing import OrderedDict, Union
+from typing import OrderedDict
 
 from django.db import transaction
-from django.core.exceptions import ValidationError as DjangoValidationError
+from django.core.exceptions import (ValidationError as DjangoValidationError,
+                                    ObjectDoesNotExist)
 from rest_framework import exceptions
 
 from apps.psychologists.models import (ProfilePsychologist, Institute,
@@ -45,11 +46,9 @@ def create_psychologist(user_data: OrderedDict,
 def create_profile(user: CustomUser,
                    psychologist_data: OrderedDict,
                    ) -> ProfilePsychologist:
-    themes = get_or_create_object(psychologist_data.pop('themes'), Theme)
+    themes = get_themes(psychologist_data.pop('themes'))
 
-    approaches = get_or_create_object(
-        psychologist_data.pop('approaches'), Approach
-    )
+    approaches = get_or_create_approaches(psychologist_data.pop('approaches'))
 
     institutes = get_or_create_education(
         psychologist_data.pop('institutes'), flag=True
@@ -96,11 +95,10 @@ def update_psychologist(instance: ProfilePsychologist,
     """
 
     if 'themes' in data:
-        themes = get_or_create_object(data.pop('themes'), Theme)
+        themes = get_themes(data.pop('themes'))
         instance.themes.set(themes)
     if 'approaches' in data:
-        approaches = get_or_create_object(data.pop('approaches'),
-                                          Approach)
+        approaches = get_or_create_approaches(data.pop('approaches'))
         instance.approaches.set(approaches)
     institutes = []
     if 'institutes' in data:
@@ -135,14 +133,28 @@ def count_started_working(experience: int) -> date:
     return date(year, 1, 1)
 
 
-def get_or_create_object(iterable: list[OrderedDict],
-                         myclass: Union[Theme, Approach]
-                         ) -> list[Union[Theme, Approach]]:
+def get_themes(iterable: list[OrderedDict]) -> list[Theme]:
     """
-    ("themes" | "approaches"): [{"title": str}],
+    ("themes"): [{"title": str}].
+    """
+    output = []
+    for data in iterable:
+        try:
+            obj = Theme.objects.get(
+                title=data['title'].title()
+            )
+            output.append(obj)
+        except ObjectDoesNotExist:
+            pass
+    return output
+
+
+def get_or_create_approaches(iterable: list[OrderedDict]) -> list[Approach]:
+    """
+    ("approaches"): [{"title": str}].
     """
     for i, data in enumerate(iterable):
-        obj, _ = myclass.objects.get_or_create(
+        obj, _ = Approach.objects.get_or_create(
             title=data['title'].title()
         )
         iterable[i] = obj
