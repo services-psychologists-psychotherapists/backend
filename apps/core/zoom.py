@@ -44,8 +44,7 @@ def create_meeting(start_time: datetime,
     payload = {
         "topic": 'Сеанс психолога',
         "duration": duration,
-        'start_time': start_time.strftime('%Y-%m-%dT%H:%M:00'),
-        "timezone": "Europe/Moscow",
+        'start_time': start_time.strftime('%Y-%m-%dT%H:%M:00Z'),
         "type": 2,
     }
 
