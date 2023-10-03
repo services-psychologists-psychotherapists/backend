@@ -6,7 +6,7 @@ from django.db import models
 from django.utils import timezone
 
 from apps.core.constants import MIN_PRICE, MAX_PRICE, SESSION_DURATION
-from apps.core.models import Gender
+from apps.core.models import Gender, UploadFile
 from apps.psychologists.validators import (validate_birthday,
                                            validate_graduation_year,
                                            validate_started_working,
@@ -191,10 +191,15 @@ class PsychoEducation(models.Model):
         max_length=10,
         validators=[validate_graduation_year],
     )
-    document = models.FileField(
+    document = models.OneToOneField(
+        UploadFile,
+        on_delete=models.CASCADE,
         verbose_name='Документ об образовании',
-        upload_to=user_directory_path,
     )
+    # document = models.CharField(
+    #     max_length=10,
+    #     verbose_name='Документ об образовании',
+    # )
 
     class Meta:
         verbose_name = 'Образование психолога'
