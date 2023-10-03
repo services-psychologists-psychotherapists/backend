@@ -36,20 +36,12 @@ class SlotSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Окно записи пересекается с другими окнами специалиста.'
             )
-
         if start_time < timezone.now():
             raise serializers.ValidationError(
                 'Время начала сессии не может быть меньше текущего времени.'
             )
 
         return super().validate(start_time)
-
-
-class FreeSlotsSerializer(serializers.ModelSerializer):
-    """Сериализация списка свободных слотов в расписании психолога."""
-    class Meta:
-        fields = ('id', 'datetime_from', 'date')
-        model = Slot
 
 
 class CreateSessionSerializer(serializers.ModelSerializer):
