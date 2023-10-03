@@ -1,15 +1,17 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import generics, status, views, viewsets
+from rest_framework import generics, parsers, status, views, viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+# from nested_multipart_parser.drf import DrfNestedParser
 
-from apps.api.v1.serializers import psychologist as psycho
 from apps.api.v1.filters import (InstituteFilter, PsychoFilter, SlotFilter,
                                  TitleFilter)
 from apps.api.v1.pagination import CustomPagination
 from apps.api.v1.permissions import IsPsychologistOnly
 from apps.api.v1.serializers import psychologist as psycho
+# from apps.core.models import UploadFile
+from apps.core.services import create_file
 from apps.psychologists import models
 from apps.psychologists.selectors import (get_all_free_slots,
                                           get_all_verified_psychologists,
@@ -81,9 +83,7 @@ class PsychologistProfileView(views.APIView):
         """Отображение профиля психолога"""
         psychologist = get_psychologist(request.user)
         return Response(
-            psycho.PsychologistSerializer(
-                psychologist, context={'request': request, 'view': self}
-            ).data,
+            psycho.PsychologistSerializer(psychologist).data,
             status=status.HTTP_200_OK,
         )
 
@@ -171,3 +171,19 @@ class FreeSlotsView(generics.ListAPIView):
 
     def get_queryset(self):
         return get_all_free_slots(self.kwargs.get('id'))
+
+
+class UploadFileView(views.APIView):
+    """
+    Загрузка документа об оброазовании
+    """
+    permission_classes = (AllowAny,)
+    parser_classes = (parsers.MultiPartParser, parsers.FormParser)
+
+    def post(self, request):
+        file_ser = psycho.UploadFileSerializer(data=request.FILES)
+        file_ser.is_valid(raise_exception=True)
+        file = create_file(file_ser.validated_data)
+        return Response({'id': file.id},
+                        status=status.HTTP_201_CREATED
+                        )

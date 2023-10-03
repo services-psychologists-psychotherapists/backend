@@ -55,7 +55,7 @@ def get_education(user: ProfilePsychologist,
     education = education.annotate(
         speciality=F('psychoeducation__speciality'),
         graduation_year=F('psychoeducation__graduation_year'),
-        document=F('psychoeducation__document'),
+        document=F('psychoeducation__document__path'),
     )
     return education
 

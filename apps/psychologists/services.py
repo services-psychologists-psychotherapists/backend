@@ -6,6 +6,7 @@ from django.core.exceptions import (ValidationError as DjangoValidationError,
                                     ObjectDoesNotExist)
 from rest_framework import exceptions
 
+from apps.core.models import UploadFile
 from apps.psychologists.models import (ProfilePsychologist, Institute,
                                        Service, Theme, Approach)
 from apps.users.models import CustomUser
@@ -25,7 +26,7 @@ def create_psychologist(user_data: OrderedDict,
             {"title": str,
             "speciality": str,
             "graduation_year": str,
-            "document":  ContentFile,
+            "document": str,
             }
         ],
         "price": int,
@@ -169,7 +170,7 @@ def get_or_create_education(iterable: list[OrderedDict],
             {"title": str,
             "speciality": str,
             "graduation_year": str,
-            "document":  ContentFile,
+            "document":  str,
             }
         ]
     """
@@ -180,6 +181,9 @@ def get_or_create_education(iterable: list[OrderedDict],
             is_higher=flag,
         )
         data['institute'] = education
+        document = data.pop('document')
+        file = UploadFile.objects.get(id=document)
+        data['document'] = file
     return iterable
 
 
