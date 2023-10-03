@@ -180,6 +180,10 @@ class UploadFileView(views.APIView):
     permission_classes = (AllowAny,)
     parser_classes = (parsers.MultiPartParser, parsers.FormParser)
 
+    @swagger_auto_schema(
+        request_body=psycho.UploadFileSerializer(),
+        responses={201: 'id'},
+    )
     def post(self, request):
         file_ser = psycho.UploadFileSerializer(data=request.FILES)
         file_ser.is_valid(raise_exception=True)
