@@ -3,12 +3,11 @@ from rest_framework import serializers
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_serializer_method
 
-from apps.api.v1.serializers.fields import (ImageFieldSerialiser,
-                                            FilePathSerializer)
+from apps.api.v1.serializers.fields import ImageFieldSerialiser
 from apps.api.v1.validators import validate_file_size
 from apps.core.models import Gender, UploadFile
 from apps.core.constants import MIN_PRICE, MAX_PRICE, SESSION_DURATION
-from apps.psychologists.models import Institute
+from apps.psychologists.models import PsychoEducation
 from apps.psychologists.selectors import (get_education, get_service,
                                           get_free_slots)
 from apps.psychologists.validators import (
@@ -66,27 +65,43 @@ class UploadFileSerializer(serializers.ModelSerializer):
         return value
 
 
-class PsychoEducationShortSerializer(serializers.ModelSerializer):
-    speciality = serializers.CharField(max_length=50)
-    graduation_year = serializers.CharField(max_length=10)
+class EducationShortOutputSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор на выдачу для полной карточки психолога в каталоге
+    """
+    title = serializers.CharField(source='institute.title')
+    speciality = serializers.CharField()
+    graduation_year = serializers.CharField()
 
     class Meta:
         fields = ('title', 'speciality', 'graduation_year')
-        model = Institute
+        model = PsychoEducation
 
 
-class PsychoEducationSerializer(serializers.Serializer):
-    title = serializers.CharField(max_length=200)
-    speciality = serializers.CharField(max_length=50)
-    graduation_year = serializers.CharField(max_length=10)
-    document = FilePathSerializer()
+class EducationOutputSerializer(EducationShortOutputSerializer):
+    """
+    Сериализатор на выдачу для ЛК психолога
+    """
+    document = serializers.FileField(source='document.path')
 
     class Meta:
         fields = ('title', 'speciality', 'graduation_year', 'document')
-        model = Institute
+        model = PsychoEducation
+
+
+class EducationInputSerializer(serializers.Serializer):
+    """
+    Сериализатор для создания и аптейда профиля психолога
+    """
+    title = serializers.CharField(max_length=200)
+    speciality = serializers.CharField(max_length=50)
+    graduation_year = serializers.CharField(max_length=10)
+    document = serializers.UUIDField()
+
+    class Meta:
         swagger_schema_fields = {
             'type': openapi.TYPE_OBJECT,
-            'title': 'PsychoEducationSerializer',
+            'title': 'EducationInputSerializer',
             'properties': {
                 'title': openapi.Schema(
                     title='title',
@@ -130,8 +145,8 @@ class CreatePsychologistSerializer(serializers.Serializer):
     price = serializers.IntegerField()
     themes = CommonInfoSerializer(many=True)
     approaches = CommonInfoSerializer(many=True)
-    institutes = PsychoEducationSerializer(many=True)
-    courses = PsychoEducationSerializer(many=True, required=False)
+    institutes = EducationInputSerializer(many=True)
+    courses = EducationInputSerializer(many=True, required=False)
 
     def validate_price(self, value):
         if value < MIN_PRICE or value > MAX_PRICE:
@@ -183,11 +198,11 @@ class PsychologistSerializer(CommonPsychologistSerializer):
     courses = serializers.SerializerMethodField()
 
     @swagger_serializer_method(
-        serializer_or_field=PsychoEducationSerializer(many=True)
+        serializer_or_field=EducationOutputSerializer(many=True)
     )
     def get_institutes(self, obj):
         institutes = get_education(obj, True)
-        serializer = PsychoEducationSerializer(
+        serializer = EducationOutputSerializer(
             institutes,
             many=True,
             context={'request': self.context.get('request'),
@@ -196,11 +211,11 @@ class PsychologistSerializer(CommonPsychologistSerializer):
         return serializer.data
 
     @swagger_serializer_method(
-        serializer_or_field=PsychoEducationSerializer(many=True)
+        serializer_or_field=EducationOutputSerializer(many=True)
     )
     def get_courses(self, obj):
         courses = get_education(obj, False)
-        serializer = PsychoEducationSerializer(
+        serializer = EducationOutputSerializer(
             courses,
             many=True,
             context={'request': self.context.get('request'),
@@ -255,22 +270,22 @@ class FullPsychoCardSerializer(ShortPsychoCardSerializer):
     courses = serializers.SerializerMethodField()
 
     @swagger_serializer_method(
-        serializer_or_field=PsychoEducationShortSerializer(many=True)
+        serializer_or_field=EducationShortOutputSerializer(many=True)
     )
     def get_institutes(self, obj):
         institutes = get_education(obj, True)
-        serializer = PsychoEducationShortSerializer(
+        serializer = EducationShortOutputSerializer(
             institutes,
             many=True,
         )
         return serializer.data
 
     @swagger_serializer_method(
-        serializer_or_field=PsychoEducationShortSerializer(many=True)
+        serializer_or_field=EducationShortOutputSerializer(many=True)
     )
     def get_courses(self, obj):
         courses = get_education(obj, False)
-        serializer = PsychoEducationShortSerializer(
+        serializer = EducationShortOutputSerializer(
             courses,
             many=True,
         )
