@@ -196,10 +196,6 @@ class PsychoEducation(models.Model):
         on_delete=models.CASCADE,
         verbose_name='Документ об образовании',
     )
-    # document = models.CharField(
-    #     max_length=10,
-    #     verbose_name='Документ об образовании',
-    # )
 
     class Meta:
         verbose_name = 'Образование психолога'

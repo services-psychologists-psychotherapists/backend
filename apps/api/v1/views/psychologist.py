@@ -3,14 +3,12 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, parsers, status, views, viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-# from nested_multipart_parser.drf import DrfNestedParser
 
 from apps.api.v1.filters import (InstituteFilter, PsychoFilter, SlotFilter,
                                  TitleFilter)
 from apps.api.v1.pagination import CustomPagination
 from apps.api.v1.permissions import IsPsychologistOnly
 from apps.api.v1.serializers import psychologist as psycho
-# from apps.core.models import UploadFile
 from apps.core.services import create_file
 from apps.psychologists import models
 from apps.psychologists.selectors import (get_all_free_slots,
@@ -83,7 +81,10 @@ class PsychologistProfileView(views.APIView):
         """Отображение профиля психолога"""
         psychologist = get_psychologist(request.user)
         return Response(
-            psycho.PsychologistSerializer(psychologist).data,
+            psycho.PsychologistSerializer(
+                psychologist,
+                context={'request': request, 'view': self},
+            ).data,
             status=status.HTTP_200_OK,
         )
 
@@ -182,12 +183,12 @@ class UploadFileView(views.APIView):
 
     @swagger_auto_schema(
         request_body=psycho.UploadFileSerializer(),
-        responses={201: 'id'},
+        responses={201: psycho.UploadFileSerializer()},
     )
     def post(self, request):
         file_ser = psycho.UploadFileSerializer(data=request.FILES)
         file_ser.is_valid(raise_exception=True)
         file = create_file(file_ser.validated_data)
-        return Response({'id': file.id},
+        return Response(psycho.UploadFileSerializer(file).data,
                         status=status.HTTP_201_CREATED
                         )

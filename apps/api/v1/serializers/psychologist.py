@@ -3,7 +3,8 @@ from rest_framework import serializers
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_serializer_method
 
-from apps.api.v1.serializers.fields import ImageFieldSerialiser
+from apps.api.v1.serializers.fields import (ImageFieldSerialiser,
+                                            FilePathSerializer)
 from apps.api.v1.validators import validate_file_size
 from apps.core.models import Gender, UploadFile
 from apps.core.constants import MIN_PRICE, MAX_PRICE, SESSION_DURATION
@@ -50,6 +51,21 @@ class SlotPsychoSerializer(serializers.ModelSerializer):
         model = Slot
 
 
+class UploadFileSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для загрузки документа об образовании
+    """
+    path = serializers.FileField()
+
+    class Meta:
+        fields = ('id', 'path')
+        model = UploadFile
+
+    def validate_document(self, value):
+        validate_file_size(value)
+        return value
+
+
 class PsychoEducationShortSerializer(serializers.ModelSerializer):
     speciality = serializers.CharField(max_length=50)
     graduation_year = serializers.CharField(max_length=10)
@@ -63,7 +79,7 @@ class PsychoEducationSerializer(serializers.Serializer):
     title = serializers.CharField(max_length=200)
     speciality = serializers.CharField(max_length=50)
     graduation_year = serializers.CharField(max_length=10)
-    document = serializers.CharField(max_length=200)
+    document = FilePathSerializer()
 
     class Meta:
         fields = ('title', 'speciality', 'graduation_year', 'document')
@@ -174,6 +190,8 @@ class PsychologistSerializer(CommonPsychologistSerializer):
         serializer = PsychoEducationSerializer(
             institutes,
             many=True,
+            context={'request': self.context.get('request'),
+                     'view': self.context.get('view')},
         )
         return serializer.data
 
@@ -185,6 +203,8 @@ class PsychologistSerializer(CommonPsychologistSerializer):
         serializer = PsychoEducationSerializer(
             courses,
             many=True,
+            context={'request': self.context.get('request'),
+                     'view': self.context.get('view')},
         )
         return serializer.data
 
@@ -255,13 +275,3 @@ class FullPsychoCardSerializer(ShortPsychoCardSerializer):
             many=True,
         )
         return serializer.data
-
-
-class UploadFileSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = ('id', 'path')
-        model = UploadFile
-
-    def validate_document(self, value):
-        validate_file_size(value)
-        return value

@@ -23,5 +23,9 @@ class UploadFile(models.Model):
     )
     path = models.FileField(
         verbose_name='Документ об образовании',
-        upload_to='uploads/',
+        upload_to='uploads/%Y/%m/%d/',
     )
+
+    class Meta:
+        verbose_name = 'Документ'
+        verbose_name_plural = 'Документы'
