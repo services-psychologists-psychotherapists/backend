@@ -91,7 +91,7 @@ class EducationOutputSerializer(EducationShortOutputSerializer):
 
 class EducationInputSerializer(serializers.Serializer):
     """
-    Сериализатор для создания и аптейда профиля психолога
+    Сериализатор для создания и апдейта профиля психолога
     """
     title = serializers.CharField(max_length=200)
     speciality = serializers.CharField(max_length=50)
