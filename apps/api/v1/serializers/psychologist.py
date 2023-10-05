@@ -4,7 +4,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_serializer_method
 
 from apps.api.v1.serializers.fields import ImageFieldSerialiser
-from apps.api.v1.validators import validate_file_size
+from apps.api.v1.validators import validate_file_size, validate_file_ext
 from apps.core.models import Gender, UploadFile
 from apps.core.constants import MIN_PRICE, MAX_PRICE, SESSION_DURATION
 from apps.psychologists.models import PsychoEducation
@@ -60,9 +60,23 @@ class UploadFileSerializer(serializers.ModelSerializer):
         fields = ('id', 'path')
         model = UploadFile
 
-    def validate_document(self, value):
-        validate_file_size(value)
-        return value
+    def validate(self, attrs):
+        errors = []
+        try:
+            validate_file_size(attrs.get('path'))
+        except serializers.ValidationError as e:
+            errors.extend(e.args)
+
+        try:
+            validate_file_ext(attrs.get('path'))
+        except serializers.ValidationError as e:
+            errors.extend(e.args)
+
+        if errors:
+            raise serializers.ValidationError(
+                errors
+            )
+        return super().validate(attrs)
 
 
 class EducationShortOutputSerializer(serializers.ModelSerializer):
