@@ -1,12 +1,12 @@
 from dateutil.relativedelta import relativedelta
 
-from django.db.models import Prefetch, F, QuerySet
+from django.db.models import Prefetch, QuerySet
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
 from apps.core.constants import LOADED_DAYS_FOR_SLOTS
-from apps.psychologists.models import (ProfilePsychologist, Institute,
-                                       Service)
+from apps.psychologists.models import (ProfilePsychologist, PsychoEducation,
+                                       Service, )
 from apps.users.models import CustomUser
 from apps.session.models import Slot
 
@@ -50,14 +50,11 @@ def get_psychologist_with_services(id: int) -> ProfilePsychologist:
 
 
 def get_education(user: ProfilePsychologist,
-                  flag: bool) -> list[Institute]:
-    education = user.education.filter(is_higher=flag)
-    education = education.annotate(
-        speciality=F('psychoeducation__speciality'),
-        graduation_year=F('psychoeducation__graduation_year'),
-        document=F('psychoeducation__document'),
-    )
-    return education
+                  flag: bool) -> list[PsychoEducation]:
+    return PsychoEducation.objects.filter(
+        psychologist=user,
+        institute__is_higher=flag
+    ).select_related('document')
 
 
 def get_service(psychologist: ProfilePsychologist,

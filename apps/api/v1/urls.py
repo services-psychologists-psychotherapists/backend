@@ -7,7 +7,8 @@ from .views.psychologist import (ApproacheViewSet, CreatePsychologistView,
                                  FreeSlotsView, InstituteViewSet,
                                  PsychoCardCatalogView, PsychoListCatalogView,
                                  PsychologistProfileView,
-                                 ShortPsychoCardCatalogView, ThemeViewSet)
+                                 ShortPsychoCardCatalogView, ThemeViewSet,
+                                 UploadFileView)
 from .views.sessions import (CancelSessionView, CreateSessionView,
                              DeleteSlotView, ListCreateSlotView)
 
@@ -57,5 +58,6 @@ urlpatterns = [
          name='psycho_card'),
     path('psychologists/', PsychoListCatalogView.as_view(), name='catalog'),
     # Вспомогательные поинты
+    path('file/upload/', UploadFileView.as_view(), name='file_upload'),
     path('', include(router_v1_1.urls)),
 ]

@@ -28,7 +28,13 @@ def validate_started_working(data):
 
 
 def validate_graduation_year(data):
-    finish_year = int(data.split('-')[-1])
+    try:
+        finish_year = int(data.split('-')[-1])
+    except ValueError:
+        raise ValidationError(
+            {'graduation_year':
+             "Значение поля должно быть вида 'YYYY-YYYY' или 'YYYY'"}
+        )
     cur_year = timezone.now().year
     if finish_year > cur_year:
         raise ValidationError(
