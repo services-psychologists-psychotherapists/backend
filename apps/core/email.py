@@ -27,6 +27,8 @@ class PsychologistActivationEmail(BaseEmailMessage):
         user = context.get("user")
         context["uid"] = encode_uid(user.pk)
         context["token"] = default_token_generator.make_token(user)
+        context["protocol"] = 'https'
+        context["domain"] = 'sharewithme.acceleratorpracticum.ru'
         context["url"] = settings.PASSWORD_RESET_CONFIRM_URL.format(**context)
         return context
 

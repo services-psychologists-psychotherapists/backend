@@ -1,9 +1,6 @@
 from django.contrib import admin
-from django.contrib import messages
-from django.utils.translation import ngettext
 
 from apps.psychologists import models
-from apps.psychologists.threads import PsychoActivationEmailThread
 
 
 @admin.register(models.Institute)
@@ -78,18 +75,8 @@ class ProfilePsychologistAdmin(admin.ModelAdmin):
     search_fields = ("last_name__startswith",)
     actions = ("send_activation_email",)
 
-    @admin.action(description="Отправить письмо")
-    def send_activation_email(self, request, queryset):
-        for psychologist in queryset:
-            PsychoActivationEmailThread(request, psychologist).start()
-
-        self.message_user(
-            request,
-            ngettext(
-                "%d письмо было успешно отправлено.",
-                "%d писем были успешно отправлены.",
-                len(queryset),
-            )
-            % len(queryset),
-            messages.SUCCESS,
-        )
+    def save_model(self, request, obj, form, change):
+        if 'is_verified' in form.changed_data:
+            obj.save(update_fields=['is_verified'])
+        else:
+            obj.save()
