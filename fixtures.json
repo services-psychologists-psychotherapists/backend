@@ -1,0 +1,918 @@
+[
+    {
+        "model": "users.customuser",
+        "pk": "1228ef6d-63dc-425e-9ad2-4ec784b1aebb",
+        "fields": {
+            "password": "pbkdf2_sha256$390000$gvezdfL9a4WQZwjrcZ15r0$stNQa+QqepUeJPgnetoYTgYVH2sE1USTH3/a2WKXyx0=",
+            "last_login": null,
+            "email": "ruslanatarov@gmail.com",
+            "is_client": true,
+            "is_psychologists": false,
+            "is_staff": false,
+            "is_superuser": false,
+            "is_active": true,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": "1bdfebbb-7a19-43f8-88f3-c1b85c48ac2b",
+        "fields": {
+            "password": "pbkdf2_sha256$390000$sQ34q1Shu61y0nQydWSLiZ$ASpRMm6o7Ch8VrZavs+N9rUV2LT5DyjMI9krvW6F+UA=",
+            "last_login": "2023-09-19T10:46:50Z",
+            "email": "psycho@unexistingmail.ru",
+            "is_client": false,
+            "is_psychologists": true,
+            "is_staff": false,
+            "is_superuser": false,
+            "is_active": true,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": "cbec0988-c6c4-41af-8664-d46f336c8714",
+        "fields": {
+            "password": "password-123",
+            "last_login": null,
+            "email": "psycho3@unexistingmail.ru",
+            "is_client": false,
+            "is_psychologists": true,
+            "is_staff": false,
+            "is_superuser": false,
+            "is_active": true,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "users.customuser",
+        "pk": "d0f35ef9-27d8-4393-8a8d-daa2233fff5f",
+        "fields": {
+            "password": "pbkdf2_sha256$390000$ABxTkI39b18hGHTAoMRa93$6cDRC1cGiAQHsp4z7zvSlO0tjmFIzREQwinO9FGNBxU=",
+            "last_login": null,
+            "email": "psycho2@unexistingmail.ru",
+            "is_client": false,
+            "is_psychologists": true,
+            "is_staff": false,
+            "is_superuser": false,
+            "is_active": true,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "clients.client",
+        "pk": "b79ffd17-c066-40b5-b5ea-6e928b42b5bd",
+        "fields": {
+            "user": "1228ef6d-63dc-425e-9ad2-4ec784b1aebb",
+            "first_name": "Руслан",
+            "last_name": "Тратата",
+            "gender": "",
+            "birthday": "1988-01-10",
+            "phone_number": "",
+            "avatar": ""
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 2,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-30T09:00:00Z",
+            "datetime_to": "2023-09-30T09:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 3,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-27T09:00:00Z",
+            "datetime_to": "2023-10-27T09:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 4,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-19T20:00:00Z",
+            "datetime_to": "2023-09-19T20:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 5,
+        "fields": {
+            "psychologist": "2b9adc14-2ce7-4568-af94-feae0aaa6f29",
+            "datetime_from": "2023-09-20T07:00:00Z",
+            "datetime_to": "2023-09-20T07:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 11,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-23T06:00:00Z",
+            "datetime_to": "2023-09-23T06:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 12,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-23T07:00:00Z",
+            "datetime_to": "2023-09-23T07:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 13,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-23T08:00:00Z",
+            "datetime_to": "2023-09-23T08:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 14,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-23T14:00:00Z",
+            "datetime_to": "2023-09-23T14:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 15,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-24T20:00:00Z",
+            "datetime_to": "2023-09-24T20:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 16,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-25T09:00:00Z",
+            "datetime_to": "2023-09-25T09:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 17,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-26T09:00:00Z",
+            "datetime_to": "2023-09-26T09:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 18,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-27T09:00:00Z",
+            "datetime_to": "2023-09-27T09:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 19,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-28T09:00:00Z",
+            "datetime_to": "2023-09-28T09:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 20,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-28T22:00:00Z",
+            "datetime_to": "2023-09-28T22:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 23,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-01T09:00:00Z",
+            "datetime_to": "2023-10-01T09:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 24,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-02T09:00:00Z",
+            "datetime_to": "2023-10-02T09:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 25,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-03T09:00:00Z",
+            "datetime_to": "2023-10-03T09:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 26,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-04T09:00:00Z",
+            "datetime_to": "2023-10-04T09:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 27,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-05T09:00:00Z",
+            "datetime_to": "2023-10-05T09:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 29,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-07T09:00:00Z",
+            "datetime_to": "2023-10-07T09:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 30,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-08T09:00:00Z",
+            "datetime_to": "2023-10-08T09:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 31,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-09T09:00:00Z",
+            "datetime_to": "2023-10-09T09:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 32,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-10T09:00:00Z",
+            "datetime_to": "2023-10-10T09:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 33,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-25T10:00:00Z",
+            "datetime_to": "2023-09-25T10:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 34,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-25T11:00:00Z",
+            "datetime_to": "2023-09-25T11:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 35,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-25T12:00:00Z",
+            "datetime_to": "2023-09-25T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 36,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-29T12:00:00Z",
+            "datetime_to": "2023-09-29T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 37,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-09-30T12:00:00Z",
+            "datetime_to": "2023-09-30T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 38,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-01T12:00:00Z",
+            "datetime_to": "2023-10-01T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 39,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-02T12:00:00Z",
+            "datetime_to": "2023-10-02T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 40,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-03T12:00:00Z",
+            "datetime_to": "2023-10-03T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 41,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-04T12:00:00Z",
+            "datetime_to": "2023-10-04T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 42,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-05T12:00:00Z",
+            "datetime_to": "2023-10-05T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 43,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-06T12:00:00Z",
+            "datetime_to": "2023-10-06T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 44,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-07T12:00:00Z",
+            "datetime_to": "2023-10-07T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 45,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-08T12:00:00Z",
+            "datetime_to": "2023-10-08T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 46,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-09T12:00:00Z",
+            "datetime_to": "2023-10-09T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 47,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-10T12:00:00Z",
+            "datetime_to": "2023-10-10T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 48,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-11T12:00:00Z",
+            "datetime_to": "2023-10-11T12:50:00Z",
+            "is_free": false
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 49,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-12T12:00:00Z",
+            "datetime_to": "2023-10-12T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 50,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-13T12:00:00Z",
+            "datetime_to": "2023-10-13T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 51,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-14T12:00:00Z",
+            "datetime_to": "2023-10-14T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 52,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-15T12:00:00Z",
+            "datetime_to": "2023-10-15T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 53,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-16T12:00:00Z",
+            "datetime_to": "2023-10-16T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 54,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-17T12:00:00Z",
+            "datetime_to": "2023-10-17T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 55,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-18T12:00:00Z",
+            "datetime_to": "2023-10-18T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 56,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-19T12:00:00Z",
+            "datetime_to": "2023-10-19T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 57,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-20T12:00:00Z",
+            "datetime_to": "2023-10-20T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 58,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-21T12:00:00Z",
+            "datetime_to": "2023-10-21T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 59,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-22T12:00:00Z",
+            "datetime_to": "2023-10-22T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 60,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-23T12:00:00Z",
+            "datetime_to": "2023-10-23T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 61,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-24T12:00:00Z",
+            "datetime_to": "2023-10-24T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 62,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-25T12:00:00Z",
+            "datetime_to": "2023-10-25T12:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 63,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-01T10:00:00Z",
+            "datetime_to": "2023-10-01T10:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 64,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-02T10:00:00Z",
+            "datetime_to": "2023-10-02T10:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 65,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-03T10:00:00Z",
+            "datetime_to": "2023-10-03T10:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 66,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-04T10:00:00Z",
+            "datetime_to": "2023-10-04T10:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 67,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-05T10:00:00Z",
+            "datetime_to": "2023-10-05T10:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 68,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-06T10:00:00Z",
+            "datetime_to": "2023-10-06T10:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 69,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-07T10:00:00Z",
+            "datetime_to": "2023-10-07T10:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 70,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-08T10:00:00Z",
+            "datetime_to": "2023-10-08T10:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.slot",
+        "pk": 71,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "datetime_from": "2023-10-09T10:00:00Z",
+            "datetime_to": "2023-10-09T10:50:00Z",
+            "is_free": true
+        }
+    },
+    {
+        "model": "session.session",
+        "pk": 17,
+        "fields": {
+            "client": "b79ffd17-c066-40b5-b5ea-6e928b42b5bd",
+            "slot": 48,
+            "status": "paid",
+            "type": "personal",
+            "price": 2000,
+            "format": "online",
+            "client_link": "https://us05web.zoom.us/j/84199997465?pwd=YvwyKjjitW7bO1GpQibbMMYOudBb7Z.1",
+            "psycho_link": "https://us05web.zoom.us/s/84199997465?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6IkVXZ0VscDB3UV9peU5WWEVIRFNZSEEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEwMCwid2NkIjoidXMwNSIsImNsdCI6MCwibW51bSI6Ijg0MTk5OTk3NDY1IiwiZXhwIjoxNjk1OTMzMzc2LCJpYXQiOjE2OTU5MjYxNzYsImFpZCI6IlFYd0MzYXRvU0RxQ0tFTXo2MmNXOUEiLCJjaWQiOiIifQ.0O_B-HppZAFv5Aj6Ik5-CDc_zW5or453ddUH4iG4hrE"
+        }
+    },
+    {
+        "model": "psychologists.institute",
+        "pk": 1,
+        "fields": {
+            "title": "НИУ ВШЭ",
+            "is_higher": true
+        }
+    },
+    {
+        "model": "psychologists.institute",
+        "pk": 2,
+        "fields": {
+            "title": "GLE International",
+            "is_higher": true
+        }
+    },
+    {
+        "model": "psychologists.institute",
+        "pk": 3,
+        "fields": {
+            "title": "Ассоциация экзистенциально-аналитических психологов и психотерапевтов",
+            "is_higher": false
+        }
+    },
+    {
+        "model": "psychologists.theme",
+        "pk": 1,
+        "fields": {
+            "title": "Депрессия"
+        }
+    },
+    {
+        "model": "psychologists.theme",
+        "pk": 2,
+        "fields": {
+            "title": "Самооценка и уверенность в себе"
+        }
+    },
+    {
+        "model": "psychologists.theme",
+        "pk": 3,
+        "fields": {
+            "title": "Самоопределение, смысл жизни, другие экзистенциальные вопросы"
+        }
+    },
+    {
+        "model": "psychologists.theme",
+        "pk": 4,
+        "fields": {
+            "title": "Конфликты, ссоры, трудности в общении"
+        }
+    },
+    {
+        "model": "psychologists.approach",
+        "pk": 1,
+        "fields": {
+            "title": "Экзистенциальный анализ"
+        }
+    },
+    {
+        "model": "psychologists.approach",
+        "pk": 2,
+        "fields": {
+            "title": "Клиент-центрированные подходы"
+        }
+    },
+    {
+        "model": "psychologists.profilepsychologist",
+        "pk": "2b9adc14-2ce7-4568-af94-feae0aaa6f29",
+        "fields": {
+            "user": "d0f35ef9-27d8-4393-8a8d-daa2233fff5f",
+            "first_name": "Андрей",
+            "last_name": "Быков",
+            "birthday": "1980-09-20",
+            "gender": "male",
+            "phone_number": "123123",
+            "started_working": "2002-09-19",
+            "about": "Вы все клинические идиоты",
+            "avatar": "user_d0f35ef9-27d8-4393-8a8d-daa2233fff5f/bykov.jpg",
+            "speciality": "Психолог",
+            "is_verified": true,
+            "themes": [
+                3,
+                4
+            ],
+            "approaches": [
+                1,
+                2
+            ]
+        }
+    },
+    {
+        "model": "psychologists.profilepsychologist",
+        "pk": "7be06428-26b5-42d6-bcac-7b9985d56677",
+        "fields": {
+            "user": "cbec0988-c6c4-41af-8664-d46f336c8714",
+            "first_name": "Ганнибал",
+            "last_name": "Лектер",
+            "birthday": "1970-09-28",
+            "gender": "male",
+            "phone_number": "123456789",
+            "started_working": "2000-09-28",
+            "about": "Люблю долгие разговоры и вкусно поесть",
+            "avatar": "user_cbec0988-c6c4-41af-8664-d46f336c8714/Hannibal1.webp",
+            "speciality": "Психолог",
+            "is_verified": true,
+            "themes": [
+                1,
+                3
+            ],
+            "approaches": [
+                1
+            ]
+        }
+    },
+    {
+        "model": "psychologists.profilepsychologist",
+        "pk": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+        "fields": {
+            "user": "1bdfebbb-7a19-43f8-88f3-c1b85c48ac2b",
+            "first_name": "Доктор",
+            "last_name": "Хаус",
+            "birthday": "1980-09-19",
+            "gender": "male",
+            "phone_number": "+791111111",
+            "started_working": "2002-09-19",
+            "about": "Много слов обо мне",
+            "avatar": "user_1bdfebbb-7a19-43f8-88f3-c1b85c48ac2b/alex.png",
+            "speciality": "Психолог",
+            "is_verified": true,
+            "themes": [
+                1,
+                2
+            ],
+            "approaches": [
+                1
+            ]
+        }
+    },
+    {
+        "model": "psychologists.psychoeducation",
+        "pk": 1,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "institute": 1,
+            "speciality": "Супер-психолог",
+            "graduation_year": "2000",
+            "document": "user_1bdfebbb-7a19-43f8-88f3-c1b85c48ac2b/bad_vs_good_code.png"
+        }
+    },
+    {
+        "model": "psychologists.psychoeducation",
+        "pk": 2,
+        "fields": {
+            "psychologist": "2b9adc14-2ce7-4568-af94-feae0aaa6f29",
+            "institute": 3,
+            "speciality": "Психолог",
+            "graduation_year": "2010",
+            "document": "user_d0f35ef9-27d8-4393-8a8d-daa2233fff5f/bad_vs_good_code.png"
+        }
+    },
+    {
+        "model": "psychologists.psychoeducation",
+        "pk": 3,
+        "fields": {
+            "psychologist": "7be06428-26b5-42d6-bcac-7b9985d56677",
+            "institute": 2,
+            "speciality": "Психолог",
+            "graduation_year": "1990",
+            "document": "user_cbec0988-c6c4-41af-8664-d46f336c8714/bad_vs_good_code.png"
+        }
+    },
+    {
+        "model": "psychologists.service",
+        "pk": 1,
+        "fields": {
+            "psychologist": "b1a198d6-d03e-4ed4-8795-bb6056469788",
+            "type": "no_matter",
+            "price": 2000,
+            "duration": 50,
+            "format": "online"
+        }
+    },
+    {
+        "model": "psychologists.service",
+        "pk": 2,
+        "fields": {
+            "psychologist": "2b9adc14-2ce7-4568-af94-feae0aaa6f29",
+            "type": "no_matter",
+            "price": 1000,
+            "duration": 50,
+            "format": "online"
+        }
+    },
+    {
+        "model": "psychologists.service",
+        "pk": 3,
+        "fields": {
+            "psychologist": "7be06428-26b5-42d6-bcac-7b9985d56677",
+            "type": "no_matter",
+            "price": 5000,
+            "duration": 50,
+            "format": "online"
+        }
+    }
+]

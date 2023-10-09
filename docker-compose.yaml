@@ -1,0 +1,63 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres:13.0-alpine
+    volumes:
+      - db_value:/var/lib/postgresql/data/
+    env_file:
+      - .env
+
+  backend:
+    image: devladi/psy_back:latest
+    container_name: psy_backend
+    restart: always
+    volumes:
+      - static_value:/app/static/
+      - media_value:/app/media/
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+  frontend:
+    image: devladi/psy_front:latest
+    container_name: psy_frontend
+    volumes:
+      - ./frontend/:/app/result_build/
+    depends_on:
+      - backend
+
+  nginx:
+    image: nginx:1.21.3-alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./frontend/build:/usr/share/nginx/html/
+      - static_value:/var/html/static/
+      - media_value:/var/html/media/
+      - ./ssl/certbot/conf:/etc/letsencrypt
+      - ./ssl/certbot/www:/var/www/certbot
+    depends_on:
+      - backend
+      - frontend
+    restart: always
+
+  certbot:
+    image: certbot/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    container_name: certbot
+    volumes:
+        - ./ssl/certbot/conf:/etc/letsencrypt
+        - ./ssl/certbot/www:/var/www/certbot
+    depends_on:
+      - nginx
+
+volumes:
+  static_value:
+  media_value:
+  db_value:
