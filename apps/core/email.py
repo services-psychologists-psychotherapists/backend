@@ -18,7 +18,7 @@ class ClientActivationEmail(BaseEmailMessage):
         return context
 
 
-class PsychologistActivationEmail(BaseEmailMessage):
+class PsychoActivationEmail(BaseEmailMessage):
     template_name = "email/psycho_activation.html"
 
     def get_context_data(self):
@@ -30,6 +30,16 @@ class PsychologistActivationEmail(BaseEmailMessage):
         context["protocol"] = 'https'
         context["domain"] = 'sharewithme.acceleratorpracticum.ru'
         context["url"] = settings.PASSWORD_RESET_CONFIRM_URL.format(**context)
+        return context
+
+
+class PsychoConfirmationFormEmail(BaseEmailMessage):
+    template_name = "email/psycho_confirm_form.html"
+
+    def get_context_data(self):
+        context = super().get_context_data()
+
+        context["email_sender"] = settings.EMAIL_SENDER
         return context
 
 
