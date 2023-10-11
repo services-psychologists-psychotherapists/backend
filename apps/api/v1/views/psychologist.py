@@ -30,14 +30,12 @@ class CreatePsychologistView(views.APIView):
     )
     def post(self, request):
         """Создание профиля психолога по анкете"""
-        user_ser = psycho.CreateUserSerializer(data=request.data)
-        user_ser.is_valid(raise_exception=True)
-        psychologist_ser = psycho.CreatePsychologistSerializer(
+        serializer = psycho.CreatePsychologistSerializer(
             data=request.data
         )
-        psychologist_ser.is_valid(raise_exception=True)
-        user, _ = create_psychologist(user_ser.validated_data,
-                                      psychologist_ser.validated_data,
+        serializer.is_valid(raise_exception=True)
+        user, _ = create_psychologist(serializer.validated_data,
+                                      request,
                                       )
         return Response(psycho.CreateUserSerializer(user).data,
                         status=status.HTTP_201_CREATED)

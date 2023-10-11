@@ -4,22 +4,23 @@ from typing import OrderedDict
 from django.db import transaction
 from django.core.exceptions import (ValidationError as DjangoValidationError,
                                     ObjectDoesNotExist)
+from django.http import HttpRequest
 from rest_framework import exceptions
 
 from apps.core.models import UploadFile
 from apps.psychologists.models import (ProfilePsychologist, Institute,
                                        Service, Theme, Approach)
+from apps.psychologists.threads import PsychoConfirmationFormEmailThread
 from apps.users.models import CustomUser
 
 
 @transaction.atomic
-def create_psychologist(user_data: OrderedDict,
-                        psychologist_data: OrderedDict
+def create_psychologist(validated_data: OrderedDict,
+                        request: HttpRequest,
                         ) -> tuple[CustomUser, ProfilePsychologist]:
     """
-    user_data = {"email": str}
     psychologist_data содержит поля, обязательные для заполнения плюс:
-    psychologist_data = {
+    validated_data = {
         "themes": [{"title": str}],
         "approaches": [{"title": str}],
         "institutes" & "courses": [
@@ -33,17 +34,22 @@ def create_psychologist(user_data: OrderedDict,
         "experience": int,
     }
     """
+    email = validated_data.pop('email')
 
     user = CustomUser.objects.create_user(
         is_client=False,
         is_psychologists=True,
         is_active=True,
-        **user_data,
+        email=email,
     )
-    psychologist = create_profile(user, psychologist_data)
+    psychologist = create_profile(user, validated_data)
+
+    PsychoConfirmationFormEmailThread(request, user).start()
+
     return (user, psychologist)
 
 
+@transaction.atomic
 def create_profile(user: CustomUser,
                    psychologist_data: OrderedDict,
                    ) -> ProfilePsychologist:
