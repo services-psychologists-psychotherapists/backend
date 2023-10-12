@@ -16,7 +16,7 @@ class Test01Client:
         """Создание пользователя с валидными данными."""
         response = guest_client.post(self.create_url, data=data)
         assert response.status_code == HTTPStatus.CREATED, (
-            f"POST-Запрос на создание клиента с валидными данными {messege}"
+            f"POST-Запрос на создание клиента с валидными данными ({messege}) "
             f"возвращает статус {response.status_code}."
         )
 
@@ -25,7 +25,7 @@ class Test01Client:
         """Создание пользователя с невалидными данными."""
         response = guest_client.post(self.create_url, data=data)
         assert response.status_code == HTTPStatus.BAD_REQUEST, (
-            f"POST-Запрос на создание клиента с невалидными данными ({messege})"
+            f"POST-Запрос на создание клиента с невалидными данными ({messege}) "
             f"возвращает статус {response.status_code}."
         )
 
@@ -34,7 +34,7 @@ class Test01Client:
         """Изменение профиля клиента с валидными данными."""
         response = client_client.put(self.profile_url, data=data)
         assert response.status_code == HTTPStatus.OK, (
-            f"POST-Запрос на изменение профиля клиента с валидными данными {messege}"
+            f"PUT-Запрос на изменение профиля клиента с валидными данными ({messege}) "
             f"возвращает статус {response.status_code}."
         )
         for field, value in data.items():
@@ -47,7 +47,16 @@ class Test01Client:
                     response.data.get(field) == value
                 ), f"При изменении профиля клиента поле {field} не изменилось."
 
-    def test_04_access_to_client_profile(self, client_client, guest_client):
+    @pytest.mark.parametrize("data,messege", utils.CLIENT_UPDATE_INVALID_DATA)
+    def test_04_update_client_fail(self, client_client, data, messege):
+        """Изменение профиля клиента с невалидными данными."""
+        response = client_client.put(self.profile_url, data=data)
+        assert response.status_code == HTTPStatus.BAD_REQUEST, (
+            f"PUT-Запрос на изменение профиля клиента с невалидными данными ({messege}) "
+            f"возвращает статус {response.status_code}."
+        )
+
+    def test_05_access_to_client_profile(self, client_client, guest_client):
         """Профиль клиента в ЛК доступен только клиенту."""
         scenarios = (
             ("Клиент", client_client, HTTPStatus.OK),
