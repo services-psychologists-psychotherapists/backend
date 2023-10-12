@@ -1,6 +1,3 @@
-from datetime import datetime, timedelta
-
-
 CLIENT_CREATE_VALID_DATA = (
     (
         {
@@ -100,5 +97,35 @@ CLIENT_CREATE_INVALID_DATA = (
             "birthday": "12.09.1900",
         },
         "старше 120 лет",
+    ),
+)
+
+
+CLIENT_UPDATE_VALID_DATA = (
+    (
+        {
+            "first_name": "Mr. Client",
+            "last_name": "Clientov",
+            "birthday": "12.09.1970",
+        },
+        "добавлена фамилия",
+    ),
+    (
+        {
+            "first_name": "Mr. Client",
+            "last_name": "Clientovich",
+            "birthday": "12.09.1970",
+            "phone_number": "+79119876543",
+        },
+        "добавлена фамилия и телефон",
+    ),
+    (
+        {
+            "first_name": "Mr. Client",
+            "last_name": "Clientovich",
+            "birthday": "12.09.1970",
+            "phone_number": "+79119876543",
+        },
+        "добавлена фамилия, телефон и пол",
     ),
 )
