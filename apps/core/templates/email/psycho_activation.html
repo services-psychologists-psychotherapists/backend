@@ -1,0 +1,26 @@
+{% block subject %}
+Завершение регистрации на сервисе Share With Me.
+{% endblock subject %}
+
+{% block text_body %}
+Здравствуйте!
+Ваша анкета на сайте Share With Me проверена и подтверждена!
+Установите пароль, чтобы начать работать, пройдя по ссылке:
+
+{{ protocol }}://{{ domain }}/{{ url|safe }}
+
+Спасибо за выбор нашего сервиса!
+Команда сервиса Share With Me.
+{% endblock text_body %}
+
+{% block html_body %}
+<p>Здравствуйте!</p>
+<p>Ваша анкета на сайте Share With Me проверена и подтверждена!</p>
+<p>Установите пароль, чтобы начать работать, пройдя по ссылке:</p>
+
+<p><a href="{{ protocol }}://{{ domain }}/{{ url|safe }}">{{ protocol }}://{{ domain }}/{{ url|safe }}</a></p>
+
+<p>Спасибо за выбор нашего сервиса!</p>
+<p>Команда сервиса Share With Me.</p>
+
+{% endblock html_body %}
