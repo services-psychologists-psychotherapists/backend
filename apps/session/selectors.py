@@ -2,19 +2,13 @@ from django.db.models import QuerySet
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
-from apps.users.models import CustomUser
 from apps.psychologists.models import ProfilePsychologist
-
-from .models import Slot
-
-
-def get_user_slot(user: CustomUser, pk: int) -> Slot:
-    """Получение объекта Слот."""
-    return get_object_or_404(Slot, psychologist__user=user, pk=pk)
+from apps.users.models import CustomUser
 
 
-def get_user_slots(user: CustomUser) -> QuerySet:
+def get_all_free_slots_by_user(user: CustomUser) -> QuerySet:
+    """Возвращает все свободные слоты психолога."""
     psycho = get_object_or_404(ProfilePsychologist, user=user)
-    return (psycho.slots.
-            filter(datetime_from__gte=timezone.now()).
-            select_related('session', 'session__client'))
+    return psycho.slots.filter(is_free=True).select_related(
+        "session", "session__client"
+    )

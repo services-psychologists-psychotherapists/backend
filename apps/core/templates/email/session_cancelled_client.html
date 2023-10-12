@@ -1,0 +1,30 @@
+{% block subject %}
+Отмена сессии на сайте Share with me.
+{% endblock subject %}
+
+{% block text_body %}
+Здравствуйте!
+Ваша сессия с психологом {{ psycho_name }}, назначенная на {{ date }} в {{ time }} (указано московское время GMT+3)
+отменена.
+{{ refund }}
+Записаться на другую сессию можно в каталоге по ссылке:
+{{ protocol }}://{{ domain }}/catalog
+
+Спасибо за выбор нашего сервиса!
+Команда Share with me.
+{% endblock text_body %}
+
+{% block html_body %}
+<p>
+    Здравствуйте!<br>
+    Ваша сессия с психологом {{ psycho_name }}, назначенная на {{ date }} в {{ time }} (указано московское время GMT+3)
+    отменена.<br>
+    {{ refund }}<br>
+    Записаться на другую сессию можно в каталоге по ссылке:<br>
+    <a href="{{ protocol }}://{{ domain }}/catalog">{{ protocol }}://{{ domain }}/catalog</a><br>
+</p>
+<p>
+    Спасибо за выбор нашего сервиса!<br>
+    Команда Share with me.
+</p>
+{% endblock html_body %}
