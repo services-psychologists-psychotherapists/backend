@@ -1,0 +1,27 @@
+{% block subject %}
+Новая сессия на сайте Share with me.
+{% endblock subject %}
+
+{% block text_body %}
+Здравствуйте!
+Вы записались на сессию с психологом {{ psycho_name }} на {{ date }} в {{ time }} (указано московское время GMT+3).
+Посмотреть запись можно в Личном кабинете по ссылке:
+{{ protocol }}://{{ domain }}/client_account
+
+Спасибо за выбор нашего сервиса!
+Команда Share with me.
+{% endblock text_body %}
+
+{% block html_body %}
+<p>
+    Здравствуйте!<br>
+    Вы записались на сессию с психологом {{ psycho_name }} на {{ date }} в {{ time }} (указано московское время
+    GMT+3).<br>
+    Посмотреть запись можно в Личном кабинете по ссылке:<br>
+    <a href="{{ protocol }}://{{ domain }}/client_account">{{ protocol }}://{{ domain }}/client_account</a><br>
+</p>
+<p>
+    Спасибо за выбор нашего сервиса!<br>
+    Команда Share with me.
+</p>
+{% endblock html_body %}
