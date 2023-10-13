@@ -206,6 +206,8 @@ class UploadFileView(views.APIView):
         file_ser.is_valid(raise_exception=True)
         file = create_file(file_ser.validated_data)
         return Response(
-            psycho.UploadFileSerializer(file).data,
+            psycho.UploadFileSerializer(
+                file, context={"request": request, "view": self}
+            ).data,
             status=status.HTTP_201_CREATED,
         )
