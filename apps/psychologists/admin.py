@@ -49,6 +49,7 @@ class ProfilePsychologistAdmin(admin.ModelAdmin):
                     "phone_number",
                     "about",
                     "started_working",
+                    "avatar",
                 )
             },
         ),
