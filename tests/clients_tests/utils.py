@@ -1,6 +1,3 @@
-from datetime import datetime, timedelta
-
-
 CLIENT_CREATE_VALID_DATA = (
     (
         {
@@ -100,5 +97,99 @@ CLIENT_CREATE_INVALID_DATA = (
             "birthday": "12.09.1900",
         },
         "старше 120 лет",
+    ),
+)
+
+
+CLIENT_UPDATE_VALID_DATA = (
+    (
+        {
+            "first_name": "Mr. Client",
+            "last_name": "Clientov",
+            "birthday": "12.09.1970",
+            "avatar": "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+        },
+        "добавлен аватар",
+    ),
+    (
+        {
+            "first_name": "Mr. Client",
+            "last_name": "Clientov",
+            "birthday": "12.09.1970",
+        },
+        "добавлена фамилия",
+    ),
+    (
+        {
+            "first_name": "Mr. Client",
+            "last_name": "Clientovich",
+            "birthday": "12.09.1970",
+            "phone_number": "+79119876543",
+        },
+        "добавлена фамилия и телефон",
+    ),
+    (
+        {
+            "first_name": "Mr. Client",
+            "last_name": "Clientovich",
+            "birthday": "12.09.1970",
+            "phone_number": "+79119876543",
+        },
+        "добавлена фамилия, телефон и пол",
+    ),
+)
+
+
+CLIENT_UPDATE_INVALID_DATA = (
+    (
+        {
+            "first_name": "Mr. Client" * 20,
+            "last_name": "Clientov",
+            "birthday": "12.09.1970",
+        },
+        "слишком длинное имя",
+    ),
+    (
+        {
+            "first_name": "Mr. Client",
+            "last_name": "Clientov" * 20,
+            "birthday": "12.09.1970",
+        },
+        "слишком длинная фамилия",
+    ),
+    (
+        {
+            "first_name": "Mr. Client",
+            "last_name": "Clientov",
+            "birthday": "1970-09-12",
+        },
+        "неверный формат даты рождения",
+    ),
+    (
+        {
+            "first_name": "Mr. Client",
+            "last_name": "Clientovich",
+            "birthday": "12.09.1970",
+            "phone_number": "+791198765432131515864864",
+        },
+        "слишком длинный номер телефона",
+    ),
+    (
+        {
+            "first_name": "Mr. Client",
+            "last_name": "Clientov",
+            "birthday": "12.09.1970",
+            "avatar": "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+        },
+        "неверный формат картинки 1",
+    ),
+    (
+        {
+            "first_name": "Mr. Client",
+            "last_name": "Clientov",
+            "birthday": "12.09.1970",
+            "avatar": "http://fakesite.com/fakesite",
+        },
+        "неверный формат картинки 2",
     ),
 )
