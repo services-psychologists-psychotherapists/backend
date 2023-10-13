@@ -4,44 +4,57 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('psychologists', '0004_institute_is_higher_psychoeducation_speciality_and_more'),
+        (
+            "psychologists",
+            "0004_institute_is_higher_psychoeducation_speciality_and_more",
+        ),
     ]
 
     operations = [
         migrations.RemoveConstraint(
-            model_name='psychoeducation',
-            name='unique_education',
+            model_name="psychoeducation",
+            name="unique_education",
         ),
         migrations.RemoveField(
-            model_name='profilepsychologist',
-            name='middle_name',
+            model_name="profilepsychologist",
+            name="middle_name",
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='about',
+            model_name="profilepsychologist",
+            name="about",
             field=models.TextField(max_length=500),
         ),
         migrations.AlterField(
-            model_name='service',
-            name='type',
-            field=models.CharField(choices=[('personal', 'личная'), ('group', 'групповая'), ('no_matter', 'неважно')], default='no_matter', max_length=10),
+            model_name="service",
+            name="type",
+            field=models.CharField(
+                choices=[
+                    ("personal", "личная"),
+                    ("group", "групповая"),
+                    ("no_matter", "неважно"),
+                ],
+                default="no_matter",
+                max_length=10,
+            ),
         ),
         migrations.AddIndex(
-            model_name='approach',
-            index=models.Index(fields=['title'], name='psychologists_approach_index'),
+            model_name="approach",
+            index=models.Index(fields=["title"], name="psychologists_approach_index"),
         ),
         migrations.AddIndex(
-            model_name='institute',
-            index=models.Index(fields=['title'], name='psychologists_institute_index'),
+            model_name="institute",
+            index=models.Index(fields=["title"], name="psychologists_institute_index"),
         ),
         migrations.AddIndex(
-            model_name='theme',
-            index=models.Index(fields=['title'], name='psychologists_theme_index'),
+            model_name="theme",
+            index=models.Index(fields=["title"], name="psychologists_theme_index"),
         ),
         migrations.AddConstraint(
-            model_name='psychoeducation',
-            constraint=models.UniqueConstraint(fields=('psychologist', 'institute', 'speciality'), name='unique_education'),
+            model_name="psychoeducation",
+            constraint=models.UniqueConstraint(
+                fields=("psychologist", "institute", "speciality"),
+                name="unique_education",
+            ),
         ),
     ]

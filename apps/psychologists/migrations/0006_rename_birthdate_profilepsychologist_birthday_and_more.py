@@ -4,20 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('psychologists', '0005_remove_psychoeducation_unique_education_and_more'),
+        ("psychologists", "0005_remove_psychoeducation_unique_education_and_more"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='profilepsychologist',
-            old_name='birthdate',
-            new_name='birthday',
+            model_name="profilepsychologist",
+            old_name="birthdate",
+            new_name="birthday",
         ),
         migrations.AddField(
-            model_name='profilepsychologist',
-            name='speciality',
-            field=models.CharField(blank=True, default='Психолог', max_length=50),
+            model_name="profilepsychologist",
+            name="speciality",
+            field=models.CharField(blank=True, default="Психолог", max_length=50),
         ),
     ]

@@ -4,25 +4,47 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('psychologists', '0002_alter_profilepsychologist_options_and_more'),
+        ("psychologists", "0002_alter_profilepsychologist_options_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='gender',
-            field=models.CharField(choices=[('male', 'мужской'), ('female', 'женский'), ('other', 'другой')], max_length=10),
+            model_name="profilepsychologist",
+            name="gender",
+            field=models.CharField(
+                choices=[
+                    ("male", "мужской"),
+                    ("female", "женский"),
+                    ("other", "другой"),
+                ],
+                max_length=10,
+            ),
         ),
         migrations.AlterField(
-            model_name='service',
-            name='format',
-            field=models.CharField(choices=[('online', 'онлайн'), ('offline', 'личная встреча'), ('no_matter', 'неважно')], default='online', max_length=10),
+            model_name="service",
+            name="format",
+            field=models.CharField(
+                choices=[
+                    ("online", "онлайн"),
+                    ("offline", "личная встреча"),
+                    ("no_matter", "неважно"),
+                ],
+                default="online",
+                max_length=10,
+            ),
         ),
         migrations.AlterField(
-            model_name='service',
-            name='type',
-            field=models.CharField(choices=[('personal', 'личная'), ('group', 'групповая'), ('no_matter', 'неважно')], default='no_matter', max_length=10),
+            model_name="service",
+            name="type",
+            field=models.CharField(
+                choices=[
+                    ("personal", "личная"),
+                    ("group", "групповая"),
+                    ("no_matter", "неважно"),
+                ],
+                default="no_matter",
+                max_length=10,
+            ),
         ),
     ]
