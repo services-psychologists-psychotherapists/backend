@@ -149,6 +149,9 @@ class EducationInputSerializer(serializers.Serializer):
 
 
 class CreatePsychologistSerializer(serializers.Serializer):
+    """
+    Сериализатор для создания профиля психолога
+    """
     email = serializers.EmailField()
     first_name = serializers.CharField(max_length=50)
     last_name = serializers.CharField(max_length=50)

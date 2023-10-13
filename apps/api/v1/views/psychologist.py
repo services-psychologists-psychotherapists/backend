@@ -29,7 +29,7 @@ class CreatePsychologistView(views.APIView):
         responses={201: psycho.CreateUserSerializer()},
     )
     def post(self, request):
-        """Создание профиля психолога по анкете"""
+        """Создание профиля психолога по анкете."""
         serializer = psycho.CreatePsychologistSerializer(
             data=request.data
         )
