@@ -5,29 +5,23 @@ from apps.psychologists import models
 
 @admin.register(models.Institute)
 class InstituteAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "is_higher")
-    empty_value_display = "-пусто-"
-    search_fields = ("title__startswith",)
+    list_display = ('id', 'title', 'is_higher')
+    empty_value_display = '-пусто-'
+    search_fields = ('title__startswith', )
 
 
 @admin.register(models.Theme)
 class ThemeAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "title",
-    )
-    empty_value_display = "-пусто-"
-    search_fields = ("title__startswith",)
+    list_display = ('id', 'title', )
+    empty_value_display = '-пусто-'
+    search_fields = ('title__startswith', )
 
 
 @admin.register(models.Approach)
 class ApproachAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "title",
-    )
-    empty_value_display = "-пусто-"
-    search_fields = ("title__startswith",)
+    list_display = ('id', 'title', )
+    empty_value_display = '-пусто-'
+    search_fields = ('title__startswith', )
 
 
 class PsychoEducationInline(admin.TabularInline):
@@ -76,7 +70,7 @@ class ProfilePsychologistAdmin(admin.ModelAdmin):
     actions = ("send_activation_email",)
 
     def save_model(self, request, obj, form, change):
-        if "is_verified" in form.changed_data:
-            obj.save(update_fields=["is_verified"])
+        if 'is_verified' in form.changed_data:
+            obj.save(update_fields=['is_verified'])
         else:
             obj.save()

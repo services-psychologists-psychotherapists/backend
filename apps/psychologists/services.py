@@ -28,7 +28,7 @@ def create_psychologist(
 ) -> tuple[CustomUser, ProfilePsychologist]:
     """
     psychologist_data содержит поля, обязательные для заполнения плюс:
-    validated_data = {
+    psychologist_data = {
         "themes": [{"title": str}],
         "approaches": [{"title": str}],
         "institutes" & "courses": [
@@ -66,11 +66,15 @@ def create_profile(
 
     approaches = get_or_create_approaches(psychologist_data.pop("approaches"))
 
-    institutes = get_or_create_education(psychologist_data.pop("institutes"), flag=True)
+    institutes = get_or_create_education(
+        psychologist_data.pop("institutes"), flag=True
+    )
 
     courses = []
     if "courses" in psychologist_data.keys():
-        courses = get_or_create_education(psychologist_data.pop("courses"), flag=False)
+        courses = get_or_create_education(
+            psychologist_data.pop("courses"), flag=False
+        )
 
     price = psychologist_data.pop("price")
 

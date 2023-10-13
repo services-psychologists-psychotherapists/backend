@@ -29,6 +29,3 @@ class UploadFile(models.Model):
     class Meta:
         verbose_name = 'Документ'
         verbose_name_plural = 'Документы'
-
-    def __str__(self) -> str:
-        return f'{self.path}'

@@ -6,7 +6,7 @@ from apps.core.constants import FILE_MAX_SIZE, ALLOWED_FORMAT
 def validate_file_size(file_obj):
     if file_obj.size > FILE_MAX_SIZE:
         raise ValidationError(
-            "Максимальный размер файла 2 Мб"
+            'Максимальный размер файла 2 Мб'
         )
 
 

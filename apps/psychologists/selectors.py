@@ -61,7 +61,9 @@ def get_psychologist_with_services(id: int) -> ProfilePsychologist:
     return get_object_or_404(queryset, id=id)
 
 
-def get_education(user: ProfilePsychologist, flag: bool) -> list[PsychoEducation]:
+def get_education(
+    user: ProfilePsychologist, flag: bool
+) -> list[PsychoEducation]:
     return PsychoEducation.objects.filter(
         psychologist=user, institute__is_higher=flag
     ).select_related("document")
@@ -93,4 +95,4 @@ def get_all_free_slots(psychologist_id: int) -> QuerySet:
     """Возвращает все свободные слоты психолога с текущего момента."""
     psycho = get_object_or_404(ProfilePsychologist, pk=psychologist_id)
     now = timezone.now()
-    return psycho.slots.filter(datetime_from__gt=now, is_free=True)
+    return psycho.slots.filter(datetime_from__gte=now, is_free=True)
