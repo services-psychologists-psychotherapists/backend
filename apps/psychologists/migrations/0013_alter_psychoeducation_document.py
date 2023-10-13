@@ -5,16 +5,22 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('core', '0001_initial'),
-        ('psychologists', '0012_alter_psychoeducation_options_alter_approach_title_and_more'),
+        ("core", "0001_initial"),
+        (
+            "psychologists",
+            "0012_alter_psychoeducation_options_alter_approach_title_and_more",
+        ),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='psychoeducation',
-            name='document',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='core.uploadfile', verbose_name='Документ об образовании'),
+            model_name="psychoeducation",
+            name="document",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="core.uploadfile",
+                verbose_name="Документ об образовании",
+            ),
         ),
     ]

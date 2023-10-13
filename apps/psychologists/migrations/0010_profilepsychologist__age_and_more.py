@@ -4,20 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('psychologists', '0009_alter_profilepsychologist_birthday_and_more'),
+        ("psychologists", "0009_alter_profilepsychologist_birthday_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='profilepsychologist',
-            name='_age',
+            model_name="profilepsychologist",
+            name="_age",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='profilepsychologist',
-            name='_experience',
+            model_name="profilepsychologist",
+            name="_experience",
             field=models.IntegerField(blank=True, null=True),
         ),
     ]

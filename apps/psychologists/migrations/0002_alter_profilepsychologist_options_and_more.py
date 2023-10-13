@@ -5,57 +5,80 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('psychologists', '0001_initial'),
+        ("psychologists", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='profilepsychologist',
-            options={'default_related_name': 'psychologists', 'verbose_name': 'Профиль психолога', 'verbose_name_plural': 'Профили психолога'},
+            name="profilepsychologist",
+            options={
+                "default_related_name": "psychologists",
+                "verbose_name": "Профиль психолога",
+                "verbose_name_plural": "Профили психолога",
+            },
         ),
         migrations.AlterModelOptions(
-            name='psychoeducation',
-            options={'default_related_name': 'psychoeducation', 'verbose_name': 'Образование психолога'},
+            name="psychoeducation",
+            options={
+                "default_related_name": "psychoeducation",
+                "verbose_name": "Образование психолога",
+            },
         ),
         migrations.AlterField(
-            model_name='approach',
-            name='title',
+            model_name="approach",
+            name="title",
             field=models.CharField(max_length=200, unique=True),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='gender',
-            field=models.CharField(choices=[('M', 'MALE'), ('F', 'FEMALE'), ('O', 'OTHER')], max_length=1),
+            model_name="profilepsychologist",
+            name="gender",
+            field=models.CharField(
+                choices=[("M", "MALE"), ("F", "FEMALE"), ("O", "OTHER")], max_length=1
+            ),
         ),
         migrations.AlterField(
-            model_name='service',
-            name='duration',
+            model_name="service",
+            name="duration",
             field=models.PositiveSmallIntegerField(default=50),
         ),
         migrations.AlterField(
-            model_name='service',
-            name='format',
-            field=models.CharField(choices=[('ON', 'ONLINE'), ('OF', 'OFFLINE'), ('N', 'NO MATTER')], default='ON', max_length=2),
+            model_name="service",
+            name="format",
+            field=models.CharField(
+                choices=[("ON", "ONLINE"), ("OF", "OFFLINE"), ("N", "NO MATTER")],
+                default="ON",
+                max_length=2,
+            ),
         ),
         migrations.AlterField(
-            model_name='service',
-            name='price',
-            field=models.PositiveIntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(50000)]),
+            model_name="service",
+            name="price",
+            field=models.PositiveIntegerField(
+                validators=[
+                    django.core.validators.MinValueValidator(1),
+                    django.core.validators.MaxValueValidator(50000),
+                ]
+            ),
         ),
         migrations.AlterField(
-            model_name='service',
-            name='type',
-            field=models.CharField(choices=[('P', 'PERSONAL'), ('G', 'GROUP'), ('N', 'NO MATTER')], default='N', max_length=1),
+            model_name="service",
+            name="type",
+            field=models.CharField(
+                choices=[("P", "PERSONAL"), ("G", "GROUP"), ("N", "NO MATTER")],
+                default="N",
+                max_length=1,
+            ),
         ),
         migrations.AlterField(
-            model_name='theme',
-            name='title',
+            model_name="theme",
+            name="title",
             field=models.CharField(max_length=200, unique=True),
         ),
         migrations.AddConstraint(
-            model_name='psychoeducation',
-            constraint=models.UniqueConstraint(fields=('psychologist', 'institute'), name='unique_education'),
+            model_name="psychoeducation",
+            constraint=models.UniqueConstraint(
+                fields=("psychologist", "institute"), name="unique_education"
+            ),
         ),
     ]

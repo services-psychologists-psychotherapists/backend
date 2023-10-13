@@ -5,15 +5,21 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('psychologists', '0006_rename_birthdate_profilepsychologist_birthday_and_more'),
+        (
+            "psychologists",
+            "0006_rename_birthdate_profilepsychologist_birthday_and_more",
+        ),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='avatar',
-            field=models.ImageField(blank=True, default='/home/veraf/styding/work/psycho-online/backend/static/default.jpg', upload_to=apps.psychologists.models.user_directory_path),
+            model_name="profilepsychologist",
+            name="avatar",
+            field=models.ImageField(
+                blank=True,
+                default="/home/veraf/styding/work/psycho-online/backend/static/default.jpg",
+                upload_to=apps.psychologists.models.user_directory_path,
+            ),
         ),
     ]

@@ -76,7 +76,7 @@ class ProfilePsychologistAdmin(admin.ModelAdmin):
     actions = ("send_activation_email",)
 
     def save_model(self, request, obj, form, change):
-        if 'is_verified' in form.changed_data:
-            obj.save(update_fields=['is_verified'])
+        if "is_verified" in form.changed_data:
+            obj.save(update_fields=["is_verified"])
         else:
             obj.save()

@@ -4,18 +4,17 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('psychologists', '0010_profilepsychologist__age_and_more'),
+        ("psychologists", "0010_profilepsychologist__age_and_more"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='profilepsychologist',
-            name='_age',
+            model_name="profilepsychologist",
+            name="_age",
         ),
         migrations.RemoveField(
-            model_name='profilepsychologist',
-            name='_experience',
+            model_name="profilepsychologist",
+            name="_experience",
         ),
     ]

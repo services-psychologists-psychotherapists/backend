@@ -5,47 +5,56 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('psychologists', '0003_alter_profilepsychologist_gender_and_more'),
+        ("psychologists", "0003_alter_profilepsychologist_gender_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='institute',
-            name='is_higher',
+            model_name="institute",
+            name="is_higher",
             field=models.BooleanField(default=True),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='psychoeducation',
-            name='speciality',
-            field=models.CharField(default='psychologist', max_length=50),
+            model_name="psychoeducation",
+            name="speciality",
+            field=models.CharField(default="psychologist", max_length=50),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='about',
+            model_name="profilepsychologist",
+            name="about",
             field=models.TextField(blank=True, max_length=500),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='avatar',
-            field=models.ImageField(blank=True, upload_to=apps.psychologists.models.user_directory_path),
+            model_name="profilepsychologist",
+            name="avatar",
+            field=models.ImageField(
+                blank=True, upload_to=apps.psychologists.models.user_directory_path
+            ),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='middle_name',
-            field=models.CharField(blank=True, default='', max_length=50),
+            model_name="profilepsychologist",
+            name="middle_name",
+            field=models.CharField(blank=True, default="", max_length=50),
         ),
         migrations.AlterField(
-            model_name='psychoeducation',
-            name='graduation_year',
+            model_name="psychoeducation",
+            name="graduation_year",
             field=models.CharField(max_length=10),
         ),
         migrations.AlterField(
-            model_name='service',
-            name='type',
-            field=models.CharField(choices=[('personal', 'личная'), ('group', 'групповая'), ('no_matter', 'неважно')], default='personal', max_length=10),
+            model_name="service",
+            name="type",
+            field=models.CharField(
+                choices=[
+                    ("personal", "личная"),
+                    ("group", "групповая"),
+                    ("no_matter", "неважно"),
+                ],
+                default="personal",
+                max_length=10,
+            ),
         ),
     ]
