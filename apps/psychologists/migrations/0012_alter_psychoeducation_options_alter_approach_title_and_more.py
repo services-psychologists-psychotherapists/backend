@@ -9,154 +9,247 @@ import uuid
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('psychologists', '0011_remove_profilepsychologist__age_and_more'),
+        ("psychologists", "0011_remove_profilepsychologist__age_and_more"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='psychoeducation',
-            options={'default_related_name': 'psychoeducation', 'verbose_name': 'Образование психолога', 'verbose_name_plural': 'Профили психологов'},
+            name="psychoeducation",
+            options={
+                "default_related_name": "psychoeducation",
+                "verbose_name": "Образование психолога",
+                "verbose_name_plural": "Профили психологов",
+            },
         ),
         migrations.AlterField(
-            model_name='approach',
-            name='title',
-            field=models.CharField(max_length=200, unique=True, verbose_name='Название'),
+            model_name="approach",
+            name="title",
+            field=models.CharField(
+                max_length=200, unique=True, verbose_name="Название"
+            ),
         ),
         migrations.AlterField(
-            model_name='institute',
-            name='is_higher',
-            field=models.BooleanField(verbose_name='Высшее'),
+            model_name="institute",
+            name="is_higher",
+            field=models.BooleanField(verbose_name="Высшее"),
         ),
         migrations.AlterField(
-            model_name='institute',
-            name='title',
-            field=models.CharField(max_length=200, unique=True, verbose_name='Название'),
+            model_name="institute",
+            name="title",
+            field=models.CharField(
+                max_length=200, unique=True, verbose_name="Название"
+            ),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='about',
-            field=models.TextField(max_length=500, verbose_name='Обо мне'),
+            model_name="profilepsychologist",
+            name="about",
+            field=models.TextField(max_length=500, verbose_name="Обо мне"),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='approaches',
-            field=models.ManyToManyField(to='psychologists.approach', verbose_name='Подходы'),
+            model_name="profilepsychologist",
+            name="approaches",
+            field=models.ManyToManyField(
+                to="psychologists.approach", verbose_name="Подходы"
+            ),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='avatar',
-            field=models.ImageField(blank=True, null=True, upload_to=apps.psychologists.models.user_directory_path, verbose_name='Фото'),
+            model_name="profilepsychologist",
+            name="avatar",
+            field=models.ImageField(
+                blank=True,
+                null=True,
+                upload_to=apps.psychologists.models.user_directory_path,
+                verbose_name="Фото",
+            ),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='birthday',
-            field=models.DateField(validators=[apps.psychologists.validators.validate_birthday], verbose_name='Дата рождения'),
+            model_name="profilepsychologist",
+            name="birthday",
+            field=models.DateField(
+                validators=[apps.psychologists.validators.validate_birthday],
+                verbose_name="Дата рождения",
+            ),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='education',
-            field=models.ManyToManyField(through='psychologists.PsychoEducation', to='psychologists.institute', verbose_name='Образование'),
+            model_name="profilepsychologist",
+            name="education",
+            field=models.ManyToManyField(
+                through="psychologists.PsychoEducation",
+                to="psychologists.institute",
+                verbose_name="Образование",
+            ),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='first_name',
-            field=models.CharField(max_length=50, verbose_name='Имя'),
+            model_name="profilepsychologist",
+            name="first_name",
+            field=models.CharField(max_length=50, verbose_name="Имя"),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='gender',
-            field=models.CharField(choices=[('male', 'мужской'), ('female', 'женский'), ('other', 'другой')], max_length=10, verbose_name='Пол'),
+            model_name="profilepsychologist",
+            name="gender",
+            field=models.CharField(
+                choices=[
+                    ("male", "мужской"),
+                    ("female", "женский"),
+                    ("other", "другой"),
+                ],
+                max_length=10,
+                verbose_name="Пол",
+            ),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='id',
-            field=models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False, verbose_name='Уникальный id'),
+            model_name="profilepsychologist",
+            name="id",
+            field=models.UUIDField(
+                default=uuid.uuid4,
+                editable=False,
+                primary_key=True,
+                serialize=False,
+                verbose_name="Уникальный id",
+            ),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='is_verified',
-            field=models.BooleanField(default=False, verbose_name='Верификация'),
+            model_name="profilepsychologist",
+            name="is_verified",
+            field=models.BooleanField(default=False, verbose_name="Верификация"),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='last_name',
-            field=models.CharField(max_length=50, verbose_name='Фамилия'),
+            model_name="profilepsychologist",
+            name="last_name",
+            field=models.CharField(max_length=50, verbose_name="Фамилия"),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='phone_number',
-            field=models.CharField(blank=True, default='', max_length=12, verbose_name='Номер телефона'),
+            model_name="profilepsychologist",
+            name="phone_number",
+            field=models.CharField(
+                blank=True, default="", max_length=12, verbose_name="Номер телефона"
+            ),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='speciality',
-            field=models.CharField(blank=True, default='Психолог', max_length=50, verbose_name='Специальность'),
+            model_name="profilepsychologist",
+            name="speciality",
+            field=models.CharField(
+                blank=True,
+                default="Психолог",
+                max_length=50,
+                verbose_name="Специальность",
+            ),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='started_working',
-            field=models.DateField(validators=[apps.psychologists.validators.validate_started_working], verbose_name='Год начала практики'),
+            model_name="profilepsychologist",
+            name="started_working",
+            field=models.DateField(
+                validators=[apps.psychologists.validators.validate_started_working],
+                verbose_name="Год начала практики",
+            ),
         ),
         migrations.AlterField(
-            model_name='profilepsychologist',
-            name='themes',
-            field=models.ManyToManyField(to='psychologists.theme', verbose_name='Темы'),
+            model_name="profilepsychologist",
+            name="themes",
+            field=models.ManyToManyField(to="psychologists.theme", verbose_name="Темы"),
         ),
         migrations.AlterField(
-            model_name='psychoeducation',
-            name='document',
-            field=models.FileField(upload_to=apps.psychologists.models.user_directory_path, verbose_name='Документ об образовании'),
+            model_name="psychoeducation",
+            name="document",
+            field=models.FileField(
+                upload_to=apps.psychologists.models.user_directory_path,
+                verbose_name="Документ об образовании",
+            ),
         ),
         migrations.AlterField(
-            model_name='psychoeducation',
-            name='graduation_year',
-            field=models.CharField(max_length=10, validators=[apps.psychologists.validators.validate_graduation_year], verbose_name='Даты обучения / Год выпуска'),
+            model_name="psychoeducation",
+            name="graduation_year",
+            field=models.CharField(
+                max_length=10,
+                validators=[apps.psychologists.validators.validate_graduation_year],
+                verbose_name="Даты обучения / Год выпуска",
+            ),
         ),
         migrations.AlterField(
-            model_name='psychoeducation',
-            name='institute',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='psychologists.institute', verbose_name='Институт'),
+            model_name="psychoeducation",
+            name="institute",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="psychologists.institute",
+                verbose_name="Институт",
+            ),
         ),
         migrations.AlterField(
-            model_name='psychoeducation',
-            name='psychologist',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='psychologists.profilepsychologist', verbose_name='Психолог'),
+            model_name="psychoeducation",
+            name="psychologist",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="psychologists.profilepsychologist",
+                verbose_name="Психолог",
+            ),
         ),
         migrations.AlterField(
-            model_name='psychoeducation',
-            name='speciality',
-            field=models.CharField(max_length=50, verbose_name='Специальность'),
+            model_name="psychoeducation",
+            name="speciality",
+            field=models.CharField(max_length=50, verbose_name="Специальность"),
         ),
         migrations.AlterField(
-            model_name='service',
-            name='duration',
-            field=models.PositiveSmallIntegerField(default=50, verbose_name='Продолжительность сессии'),
+            model_name="service",
+            name="duration",
+            field=models.PositiveSmallIntegerField(
+                default=50, verbose_name="Продолжительность сессии"
+            ),
         ),
         migrations.AlterField(
-            model_name='service',
-            name='format',
-            field=models.CharField(choices=[('online', 'онлайн'), ('offline', 'личная встреча'), ('no_matter', 'неважно')], default='online', max_length=10, verbose_name='Формат сессии'),
+            model_name="service",
+            name="format",
+            field=models.CharField(
+                choices=[
+                    ("online", "онлайн"),
+                    ("offline", "личная встреча"),
+                    ("no_matter", "неважно"),
+                ],
+                default="online",
+                max_length=10,
+                verbose_name="Формат сессии",
+            ),
         ),
         migrations.AlterField(
-            model_name='service',
-            name='price',
-            field=models.PositiveIntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(50000)], verbose_name='Цена'),
+            model_name="service",
+            name="price",
+            field=models.PositiveIntegerField(
+                validators=[
+                    django.core.validators.MinValueValidator(1),
+                    django.core.validators.MaxValueValidator(50000),
+                ],
+                verbose_name="Цена",
+            ),
         ),
         migrations.AlterField(
-            model_name='service',
-            name='psychologist',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='services', to='psychologists.profilepsychologist', verbose_name='Психолог'),
+            model_name="service",
+            name="psychologist",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="services",
+                to="psychologists.profilepsychologist",
+                verbose_name="Психолог",
+            ),
         ),
         migrations.AlterField(
-            model_name='service',
-            name='type',
-            field=models.CharField(choices=[('personal', 'личная'), ('group', 'групповая'), ('no_matter', 'неважно')], default='no_matter', max_length=10, verbose_name='Тип консультации'),
+            model_name="service",
+            name="type",
+            field=models.CharField(
+                choices=[
+                    ("personal", "личная"),
+                    ("group", "групповая"),
+                    ("no_matter", "неважно"),
+                ],
+                default="no_matter",
+                max_length=10,
+                verbose_name="Тип консультации",
+            ),
         ),
         migrations.AlterField(
-            model_name='theme',
-            name='title',
-            field=models.CharField(max_length=200, unique=True, verbose_name='Название'),
+            model_name="theme",
+            name="title",
+            field=models.CharField(
+                max_length=200, unique=True, verbose_name="Название"
+            ),
         ),
     ]

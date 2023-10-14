@@ -7,7 +7,7 @@ from apps.core.email import (
 
 
 class PsychoActivationEmailThread(threading.Thread):
-    """Отправка письма психологу для активации аккаунта."""
+    """Отправка письма психологу для активации аккаунта"""
 
     def __init__(self, psychologist):
         self.psychologist = psychologist
@@ -20,7 +20,7 @@ class PsychoActivationEmailThread(threading.Thread):
 
 
 class PsychoConfirmationFormEmailThread(threading.Thread):
-    """Отправка письма психологу, что анкета получена."""
+    """Отправка письма психологу, что анкета получена"""
 
     def __init__(self, request, user):
         self.request = request
