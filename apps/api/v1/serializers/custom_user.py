@@ -12,7 +12,7 @@ class CustomUserMeSerializer(serializers.ModelSerializer):
 
     def get_name(self, obj):
         if obj.is_psychologists:
-            return obj.psychologist.first_name
+            return obj.psychologists.first_name
         elif obj.is_client:
             return obj.client.first_name
         return ''
