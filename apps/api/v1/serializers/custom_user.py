@@ -14,6 +14,5 @@ class CustomUserMeSerializer(serializers.ModelSerializer):
         if obj.is_psychologists:
             return obj.psychologist.first_name
         elif obj.is_client:
-            return obj.client.name
-        else:
-            return ''
+            return obj.client.first_name
+        return ''
