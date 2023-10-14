@@ -10,4 +10,3 @@ def send_psycho_email(sender, instance, created, update_fields, **kwargs):
     if not created and update_fields is not None:
         if ("is_verified" in update_fields) and (instance.is_verified is True):
             PsychoActivationEmailThread(instance).start()
-            print("Письмо отправлено")
