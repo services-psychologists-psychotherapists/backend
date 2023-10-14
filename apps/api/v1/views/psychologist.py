@@ -39,6 +39,8 @@ class CreatePsychologistView(views.APIView):
     )
     def post(self, request):
         """Создание профиля психолога по анкете."""
+        user_ser = psycho.CreateUserSerializer(data=request.data)
+        user_ser.is_valid(raise_exception=True)
         serializer = psycho.CreatePsychologistSerializer(
             data=request.data
         )
@@ -151,7 +153,10 @@ class PsychoCardCatalogView(views.APIView):
     def get(self, request, id=None):
         psychologist = get_psychologist_for_card(id)
         return Response(
-            psycho.FullPsychoCardSerializer(psychologist).data,
+            psycho.FullPsychoCardSerializer(
+                psychologist,
+                context={"request": request, "view": self},
+            ).data,
             status=status.HTTP_200_OK,
         )
 

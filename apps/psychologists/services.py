@@ -6,6 +6,7 @@ from django.core.exceptions import (
     ValidationError as DjangoValidationError,
     ObjectDoesNotExist,
 )
+from django.db.utils import IntegrityError
 from django.http import HttpRequest
 from rest_framework import exceptions
 
@@ -93,7 +94,13 @@ def create_profile(
     psychologist.approaches.add(*approaches)
     for data in institutes + courses:
         education = data.pop("institute")
-        psychologist.education.add(education, through_defaults=data)
+        try:
+            psychologist.education.add(education, through_defaults=data)
+        except IntegrityError:
+            raise exceptions.ValidationError(
+                {"document": (f"Документ с UUID '{data['document'].id}' "
+                              "принадлежит другому пользователю")}
+            )
 
     create_service(psychologist, price)
 
@@ -188,8 +195,13 @@ def get_or_create_education(
         )
         data["institute"] = education
         document = data.pop("document")
-        file = UploadFile.objects.get(id=document)
-        data["document"] = file
+        try:
+            file = UploadFile.objects.get(id=document)
+            data["document"] = file
+        except ObjectDoesNotExist:
+            raise exceptions.ValidationError(
+                {"document": f"Документ с UUID '{document}' не найден"}
+            )
     return iterable
 
 
