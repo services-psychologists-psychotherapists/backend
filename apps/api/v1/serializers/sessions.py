@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework import serializers
 
@@ -20,6 +21,7 @@ class SlotSerializer(serializers.ModelSerializer):
 
     client = ShortClientSerializer(source="session.client", required=False)
     href = serializers.URLField(source="session.psycho_link", required=False)
+    session_id = serializers.IntegerField(source="session.id", required=False)
 
     class Meta:
         fields = (
@@ -30,9 +32,17 @@ class SlotSerializer(serializers.ModelSerializer):
             "is_free",
             "client",
             "href",
+            "session_id",
         )
         model = Slot
-        read_only_fields = ("date", "datetime_to", "client", "is_free", "href")
+        read_only_fields = (
+            "date",
+            "datetime_to",
+            "client",
+            "is_free",
+            "href",
+            "session_id",
+        )
 
     def validate_datetime_from(self, start_time):
         user = self.context["request"].user
@@ -63,6 +73,13 @@ class CreateSessionSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         request = self.context.get("request")
         return create_session(request, validated_data.get("slot"))
+
+    def validate_slot(self, slot):
+        if slot.datetime_from < timezone.now():
+            raise serializers.ValidationError(
+                "Вы не можете запланировать сессию на прошедшее время."
+            )
+        return slot
 
     def validate(self, attrs):
         user = self.context.get("request").user
