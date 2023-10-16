@@ -69,14 +69,12 @@ def get_education(
     ).select_related("document")
 
 
-def get_service(
-    psychologist: ProfilePsychologist,
-    type: Service.Type = Service.Type.NOMATTER,
-    format: Service.Format = Service.Format.ONLINE,
-) -> Service:
-    return get_object_or_404(
-        Service, psychologist=psychologist, type=type, format=format
-    )
+def get_price(psychologist: ProfilePsychologist) -> Service:
+    prices = Service.objects.filter(psychologist=psychologist).values_list(
+        "price", flat=True)
+    if prices:
+        return min(prices)
+    return 1
 
 
 def get_free_slots(psychologist: ProfilePsychologist) -> Slot:
