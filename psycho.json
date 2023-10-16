@@ -1,0 +1,427 @@
+[
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "128dc637-98b8-4cb9-92fb-ce4f3f2b0c46",
+    "fields": {
+        "user": "061d4873-6e55-4112-adc0-e58a4245193e",
+        "first_name": "Ирина",
+        "last_name": "Казакова",
+        "birthday": "1986-09-21",
+        "gender": "female",
+        "phone_number": "",
+        "started_working": "2014-01-01",
+        "about": "Я клинический психолог, гештальт-терапевт с 12-летним опытом работы в профессии. Помогаю людям развивать осознанность, эмоциональный интеллект и строить здоровые, счастливые отношения.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "33062b0d-734b-4120-bd46-8e38ce69c372",
+    "fields": {
+        "user": "18f381c6-91b7-4010-a970-f6e24fc1b1a2",
+        "first_name": "Ольга",
+        "last_name": "Степанова",
+        "birthday": "1974-11-11",
+        "gender": "female",
+        "phone_number": "",
+        "started_working": "2001-01-01",
+        "about": "Бла-бла-бла. Я крутой психолог",
+        "avatar": "Я - психолог с глубоким пониманием человеческой психики и многолетним опытом помощи людям. Моя страсть - помогать клиентам раскрывать свой потенциал, преодолевать жизненные трудности и развиваться.",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "4164d856-1b48-4dfc-a949-93ba443fbcef",
+    "fields": {
+        "user": "1c563e78-1a8d-4ed6-b117-a2cb92be4b28",
+        "first_name": "Людмила",
+        "last_name": "Иванова",
+        "birthday": "1980-02-06",
+        "gender": "female",
+        "phone_number": "",
+        "started_working": "2005-01-01",
+        "about": "Я являюсь психологом с многолетним опытом, специализирующимся на когнитивно-поведенческой терапии. В работе с клиентами я поддерживаю их в поиске решений, способствую психологическому благополучию и развитию личностной гармонии.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "47bc8bf9-cd32-436b-875c-2b66a60d9861",
+    "fields": {
+        "user": "39725829-2922-47da-aa89-04cc7819c50e",
+        "first_name": "Анастасия",
+        "last_name": "Казакова",
+        "birthday": "1993-07-03",
+        "gender": "female",
+        "phone_number": "",
+        "started_working": "2018-01-01",
+        "about": "Я психолог с опытом 5-летним в сфере психотерапии. Моя миссия - помогать людям понимать себя, преодолевать эмоциональные трудности и развиваться. Я специализируюсь на работе с депрессией, тревожностью и улучшении отношений.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "4e88c22b-ecba-4013-be50-08c5d19fba64",
+    "fields": {
+        "user": "3fee4af2-945d-412f-a514-55d18e701ffd",
+        "first_name": "Роман",
+        "last_name": "Кургуров",
+        "birthday": "1983-12-10",
+        "gender": "male",
+        "phone_number": "",
+        "started_working": "2011-01-01",
+        "about": "Я - психолог с глубоким пониманием человеческой натуры. С моей поддержкой вы можете разрешить конфликты, преодолеть стрессы и достичь личностного роста. Моя цель - помочь вам стать лучшей версией себя.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "50c8b84a-c17c-4db0-9cf3-0c49c2607dd7",
+    "fields": {
+        "user": "49bb3d68-ae6a-490c-a9e1-ebca186f28c8",
+        "first_name": "Маргарита",
+        "last_name": "Прокопьева",
+        "birthday": "1926-04-09",
+        "gender": "female",
+        "phone_number": "",
+        "started_working": "2017-01-01",
+        "about": "Я клинический психолог. Ценю эмпатию, конфиденциальность эффективное взаимодействие, чтобы помочь клиентам достичь психологического благополучия. Моя миссия - помогать людям создавать более здоровую и удовлетворительную жизнь.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "590cd27c-8460-4bfd-98ba-4268030fa55d",
+    "fields": {
+        "user": "5443b2a3-6351-4ff5-b298-068a43e61d96",
+        "first_name": "Руслан",
+        "last_name": "Петров",
+        "birthday": "1986-06-18",
+        "gender": "male",
+        "phone_number": "",
+        "started_working": "2011-01-01",
+        "about": "Я психолог с 12-летним стажем Моя цель - помочь людям разрешить внутренние конфликты, обрести психологическое равновесие и лучше понимать себя. Я специализируюсь на когнитивно-поведенческой терапии и психологическом консультировании.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "791c4d76-3e1a-45c6-91d6-ae06a7526f01",
+    "fields": {
+        "user": "5be9df41-0dc1-409b-bbe7-e1c90107c128",
+        "first_name": "Полина",
+        "last_name": "Винокурова",
+        "birthday": "1962-03-27",
+        "gender": "female",
+        "phone_number": "",
+        "started_working": "2083-01-01",
+        "about": "Я - психолог с глубоким пониманием человеческой натуры. С моей поддержкой вы можете разрешить конфликты, преодолеть стрессы и достичь личностного роста. Моя цель - помочь вам стать лучшей версией себя.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "7a5e1432-5293-4c54-bc2f-1a7cb5c5e9cb",
+    "fields": {
+        "user": "78ef4d05-98b8-448e-857e-8a859244ff30",
+        "first_name": "Павел",
+        "last_name": "Меньшиков",
+        "birthday": "1973-11-01",
+        "gender": "male",
+        "phone_number": "",
+        "started_working": "2000-01-01",
+        "about": "Я являюсь психологом с многолетним опытом, специализирующимся на когнитивно-поведенческой терапии. В работе с клиентами я поддерживаю их в поиске решений, способствую психологическому благополучию и развитию личностной гармонии.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "7f148d53-c057-4ffa-b74c-576631823d53",
+    "fields": {
+        "user": "801c9686-522f-4e25-be05-c18a6228106e",
+        "first_name": "Андрей",
+        "last_name": "Васильев",
+        "birthday": "1985-05-03",
+        "gender": "male",
+        "phone_number": "",
+        "started_working": "2009-01-01",
+        "about": "Я - психолог с глубоким пониманием человеческой психики и многолетним опытом помощи людям. Моя страсть - помогать клиентам раскрывать свой потенциал, преодолевать жизненные трудности и развиваться.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "92543e2a-487d-40a6-81de-1ea531106d16",
+    "fields": {
+        "user": "8ab4d172-cb9b-4b61-8267-29481b21392e",
+        "first_name": "Анастасия",
+        "last_name": "Попова",
+        "birthday": "1964-03-09",
+        "gender": "female",
+        "phone_number": "",
+        "started_working": "2085-01-01",
+        "about": "Я клинический психолог. Ценю эмпатию, конфиденциальность эффективное взаимодействие, чтобы помочь клиентам достичь психологического благополучия. Моя миссия - помогать людям создавать более здоровую и удовлетворительную жизнь.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "208261ca-9836-46dc-9c34-5ab40b2614a4",
+    "fields": {
+        "user": "9b267417-4d4a-4736-8c4e-e75c79efcf81",
+        "first_name": "Василиса",
+        "last_name": "Зарубина",
+        "birthday": "1994-10-30",
+        "gender": "female",
+        "phone_number": "",
+        "started_working": "2017-01-01",
+        "about": "Я психолог с опытом 5-летним в сфере психотерапии. Моя миссия - помогать людям понимать себя, преодолевать эмоциональные трудности и развиваться. Я специализируюсь на работе с депрессией, тревожностью и улучшении отношений.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "e6afe70e-0cd1-4471-9197-3c56458500cb",
+    "fields": {
+        "user": "9f2e057c-2aa3-42a1-aa0b-a7201377c29b",
+        "first_name": "Михаил",
+        "last_name": "Севастьянов",
+        "birthday": "1989-08-06",
+        "gender": "male",
+        "phone_number": "",
+        "started_working": "2015-01-01",
+        "about": "Я - психолог с глубоким пониманием человеческой психики и многолетним опытом помощи людям. Моя страсть - помогать клиентам раскрывать свой потенциал, преодолевать жизненные трудности и развиваться.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "ed94fad3-3b7c-46d6-98a6-54cb766bfb77",
+    "fields": {
+        "user": "d4804e08-b75d-4f38-846f-e9c20637de15",
+        "first_name": "Андрей",
+        "last_name": "Потапов",
+        "birthday": "1972-11-25",
+        "gender": "male",
+        "phone_number": "",
+        "started_working": "1994-01-01",
+        "about": "Я являюсь психологом с многолетним опытом, специализирующимся на когнитивно-поведенческой терапии. В работе с клиентами я поддерживаю их в поиске решений, способствую психологическому благополучию и развитию личностной гармонии.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "f7ee1c03-df66-4bca-89ab-13f94cf4c722",
+    "fields": {
+        "user": "dbc3b93e-e14c-4763-aab0-b3f071785569",
+        "first_name": "Злата",
+        "last_name": "Воблая",
+        "birthday": "1995-08-02",
+        "gender": "female",
+        "phone_number": "",
+        "started_working": "2018-01-01",
+        "about": "Я психолог с опытом 5-летним в сфере психотерапии. Моя миссия - помогать людям понимать себя, преодолевать эмоциональные трудности и развиваться. Я специализируюсь на работе с депрессией, тревожностью и улучшении отношений.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "4ac0f15d-5f9e-42ea-8469-892c24080697",
+    "fields": {
+        "user": "71ba399b-eb2e-49d7-aefb-0e44db03f36b",
+        "first_name": "Максим",
+        "last_name": "Благосмыслов",
+        "birthday": "1982-07-18",
+        "gender": "male",
+        "phone_number": "",
+        "started_working": "2011-01-01",
+        "about": "Я клинический психолог, гештальт-терапевт с 12-летним опытом работы в профессии. Помогаю людям развивать осознанность, эмоциональный интеллект и строить здоровые, счастливые отношения.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "94ad5141-33e4-4842-88da-e328bbfbefc1",
+    "fields": {
+        "user": "3e914773-26cf-4a86-975e-0e85246ca258",
+        "first_name": "Иван",
+        "last_name": "Ермаченок",
+        "birthday": "1991-05-11",
+        "gender": "male",
+        "phone_number": "",
+        "started_working": "2014-01-01",
+        "about": "Я - психолог с глубоким пониманием человеческой натуры. С моей поддержкой вы можете разрешить конфликты, преодолеть стрессы и достичь личностного роста. Моя цель - помочь вам стать лучшей версией себя.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "225ab12a-a209-48b3-b04e-c8039c3e5921",
+    "fields": {
+        "user": "cb449dee-8166-4b6d-95d9-4bb1e7a0efd8",
+        "first_name": "Анна",
+        "last_name": "Демидова",
+        "birthday": "1988-02-25",
+        "gender": "female",
+        "phone_number": "",
+        "started_working": "2010-01-01",
+        "about": "Я являюсь психологом с многолетним опытом, специализирующимся на когнитивно-поведенческой терапии. В работе с клиентами я поддерживаю их в поиске решений, способствую психологическому благополучию и развитию личностной гармонии.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "05598c26-e5e7-4b5d-9066-5e0df4996dab",
+    "fields": {
+        "user": "665b5bf6-2093-4aad-ad43-0e85d294e405",
+        "first_name": "Амина",
+        "last_name": "Мансимова",
+        "birthday": "1983-05-14",
+        "gender": "female",
+        "phone_number": "",
+        "started_working": "2013-01-01",
+        "about": "Я психолог с опытом 10-летним в сфере психотерапии. Моя миссия - помогать людям понимать себя, преодолевать эмоциональные трудности и развиваться. Я специализируюсь на работе с депрессией, тревожностью и улучшении отношений.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "0b5567f9-3a24-4fa2-910a-fa1061f733de",
+    "fields": {
+        "user": "8f76ee3c-7a2f-4c49-87fa-36d8a345d2cc",
+        "first_name": "София",
+        "last_name": "Каганова",
+        "birthday": "1987-05-11",
+        "gender": "female",
+        "phone_number": "",
+        "started_working": "2010-01-01",
+        "about": "Я - психолог с глубоким пониманием человеческой психики и многолетним опытом помощи людям. Моя страсть - помогать клиентам раскрывать свой потенциал, преодолевать жизненные трудности и развиваться.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "82968dbc-bd25-4326-afc3-e1863ad4dd35",
+    "fields": {
+        "user": "efb4f238-685f-430b-a17e-ef4162499e4b",
+        "first_name": "Степан",
+        "last_name": "Самойлов",
+        "birthday": "1975-08-10",
+        "gender": "male",
+        "phone_number": "",
+        "started_working": "1996-01-01",
+        "about": "Я являюсь психологом с многолетним опытом, специализирующимся на когнитивно-поведенческой терапии. В работе с клиентами я поддерживаю их в поиске решений, способствую психологическому благополучию и развитию личностной гармонии.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "5686dd88-8377-4f1c-85a4-e51e29b585ba",
+    "fields": {
+        "user": "ecd0ee77-50fb-4291-b476-c5ced7d5f3fb",
+        "first_name": "Евангелина",
+        "last_name": "Серая",
+        "birthday": "1989-03-27",
+        "gender": "female",
+        "phone_number": "",
+        "started_working": "2014-01-01",
+        "about": "Я клинический психолог. Ценю эмпатию, конфиденциальность эффективное взаимодействие, чтобы помочь клиентам достичь психологического благополучия. Моя миссия - помогать людям создавать более здоровую и удовлетворительную жизнь.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "9e620b00-9b82-4554-a7bd-989c2c9b6d7d",
+    "fields": {
+        "user": "b3d8b53d-65ec-40b2-946b-ad02d314ce60",
+        "first_name": "Дмитрий",
+        "last_name": "Шевкун",
+        "birthday": "1995-06-12",
+        "gender": "male",
+        "phone_number": "",
+        "started_working": "2018-01-01",
+        "about": "Я психолог с опытом 5-летним в сфере психотерапии. Моя миссия - помогать людям понимать себя, преодолевать эмоциональные трудности и развиваться. Я специализируюсь на работе с депрессией, тревожностью и улучшении отношений.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "94dc86fa-8d91-40f7-a278-4e62c9dbc78d",
+    "fields": {
+        "user": "07628703-be6d-4e63-bc5b-6366bf0a003e",
+        "first_name": "Анна",
+        "last_name": "Сокулина",
+        "birthday": "1994-09-02",
+        "gender": "female",
+        "phone_number": "",
+        "started_working": "2018-01-01",
+        "about": "Я клинический психолог. Ценю эмпатию, конфиденциальность эффективное взаимодействие, чтобы помочь клиентам достичь психологического благополучия. Моя миссия - помогать людям создавать более здоровую и удовлетворительную жизнь.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+},
+{
+    "model": "psychologists.profilepsychologist",
+    "pk": "28393f57-48ef-4814-ba10-ebd4fce30039",
+    "fields": {
+        "user": "597c1bb7-0925-43ce-af7e-1f5ea54e21b6",
+        "first_name": "Полина",
+        "last_name": "Тюкина",
+        "birthday": "1964-11-13",
+        "gender": "female",
+        "phone_number": "",
+        "started_working": "2018-01-01",
+        "about": "Я психолог с многолетним опытом. Моя цель - помочь людям разрешить внутренние конфликты, обрести психологическое равновесие и лучше понимать себя. Я специализируюсь на когнитивно-поведенческой терапии и психологическом консультировании.",
+        "avatar": "",
+        "speciality": "Психолог",
+        "is_verified": true
+    }
+}
+]
