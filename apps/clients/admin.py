@@ -5,5 +5,5 @@ from .models import Client
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'first_name', 'birthday')
-    empty_value_display = '-пусто-'
+    list_display = ("user", "first_name", "last_name", "birthday")
+    empty_value_display = "-пусто-"
