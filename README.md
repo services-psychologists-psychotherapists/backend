@@ -38,28 +38,6 @@ https://sharewithme.acceleratorpracticum.ru/
 https://sharewithme.acceleratorpracticum.ru/swagger/
 ```
 
-### Пример содержания .env файла:
-```
-DB_ENGINE=django.db.backends.postgresql
-DB_NAME=postgres
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-DB_HOST=localhost
-DB_PORT=5432
-SECRET_KEY='16dg2dj1jfu+mc+ylzojdiw_fk!f#x*8ci!u2-asdadnkqlkwdk'
-DEBUG=False
-ALLOWED_HOSTS=*
-CSRF_TRUSTED_ORIGINS=*
-EMAIL_BACKEND='django.core.mail.backends.filebased.EmailBackend'
-EMAIL_HOST_USER='share.with.me-help@yandex.ru'
-EMAIL_HOST_PASSWORD='emailpassword'
-EMAIL_HOST='smtp.someserver.ru'
-EMAIL_PORT=587
-ZOOM_CLIENT_ID='zoomclientid'
-ZOOM_ACCOUNT_ID='zoomaccountid'
-ZOOM_CLIENT_SECRET='zoomclientsecret'
-```
-
 ### Запуск проекта
 Склонировать репозиторий:
 ```
@@ -77,5 +55,13 @@ docker-compose exec -it psy_backend python manage.py migrate
 ```
 Наполнение базы фикстурами:
 ```
-docker-compose exec -it psy_backend python manage.py loaddata fixtures.json 
+docker-compose exec -it psy_backend python manage.py loaddata static/fixtures/fixtures.json
+docker-compose exec -it psy_backend python manage.py loaddata static/fixtures/users.json
+docker-compose exec -it psy_backend python manage.py loaddata static/fixtures/psycho.json 
 ```
+Образец файла .env лежит в репозитории.
+
+### Разработчики:
+ - [Вера Фадеева](https://github.com/verafadeeva): Psychologists app + API
+ - [Руслан Атаров](https://github.com/ratarov): Clients app + API, Sessions app + API, mail service
+ - [Владислав Нестеров](https://github.com/nevladi): Users app + API, CI/CD workflows

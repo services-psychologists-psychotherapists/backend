@@ -1,0 +1,402 @@
+[
+{
+    "model": "users.customuser",
+    "pk": "061d4873-6e55-4112-adc0-e58a4245193e",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$JLItfulBHpBpo3q8ZzjmUe$nc2Q5mou0WtutmLNhXT00KtS0KoRBfePprbTqHZMQ5g=",
+        "last_login": null,
+        "email": "psycho1@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "18f381c6-91b7-4010-a970-f6e24fc1b1a2",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$RqqUCzwUuXyyqG8H3lvokK$3sMJ5rny0FmFt/xqEW+CUFn2QOK9fBCqefmoTdxt/ug=",
+        "last_login": null,
+        "email": "psycho2@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "1c563e78-1a8d-4ed6-b117-a2cb92be4b28",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$B3r9mYesE3wMZiV9l6FkYv$IrOjRFUj+ISKPY/+9AfWHx/p8tcPsLcZSYOKicJ5Lio=",
+        "last_login": null,
+        "email": "psycho3@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "39725829-2922-47da-aa89-04cc7819c50e",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$UHn0X0nVDcKFvKUBriwyjA$KNW9Dfj/IBJinX8k2zdtheTBL0gQJdIN4EWy/yN2J5M=",
+        "last_login": null,
+        "email": "psycho4@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "3fee4af2-945d-412f-a514-55d18e701ffd",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$iRKBZu8bacDv0PuIgKofk9$U213LjAFnrAuPe5+gQ7qpN4hr3FQzadL18A7nuJGgmU=",
+        "last_login": null,
+        "email": "psycho5@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "49bb3d68-ae6a-490c-a9e1-ebca186f28c8",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$jfhI9iJVtEO3FqEkJjmwoD$FSi5nHZmqivBTfftxdq69xEYuhN5+F3+GFCrMpzQRcU=",
+        "last_login": null,
+        "email": "psycho6@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "5443b2a3-6351-4ff5-b298-068a43e61d96",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$tfMVwIKuZcfkqqboAXEEFr$OnqVCGJNdqeyr3RXyuitNo97AsgcwgJqouQNk+CZjCs=",
+        "last_login": null,
+        "email": "psycho7@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "5be9df41-0dc1-409b-bbe7-e1c90107c128",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$3gPmPfeQoN9LzaMVoVlWJ1$Wu3g2sahHBqlDD1sFeUEi8YNerINRTs/EtrU2UH+m1k=",
+        "last_login": null,
+        "email": "psycho8@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "78ef4d05-98b8-448e-857e-8a859244ff30",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$qxSwP3GEBK4TGF8nS9Rah5$07lWiE8M4fil3chRbjX/6wPAy1ExelAgNP4wtgcrEvI=",
+        "last_login": null,
+        "email": "psycho9@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "801c9686-522f-4e25-be05-c18a6228106e",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$V58tuPraMEo1lnRlJFP8vJ$vNKelquzxrKDWEeJzDM5p1dSNMcoUIrMJBMQlVWgiIA=",
+        "last_login": null,
+        "email": "psycho10@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "8ab4d172-cb9b-4b61-8267-29481b21392e",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$inawC9RyZGjqfnX6tvyA7r$bbdoUqpg5xxDE+9IWmaj+oPoiyu+S1ExJyJ4eEwCNmA=",
+        "last_login": null,
+        "email": "psycho11@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "9b267417-4d4a-4736-8c4e-e75c79efcf81",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$QoFieoDRnKDmNPXz0W1iYt$vh8c3+nLorXpPCsy+LEi7IbAzU0LA5MBhuh31IXWuAI=",
+        "last_login": null,
+        "email": "psycho12@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "9f2e057c-2aa3-42a1-aa0b-a7201377c29b",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$c7Sze1H9SlVsl0ElfRub0Z$XduQGjxL39abb5qqJOc7LfaBexu8lrsLwdLmReKCYTg=",
+        "last_login": null,
+        "email": "psycho13@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "d4804e08-b75d-4f38-846f-e9c20637de15",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$7uzqrlNekCB5OJvulrSTPQ$vXlF3ZugwSOxWUV5Q9q9T+9EYEL92pjAmv79eSCOtXg=",
+        "last_login": null,
+        "email": "psycho14@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "dbc3b93e-e14c-4763-aab0-b3f071785569",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$UkoNDN9duyiM4mnjzLhG2z$ppktRa2otqvPliYJg9UMj3j1meVZXqI0IxNcMUMVRTo=",
+        "last_login": null,
+        "email": "psycho15@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "71ba399b-eb2e-49d7-aefb-0e44db03f36b",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$UkoNDN9duyiM4mnjzLhG2z$ppktRa2otqvPliYJg9UMj3j1meVZXqI0IxNcMUMVRTo=",
+        "last_login": null,
+        "email": "psycho16@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "3e914773-26cf-4a86-975e-0e85246ca258",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$UkoNDN9duyiM4mnjzLhG2z$ppktRa2otqvPliYJg9UMj3j1meVZXqI0IxNcMUMVRTo=",
+        "last_login": null,
+        "email": "psycho17@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "cb449dee-8166-4b6d-95d9-4bb1e7a0efd8",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$UkoNDN9duyiM4mnjzLhG2z$ppktRa2otqvPliYJg9UMj3j1meVZXqI0IxNcMUMVRTo=",
+        "last_login": null,
+        "email": "psycho18@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "665b5bf6-2093-4aad-ad43-0e85d294e405",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$UkoNDN9duyiM4mnjzLhG2z$ppktRa2otqvPliYJg9UMj3j1meVZXqI0IxNcMUMVRTo=",
+        "last_login": null,
+        "email": "psycho19@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "8f76ee3c-7a2f-4c49-87fa-36d8a345d2cc",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$UkoNDN9duyiM4mnjzLhG2z$ppktRa2otqvPliYJg9UMj3j1meVZXqI0IxNcMUMVRTo=",
+        "last_login": null,
+        "email": "psycho20@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "efb4f238-685f-430b-a17e-ef4162499e4b",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$UkoNDN9duyiM4mnjzLhG2z$ppktRa2otqvPliYJg9UMj3j1meVZXqI0IxNcMUMVRTo=",
+        "last_login": null,
+        "email": "psycho21@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "ecd0ee77-50fb-4291-b476-c5ced7d5f3fb",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$UkoNDN9duyiM4mnjzLhG2z$ppktRa2otqvPliYJg9UMj3j1meVZXqI0IxNcMUMVRTo=",
+        "last_login": null,
+        "email": "psycho22@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "b3d8b53d-65ec-40b2-946b-ad02d314ce60",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$UkoNDN9duyiM4mnjzLhG2z$ppktRa2otqvPliYJg9UMj3j1meVZXqI0IxNcMUMVRTo=",
+        "last_login": null,
+        "email": "psycho23@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "07628703-be6d-4e63-bc5b-6366bf0a003e",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$UkoNDN9duyiM4mnjzLhG2z$ppktRa2otqvPliYJg9UMj3j1meVZXqI0IxNcMUMVRTo=",
+        "last_login": null,
+        "email": "psycho24@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": "597c1bb7-0925-43ce-af7e-1f5ea54e21b6",
+    "fields": {
+        "password": "pbkdf2_sha256$390000$UkoNDN9duyiM4mnjzLhG2z$ppktRa2otqvPliYJg9UMj3j1meVZXqI0IxNcMUMVRTo=",
+        "last_login": null,
+        "email": "psycho25@example.com",
+        "is_client": false,
+        "is_psychologists": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]

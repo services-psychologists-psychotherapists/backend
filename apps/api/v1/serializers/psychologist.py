@@ -8,7 +8,7 @@ from apps.api.v1.validators import validate_file_size, validate_file_ext
 from apps.core.models import Gender, UploadFile
 from apps.core.constants import MIN_PRICE, MAX_PRICE, SESSION_DURATION
 from apps.psychologists.models import PsychoEducation
-from apps.psychologists.selectors import (get_education, get_service,
+from apps.psychologists.selectors import (get_education, get_price,
                                           get_free_slots)
 from apps.psychologists.validators import (
     validate_birthday as _validate_birthday,
@@ -199,8 +199,8 @@ class CommonPsychologistSerializer(serializers.Serializer):
 
     @swagger_serializer_method(serializer_or_field=serializers.IntegerField)
     def get_price(self, obj):
-        service = get_service(obj)
-        return service.price
+        price = get_price(obj)
+        return price
 
 
 class PsychologistSerializer(CommonPsychologistSerializer):

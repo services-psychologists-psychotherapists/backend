@@ -157,7 +157,7 @@ def get_themes(iterable: list[OrderedDict]) -> list[Theme]:
     output = []
     for data in iterable:
         try:
-            obj = Theme.objects.get(title=data["title"].title())
+            obj = Theme.objects.get(title=data["title"])
             output.append(obj)
         except ObjectDoesNotExist:
             pass

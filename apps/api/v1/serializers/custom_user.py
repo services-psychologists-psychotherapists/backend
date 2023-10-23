@@ -8,12 +8,11 @@ class CustomUserMeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['name', 'is_psychologists', 'is_client']
+        fields = ["name", "is_psychologists", "is_client", "email"]
 
     def get_name(self, obj):
         if obj.is_psychologists:
-            return obj.psychologist.first_name
+            return obj.psychologists.first_name
         elif obj.is_client:
-            return obj.client.name
-        else:
-            return ''
+            return obj.client.first_name
+        return ""

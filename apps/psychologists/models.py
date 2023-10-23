@@ -211,7 +211,12 @@ class PsychoEducation(models.Model):
         default_related_name = "psychoeducation"
         constraints = [
             models.UniqueConstraint(
-                fields=("psychologist", "institute", "speciality"),
+                fields=(
+                    "psychologist",
+                    "institute",
+                    "speciality",
+                    "graduation_year",
+                ),
                 name="unique_education",
             )
         ]
