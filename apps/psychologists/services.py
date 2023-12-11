@@ -98,8 +98,12 @@ def create_profile(
             psychologist.education.add(education, through_defaults=data)
         except IntegrityError:
             raise exceptions.ValidationError(
-                {"document": (f"Документ с UUID '{data['document'].id}' "
-                              "принадлежит другому пользователю")}
+                {
+                    "document": (
+                        f"Документ с UUID '{data['document'].id}' "
+                        "принадлежит другому пользователю"
+                    )
+                }
             )
 
     create_service(psychologist, price)
