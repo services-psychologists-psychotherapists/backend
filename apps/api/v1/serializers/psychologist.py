@@ -8,8 +8,11 @@ from apps.api.v1.validators import validate_file_size, validate_file_ext
 from apps.core.models import Gender, UploadFile
 from apps.core.constants import MIN_PRICE, MAX_PRICE, SESSION_DURATION
 from apps.psychologists.models import PsychoEducation
-from apps.psychologists.selectors import (get_education, get_price,
-                                          get_free_slots)
+from apps.psychologists.selectors import (
+    get_education,
+    get_price,
+    get_free_slots,
+)
 from apps.psychologists.validators import (
     validate_birthday as _validate_birthday,
     validate_graduation_year as _validate_graduation_year,
@@ -20,93 +23,84 @@ from apps.session.models import Slot
 
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ('id', 'email')
+        fields = ("id", "email")
         model = CustomUser
 
 
 class CommonInfoSerializer(serializers.Serializer):
-    """
-    Сериализатор для Theme, Approach
-    """
+    """Сериализатор для Theme, Approach."""
+
     id = serializers.IntegerField(read_only=True)
     title = serializers.CharField(max_length=200)
 
 
 class InstituteSerializer(CommonInfoSerializer):
-    """
-    Сериализатор для Institute
-    """
+    """Сериализатор для Institute."""
+
     is_higher = serializers.BooleanField(read_only=True)
 
 
 class SlotPsychoSerializer(serializers.ModelSerializer):
-    """
-    Сериализатор для слотов
-    """
+    """Сериализатор для слотов."""
+
     datetime_from = serializers.DateTimeField()
 
     class Meta:
-        fields = ('id', 'datetime_from')
+        fields = ("id", "datetime_from")
         model = Slot
 
 
 class UploadFileSerializer(serializers.ModelSerializer):
-    """
-    Сериализатор для загрузки документа об образовании
-    """
+    """Сериализатор для загрузки документа об образовании."""
+
     path = serializers.FileField()
 
     class Meta:
-        fields = ('id', 'path')
+        fields = ("id", "path")
         model = UploadFile
 
     def validate(self, attrs):
         errors = []
         try:
-            validate_file_size(attrs.get('path'))
+            validate_file_size(attrs.get("path"))
         except serializers.ValidationError as e:
             errors.extend(e.args)
 
         try:
-            validate_file_ext(attrs.get('path'))
+            validate_file_ext(attrs.get("path"))
         except serializers.ValidationError as e:
             errors.extend(e.args)
 
         if errors:
-            raise serializers.ValidationError(
-                errors
-            )
+            raise serializers.ValidationError(errors)
         return super().validate(attrs)
 
 
 class EducationShortOutputSerializer(serializers.ModelSerializer):
-    """
-    Сериализатор на выдачу для полной карточки психолога в каталоге
-    """
-    title = serializers.CharField(source='institute.title')
+    """Сериализатор на выдачу для полной карточки психолога в каталоге."""
+
+    title = serializers.CharField(source="institute.title")
     speciality = serializers.CharField()
     graduation_year = serializers.CharField()
 
     class Meta:
-        fields = ('title', 'speciality', 'graduation_year')
+        fields = ("title", "speciality", "graduation_year")
         model = PsychoEducation
 
 
 class EducationOutputSerializer(EducationShortOutputSerializer):
-    """
-    Сериализатор на выдачу для ЛК психолога
-    """
-    document = serializers.FileField(source='document.path')
+    """Сериализатор на выдачу для ЛК психолога."""
+
+    document = serializers.FileField(source="document.path")
 
     class Meta:
-        fields = ('title', 'speciality', 'graduation_year', 'document')
+        fields = ("title", "speciality", "graduation_year", "document")
         model = PsychoEducation
 
 
 class EducationInputSerializer(serializers.Serializer):
-    """
-    Сериализатор для создания и апдейта профиля психолога
-    """
+    """Сериализатор для создания и апдейта профиля психолога."""
+
     title = serializers.CharField(max_length=200)
     speciality = serializers.CharField(max_length=50)
     graduation_year = serializers.CharField(max_length=10)
@@ -114,30 +108,30 @@ class EducationInputSerializer(serializers.Serializer):
 
     class Meta:
         swagger_schema_fields = {
-            'type': openapi.TYPE_OBJECT,
-            'title': 'EducationInputSerializer',
-            'properties': {
-                'title': openapi.Schema(
-                    title='title',
+            "type": openapi.TYPE_OBJECT,
+            "title": "EducationInputSerializer",
+            "properties": {
+                "title": openapi.Schema(
+                    title="title",
                     type=openapi.TYPE_STRING,
                     max_length=200,
                 ),
-                'speciality': openapi.Schema(
-                    title='speciality',
+                "speciality": openapi.Schema(
+                    title="speciality",
                     type=openapi.TYPE_STRING,
                     max_length=50,
                 ),
-                'graduation_year': openapi.Schema(
-                    title='graduation_year',
+                "graduation_year": openapi.Schema(
+                    title="graduation_year",
                     type=openapi.TYPE_STRING,
                     max_length=10,
                 ),
-                'document': openapi.Schema(
-                    title='document',
+                "document": openapi.Schema(
+                    title="document",
                     type=openapi.TYPE_STRING,
                 ),
             },
-            "required": ['title', 'speciality', 'graduation_year', 'document'],
+            "required": ["title", "speciality", "graduation_year", "document"],
         }
 
     def validate_graduation_year(self, value):
@@ -149,9 +143,8 @@ class EducationInputSerializer(serializers.Serializer):
 
 
 class CreatePsychologistSerializer(serializers.Serializer):
-    """
-    Сериализатор для создания профиля психолога
-    """
+    """Сериализатор для создания профиля психолога."""
+
     email = serializers.EmailField()
     first_name = serializers.CharField(max_length=50)
     last_name = serializers.CharField(max_length=50)
@@ -169,7 +162,7 @@ class CreatePsychologistSerializer(serializers.Serializer):
     def validate_price(self, value):
         if value < MIN_PRICE or value > MAX_PRICE:
             raise serializers.ValidationError(
-                'Введите корректную цену на услугу'
+                "Введите корректную цену на услугу"
             )
         return value
 
@@ -182,13 +175,15 @@ class CreatePsychologistSerializer(serializers.Serializer):
 
 
 class UpdatePsychologistSerializer(CreatePsychologistSerializer):
+    """Сериализатор для обновления полей профиля Психолога."""
+
     experience = None
+    avatar = ImageFieldSerialiser()
 
 
 class CommonPsychologistSerializer(serializers.Serializer):
-    """
-    Общие данные для сериализаторов на выдачу
-    """
+    """Общие данные для сериализаторов на выдачу."""
+
     id = serializers.UUIDField()
     first_name = serializers.CharField(max_length=50)
     last_name = serializers.CharField(max_length=50)
@@ -207,6 +202,7 @@ class PsychologistSerializer(CommonPsychologistSerializer):
     """
     Профиль психолога
     """
+
     birthday = serializers.DateField()
     gender = serializers.ChoiceField(choices=Gender.choices)
     phone_number = serializers.CharField(max_length=12, required=False)
@@ -223,8 +219,10 @@ class PsychologistSerializer(CommonPsychologistSerializer):
         serializer = EducationOutputSerializer(
             institutes,
             many=True,
-            context={'request': self.context.get('request'),
-                     'view': self.context.get('view')},
+            context={
+                "request": self.context.get("request"),
+                "view": self.context.get("view"),
+            },
         )
         return serializer.data
 
@@ -236,8 +234,10 @@ class PsychologistSerializer(CommonPsychologistSerializer):
         serializer = EducationOutputSerializer(
             courses,
             many=True,
-            context={'request': self.context.get('request'),
-                     'view': self.context.get('view')},
+            context={
+                "request": self.context.get("request"),
+                "view": self.context.get("view"),
+            },
         )
         return serializer.data
 
@@ -246,6 +246,7 @@ class SuperShortPsychoSerializer(CommonPsychologistSerializer):
     """
     Данные психолога для страницы создания сессии.
     """
+
     speciality = serializers.CharField()
     duration = serializers.SerializerMethodField()
     format = serializers.SerializerMethodField()
@@ -254,13 +255,14 @@ class SuperShortPsychoSerializer(CommonPsychologistSerializer):
         return SESSION_DURATION
 
     def get_format(self, obj) -> str:
-        return 'онлайн'
+        return "онлайн"
 
 
 class ShortPsychoCardSerializer(CommonPsychologistSerializer):
     """
     Данные для краткой карточки психолога
     """
+
     duration = serializers.SerializerMethodField()
     slots = serializers.SerializerMethodField()
 
@@ -280,6 +282,7 @@ class FullPsychoCardSerializer(ShortPsychoCardSerializer):
     """
     Данные для полной карточки психолога
     """
+
     age = serializers.IntegerField()
     speciality = serializers.CharField()
     themes = CommonInfoSerializer(many=True)

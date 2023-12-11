@@ -1,5 +1,5 @@
 # SHARE WITH ME
-https://sharewithme.acceleratorpracticum.ru/
+https://sharewithme.site/
 
 ##  BACKEND: Платформа для онлайн-бронирования услуг психологов и психотерапевтов
 
@@ -35,7 +35,7 @@ https://sharewithme.acceleratorpracticum.ru/
 
 ### API-документация:
 ```
-https://sharewithme.acceleratorpracticum.ru/swagger/
+https://sharewithme.site/swagger/
 ```
 
 ### Запуск проекта

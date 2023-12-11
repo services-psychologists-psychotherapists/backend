@@ -143,7 +143,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 HIDE_USERS = True
 ACTIVATION_URL = "auth/verify-email/{uid}/{token}"
-PASSWORD_RESET_CONFIRM_URL = "auth/reset-password/{uid}/{token}"
+PASSWORD_RESET_CONFIRM_URL = "create_password/{uid}/{token}"
 SEND_ACTIVATION_EMAIL = True
 SEND_CONFIRMATION_EMAIL = True
 PASSWORD_CHANGED_EMAIL_CONFIRMATION = True
