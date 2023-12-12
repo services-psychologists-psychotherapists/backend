@@ -173,7 +173,7 @@ def get_or_create_approaches(iterable: list[OrderedDict]) -> list[Approach]:
     ("approaches"): [{"title": str}].
     """
     for i, data in enumerate(iterable):
-        obj, _ = Approach.objects.get_or_create(title=data["title"].title())
+        obj, _ = Approach.objects.get_or_create(title=data["title"])
         iterable[i] = obj
     return iterable
 
