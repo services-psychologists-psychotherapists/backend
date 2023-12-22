@@ -4,7 +4,7 @@
 
 {% block text_body %}
 Здравствуйте!
-К Вам записался клиент {{ psycho_name }} на {{ date }} в {{ time }} (указано московское время GMT+3).
+К Вам записался клиент {{ client_name }} на {{ date }} в {{ time }} (указано московское время GMT+3).
 Посмотреть запись можно в Личном кабинете по ссылке:
 {{ protocol }}://{{ domain }}/psychologist_account
 
@@ -15,7 +15,7 @@
 {% block html_body %}
 <p>
     Здравствуйте!<br>
-    К Вам записался клиент {{ psycho_name }} на {{ date }} в {{ time }} (указано московское время GMT+3).<br>
+    К Вам записался клиент {{ client_name }} на {{ date }} в {{ time }} (указано московское время GMT+3).<br>
     Посмотреть запись можно в Личном кабинете по ссылке:<br>
     <a href="{{ protocol }}://{{ domain }}/psychologist_account">
         {{ protocol }}://{{ domain }}/psychologist_account
