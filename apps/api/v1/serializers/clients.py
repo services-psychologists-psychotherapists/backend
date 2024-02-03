@@ -15,19 +15,27 @@ from .fields import ImageFieldSerialiser
 
 class UserSerializer(serializers.ModelSerializer):
     """Сериализация полей пользователя."""
+
     class Meta:
-        fields = ('id', 'email')
+        fields = ("id", "email")
         model = CustomUser
 
 
 class CreateClientSerializer(serializers.ModelSerializer):
     """Сериализация полей пользователя-клиента и профиля клиента."""
-    email = serializers.EmailField(source='user.email')
-    password = serializers.CharField(source='user.password')
+
+    email = serializers.EmailField(source="user.email")
+    password = serializers.CharField(source="user.password")
 
     class Meta:
-        fields = ('id', 'first_name', 'birthday', 'phone_number',
-                  'email', 'password')
+        fields = (
+            "id",
+            "first_name",
+            "birthday",
+            "phone_number",
+            "email",
+            "password",
+        )
         model = Client
         extra_kwargs = {
             "password": {"write_only": True},
@@ -36,19 +44,19 @@ class CreateClientSerializer(serializers.ModelSerializer):
     def validate_email(self, value):
         if CustomUser.objects.filter(email=value).exists():
             raise serializers.ValidationError(
-                'Пользователь с таким адресом эл.почты существует.'
+                "Пользователь с таким адресом эл.почты существует."
             )
         return value
 
     def validate(self, attrs):
         """Валидация пароля по списку валидаторов в settings"""
-        password = attrs.get("user").get('password')
+        password = attrs.get("user").get("password")
         errors = dict()
 
         try:
             validate_password(password=password, user=None)
         except exceptions.ValidationError as e:
-            errors['password'] = list(e.messages)
+            errors["password"] = list(e.messages)
 
         if errors:
             raise serializers.ValidationError(errors)
@@ -58,18 +66,20 @@ class CreateClientSerializer(serializers.ModelSerializer):
         return UserSerializer(instance=instance.user).data
 
     def create(self, validated_data):
-        return create_client(validated_data, self.context.get('request'))
+        return create_client(validated_data, self.context.get("request"))
 
 
 class ShortPsychologistSerializer(serializers.ModelSerializer):
     """Сериализация полей профиля психолога для ближайшей сессии."""
+
     class Meta:
-        fields = ('id', 'first_name', 'last_name', 'avatar')
+        fields = ("id", "first_name", "last_name", "avatar")
         model = ProfilePsychologist
 
 
 class FullPsychologistSerializer(serializers.Serializer):
     """Сериализация полей профиля текущего психолога клиента."""
+
     id = serializers.UUIDField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
@@ -81,25 +91,36 @@ class FullPsychologistSerializer(serializers.Serializer):
 
 class SessionSerializer(serializers.ModelSerializer):
     """Сериализация полей ближайшей сессии клиента в личном кабинете."""
-    psychologist = ShortPsychologistSerializer(source='slot.psychologist')
-    datetime_from = serializers.DateTimeField(source='slot.datetime_from')
-    datetime_to = serializers.DateTimeField(source='slot.datetime_to')
-    href = serializers.URLField(source='client_link')
+
+    psychologist = ShortPsychologistSerializer(source="slot.psychologist")
+    datetime_from = serializers.DateTimeField(source="slot.datetime_from")
+    datetime_to = serializers.DateTimeField(source="slot.datetime_to")
+    href = serializers.URLField(source="client_link")
 
     class Meta:
-        fields = ('id', 'psychologist', 'datetime_from', 'datetime_to', 'href')
+        fields = ("id", "psychologist", "datetime_from", "datetime_to", "href")
         model = Session
 
 
 class ClientSerializer(serializers.ModelSerializer):
     """Сериализатор для профиля клиента в личном кабинете."""
+
     avatar = ImageFieldSerialiser(required=False)
     next_session = serializers.SerializerMethodField()
     my_psychologist = serializers.SerializerMethodField()
 
     class Meta:
-        fields = ('id', 'first_name', 'last_name', 'birthday', 'phone_number',
-                  'avatar', 'next_session', 'my_psychologist')
+        fields = (
+            "id",
+            "first_name",
+            "last_name",
+            "birthday",
+            "phone_number",
+            "avatar",
+            "next_session",
+            "my_psychologist",
+            "gender",
+        )
         model = Client
 
     @swagger_serializer_method(SessionSerializer)

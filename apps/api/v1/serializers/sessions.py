@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.db.models import Q
 from django.utils import timezone
 from rest_framework import serializers
@@ -45,8 +47,8 @@ class SlotSerializer(serializers.ModelSerializer):
 
     def validate_datetime_from(self, start_time):
         user = self.context["request"].user
-        up_limit = start_time.replace(hour=start_time.hour + 1)
-        low_limit = start_time.replace(hour=start_time.hour - 1)
+        up_limit = start_time + timedelta(hours=1)
+        low_limit = start_time - timedelta(hours=1)
         if Slot.objects.filter(
             Q(datetime_from__lt=up_limit) & Q(datetime_from__gt=low_limit),
             psychologist__user=user,
