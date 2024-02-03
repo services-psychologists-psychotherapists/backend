@@ -1,7 +1,7 @@
 from rest_framework import generics, status, views
 from rest_framework.response import Response
 
-from apps.session.selectors import get_all_free_slots_by_user
+from apps.session.selectors import get_all_slots_by_user
 from apps.session.services import cancel_session, delete_user_slot
 
 from ..filters import SlotFilter
@@ -20,7 +20,7 @@ class ListCreateSlotView(generics.ListCreateAPIView):
     filterset_class = SlotFilter
 
     def get_queryset(self):
-        return get_all_free_slots_by_user(self.request.user)
+        return get_all_slots_by_user(self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(psychologist=self.request.user.psychologists)
